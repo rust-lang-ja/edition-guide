@@ -1,0 +1,36 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: quay.io/rust-lang-ja/circleci:edition-guide
+    steps:
+      - checkout
+      - run: rustc --version --verbose
+      - run: cargo --version --verbose
+      - run: mdbook --version
+      - run:
+          name: Building book
+          command: mdbook build
+      - run:
+          name: Testing book
+          command: mdbook test
+      - run:
+          name: Creating artifact
+          command: |
+            mkdir /tmp/book
+            cp -rp book /tmp/book
+            tar cJf book.txz book
+            mv book.txz /tmp
+      - store_artifacts:
+          path: /tmp/book
+          destination: book
+      - store_artifacts:
+          path: /tmp/book.txz
+          destination: book.txz
+
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+    - build
