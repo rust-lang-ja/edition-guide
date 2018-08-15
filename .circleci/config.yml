@@ -18,7 +18,6 @@ jobs:
       - run:
           name: Creating artifact
           command: |
-            mkdir /tmp/book
             cp -rp book /tmp/book
             tar cJf book.txz book
             mv book.txz /tmp
