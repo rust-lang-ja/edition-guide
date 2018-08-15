@@ -1,21 +1,36 @@
 version: 2
 
-# This '.circleci/config' is intended to be used in "upstream-master" branch.
-
 jobs:
   build:
     docker:
       - image: quay.io/rust-lang-ja/circleci:edition-guide
-    parallelism: 1
-    branches:
-      ignore:
-        - upstream-master
     steps:
+      - checkout
+      - run: rustc --version --verbose
+      - run: cargo --version --verbose
+      - run: mdbook --version
       - run:
-          name: Print error and exit
+          name: Building book
+          command: mdbook build
+      - run:
+          name: Testing book
+          command: mdbook test
+      - run:
+          name: Creating artifact
           command: |
-            if [ "x_$CIRCLE_BRANCH" != "x_upstream-master" ]; then
-              echo "ERROR: Wrong '.circleci/config' for $CIRCLE_BRANCH branch."
-              echo "       Please contact the developer (e.g. tatsuya6502) to fix."
-              exit 8
-            fi
+            mkdir /tmp/book
+            cp -rp book /tmp/book
+            tar cJf book.txz book
+            mv book.txz /tmp
+      - store_artifacts:
+          path: /tmp/book
+          destination: book
+      - store_artifacts:
+          path: /tmp/book.txz
+          destination: book.txz
+
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+      - build
