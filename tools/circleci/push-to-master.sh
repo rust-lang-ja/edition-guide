@@ -21,7 +21,8 @@ fi
 REVISION=$(git rev-parse --short HEAD)
 
 # If there are anything to commit, do `git commit` and `git push`
-git add docs
+# -f flag is needed as docs is listed in .gitignore
+git add -f docs
 set +e
 ret=$(git status | grep -q 'nothing to commit'; echo $?)
 set -e
