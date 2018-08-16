@@ -1,10 +1,14 @@
 # The Rust Edition Guide
 
+[![CircleCI](https://circleci.com/gh/rust-lang-ja/edition-guide.svg?style=svg)](https://circleci.com/gh/rust-lang-ja/edition-guide)
+
+日本語翻訳版 (Japanese Edition)
+
 This book explains the concept of "editions", major new eras in [Rust]'s
 development. You can [read the book
 online](https://doc.rust-lang.org/nightly/edition-guide/).
 
-[Rust]: https://www.rust-lang.org/
+[rust]: https://www.rust-lang.org/
 
 ## License
 
@@ -19,7 +23,7 @@ You can also build the book and read it locally if you'd like.
 
 Building the book requires [mdBook] 0.2. To get it:
 
-[mdBook]: https://github.com/azerupi/mdBook
+[mdbook]: https://github.com/azerupi/mdBook
 
 ```bash
 $ cargo install mdbook
@@ -28,6 +32,7 @@ $ cargo install mdbook
 ### Building
 
 The most straight-forward way to build and view the book locally is to use the following command:
+
 ```bash
 $ mdbook serve
 ```
