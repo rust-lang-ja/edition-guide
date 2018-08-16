@@ -11,25 +11,27 @@ jobs:
       - run: mdbook --version
       - run:
           name: Building book
-          command: mdbook build
+          command: mdbook build --dest-dir ./docs
+      - run:
+          name: Creating artifact
+          command: |
+            cp -rp docs /tmp/docs
+            tar cJf docs.txz docs
+            mv docs.txz /tmp
+      - store_artifacts:
+          path: /tmp/docs
+          destination: docs
+      - store_artifacts:
+          path: /tmp/docs.txz
+          destination: docs.txz
       - run:
           name: Testing book
           command: mdbook test
       - run:
-          name: Creating artifact
+          name: If master branch, publish to GitHub Page
           command: |
-            cp -rp book /tmp/book
-            tar cJf book.txz book
-            mv book.txz /tmp
-      - store_artifacts:
-          path: /tmp/book
-          destination: book
-      - store_artifacts:
-          path: /tmp/book.txz
-          destination: book.txz
-
-workflows:
-  version: 2
-  build_and_publish:
-    jobs:
-      - build
+            if [ "x_${CIRCLE_BRANCH}" == "x_master" ]; then
+              git config user.name "bn-e (CircleCI)"
+              git config user.email "bn-e@hibaridb.org"
+              ./tools/circleci/push-to-master.sh
+            fi
