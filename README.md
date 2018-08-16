@@ -1,6 +1,8 @@
 # The Rust Edition Guide
 
-[![Build Status](https://travis-ci.org/rust-lang-nursery/edition-guide.svg?branch=master)](https://travis-ci.org/rust-lang-nursery/edition-guide)
+[![CircleCI](https://circleci.com/gh/rust-lang-ja/edition-guide.svg?style=svg)](https://circleci.com/gh/rust-lang-ja/edition-guide)
+
+日本語翻訳版 (Japanese Edition)
 
 This book explains the concept of "editions", major new eras in [Rust]'s
 development. You can [read the book
