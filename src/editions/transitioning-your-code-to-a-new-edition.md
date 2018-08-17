@@ -31,7 +31,8 @@ manually!
 Before an edition is released, it will have a "preview" phase which lets you
 try out the new edition in nightly Rust before its release. Currently Rust 2018
 is in its preview phase and because of this, there's an extra step you need to
-take to opt in.  Add this feature flag to your `lib.rs` or `main.rs`:
+take to opt in.  Add this feature flag to your `lib.rs` or `main.rs` as well as
+to any examples in the `examples` directory of your project if you have one:
 
 ```rust
 #![feature(rust_2018_preview)]
@@ -43,7 +44,19 @@ require a Cargo.toml change to enable (described in the sections below). Also
 note that during the time the preview is available, we may continue to add/enable
 new features with this flag!
 
-[status]: 2018/status.html
+For Rust 2018 edition preview 2, we're also testing a [new module path
+variant](../rust-2018/module-system/path-clarity.html), "uniform paths",
+which we'd like to get further testing and feedback on.
+Please try it out, by adding the following to your `lib.rs` or `main.rs`:
+
+```rust
+#![feature(rust_2018_preview, uniform_paths)]
+```
+
+The release of Rust 2018 will stabilize one of the two module path variants and
+drop the other.
+
+[status]: ../unstable-feature-status.html
 
 ## Fix edition compatibility warnings
 
@@ -53,6 +66,13 @@ picture. To enable the compatibility lints for your project you run:
 
 ```shell
 $ cargo fix --edition
+```
+
+If the nightly toolchain is not your default, you may need to run this command
+instead:
+
+```shell
+$ cargo +nightly fix --edition
 ```
 
 This will instruct Cargo to compile all targets in your project (libraries,
