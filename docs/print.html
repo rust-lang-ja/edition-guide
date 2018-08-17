@@ -136,20 +136,34 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#introduction" id="introduction"><h1>Introduction</h1></a>
-<p>Welcome to the Rust Edition Guide! &quot;Editions&quot; are Rust's way of communicating
-large changes in the way that it feels to write Rust code.</p>
-<p>In this guide, we'll discuss:</p>
+                        <a class="header" href="#a序文" id="a序文"><h1>序文</h1></a>
+<!-- # Introduction -->
+<!-- Welcome to the Rust Edition Guide! "Editions" are Rust's way of -->
+<!-- communicating large changes in the way that it feels to write Rust -->
+<!-- code. -->
+<p>Rust エディションガイドへようこそ！「エディション」とは、Rust でのコードの書き方
+における重大な変化をあなたに伝えるためにあるものです。</p>
+<!-- In this guide, we'll discuss: -->
+<p>このガイドでは、下記の項目について説明します：</p>
+<!-- * What editions are -->
+<!-- * What each edition is about -->
+<!-- * How to migrate your code from one edition to another -->
 <ul>
-<li>What editions are</li>
-<li>What each edition is about</li>
-<li>How to migrate your code from one edition to another</li>
+<li>エディションとは何か</li>
+<li>各エディションの内容</li>
+<li>コードをあるエディションから別のエディションへ移行する方法</li>
 </ul>
-<p>Note that the standard library grows with each Rust release; there are <em>many</em>
-additions to the standard library that are not called out in this guide. Only
-the major ones are, but there's tons of medium and small things that are
-great too. You may want to check out <a href="https://doc.rust-lang.org/std/">the standard library
-documentation</a> as well.</p>
+<!-- Note that the standard library grows with each Rust release; there are -->
+<!-- *many* additions to the standard library that are not called out in -->
+<!-- this guide. Only the major ones are, but there's tons of medium and -->
+<!-- small things that are great too. You may want to check out [the -->
+<!-- standard library documentation](https://doc.rust-lang.org/std/) as -->
+<!-- well. -->
+<p>Rust が新しくリリースされるとともに、標準ライブラリは発展します。標準ライブラリ
+へ追加される機能のうち、重要なものだけがこのガイドに記載されていますが、記載は
+ないものの、すばらしい機能も沢山追加されています。
+<a href="https://doc.rust-lang.org/std/">標準ライブラリのドキュメンテーション</a>も是非
+ご覧ください。</p>
 <a class="header" href="#what-are-editions" id="what-are-editions"><h1>What are Editions?</h1></a>
 <p>Rust ships releases on a six-week cycle. This means that users get a constant
 stream of new features. This is much faster than updates for other languages,
