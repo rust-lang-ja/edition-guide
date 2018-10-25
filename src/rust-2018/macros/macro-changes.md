@@ -1,6 +1,6 @@
 # Macro changes
 
-![Minimum Rust version: nightly](https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg)
+![Minimum Rust version: beta](https://img.shields.io/badge/Minimum%20Rust%20Version-beta-orange.svg)
 
 In Rust 2018, you can import specific macros from external crates via `use`
 statements, rather than the old `#[macro_use]` attribute.
@@ -32,7 +32,6 @@ Now, you write:
 
 ```rust,ignore
 // Rust 2018
-#![feature(rust_2018_preview)]
 
 use bar::baz;
 
@@ -43,6 +42,9 @@ fn main() {
 
 This moves `macro_rules` macros to be a bit closer to other kinds of items.
 
+Note that you'll still need `#[macro_use]` to use macros you've defined
+in your own crate; this feature only works for importing macros from
+external crates.
 
 ## Procedural macros
 
@@ -65,7 +67,6 @@ Now, you write instead:
 
 ```rust,ignore
 // Rust 2018
-#![feature(rust_2018_preview)]
 use serde_derive::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize)]

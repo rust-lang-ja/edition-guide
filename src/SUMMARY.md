@@ -5,7 +5,8 @@
 ## What are editions?
 
 - [What are editions?](editions/index.md)
-  - [Transitioning your code to a new edition](editions/transitioning-your-code-to-a-new-edition.md)
+  - [Creating a new project](editions/creating-a-new-project.md)
+  - [Transitioning an existing project to a new edition](editions/transitioning-an-existing-project-to-a-new-edition.md)
 
 ## Rust 2015
 
@@ -32,8 +33,10 @@
       - [`dyn Trait` for trait objects](rust-2018/trait-system/dyn-trait-for-trait-objects.md)
       - [More container types support trait objects](rust-2018/trait-system/more-container-types-support-trait-objects.md)
       - [Associated constants](rust-2018/trait-system/associated-constants.md)
+      - [No more anonymous parameters](rust-2018/trait-system/no-anon-params.md)
     - [Slice patterns](rust-2018/slice-patterns.md)
     - [Ownership and lifetimes](rust-2018/ownership-and-lifetimes/index.md)
+      - [Non-lexical lifetimes](rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.md)
       - [Default `match` bindings](rust-2018/ownership-and-lifetimes/default-match-bindings.md)
       - [`'_`, the anonymous lifetime](rust-2018/ownership-and-lifetimes/the-anonymous-lifetime.md)
       - [Lifetime elision in `impl`](rust-2018/ownership-and-lifetimes/lifetime-elision-in-impl.md)
