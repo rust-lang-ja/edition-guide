@@ -27,12 +27,12 @@ jobs:
       - run:
           name: Testing book
           command: mdbook test
-      - run:
-          name: Check for broken links
-          command: |
-            curl -sSLo linkcheck.sh \
-              https://raw.githubusercontent.com/rust-lang/rust/master/src/tools/linkchecker/linkcheck.sh
-            sh linkcheck.sh --all edition-guide
+      # - run:
+      #     name: Check for broken links
+      #     command: |
+      #       curl -sSLo linkcheck.sh \
+      #         https://raw.githubusercontent.com/rust-lang/rust/master/src/tools/linkchecker/linkcheck.sh
+      #       sh linkcheck.sh --all edition-guide
       - run:
           name: If master branch, publish to GitHub Page
           command: |
