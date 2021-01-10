@@ -1,6 +1,6 @@
 # Path clarity
 
-![Minimum Rust version: nightly](https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg)
+![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 
 The module system is often one of the hardest things for people new to Rust. Everyone
 has their own things that take time to master, of course, but there's a root
@@ -12,30 +12,15 @@ As such, the 2018 edition of Rust introduces a few new module system
 features, but they end up *simplifying* the module system, to make it more
 clear as to what is going on.
 
-Note: During the 2018 edition preview, there are two variants of the module
-system under consideration, the "uniform paths" variant and the "anchored use
-paths" variant. Most of these changes apply to both variants; the two variant
-sections call out the differences between the two. We encourage testing of the
-new "uniform paths" variant introduced in edition preview 2. The release of
-Rust 2018 will stabilize one of these two variants and drop the other.
-
-To test Rust 2018 with the new "uniform paths" variant, put
-`#![feature(rust_2018_preview, uniform_paths)]` at the top of your `lib.rs` or
-`main.rs`.
-
 Here's a brief summary:
 
-* `extern crate` is no longer needed
+* `extern crate` is no longer needed in 99% of circumstances.
 * The `crate` keyword refers to the current crate.
-* Uniform paths variant: Paths work uniformly in both `use` declarations and in
-  other code. Paths work uniformly both in the top-level module and in
-  submodules. Any path may start with a crate, with `crate`, `super`, or
-  `self`, or with a local name relative to the current module.
-* Anchored use paths variant: Paths in `use` declarations always start with a
-  crate name, or with `crate`, `super`, or `self`. Paths in code other than
-  `use` declarations may also start with names relative to the current module.
+* Paths may start with a crate name, even within submodules.
+* Paths starting with `::` must reference an external crate.
 * A `foo.rs` and `foo/` subdirectory may coexist; `mod.rs` is no longer needed
   when placing submodules in a subdirectory.
+* Paths in `use` declarations work the same as other paths.
 
 These may seem like arbitrary new rules when put this way, but the mental
 model is now significantly simplified overall. Read on for more details!
@@ -74,10 +59,73 @@ and then there is no step two. If you're not using Cargo, you already had to pas
 `--extern` flags to give `rustc` the location of external crates, so you'd just
 keep doing what you were doing there as well.
 
-One other use for `extern crate` was to import macros; that's no longer needed.
-Check [the macro section](../macros/macro-changes.html) for more.
+> One small note here: `cargo fix` will not currently automate this change. We may
+> have it do this for you in the future.
 
-### The `crate` keyword refers to the current crate.
+#### An exception
+
+There's one exception to this rule, and that's the "sysroot" crates. These are the
+crates distributed with Rust itself.
+
+Usually these are only needed in very specialized situations. Starting in
+1.41, `rustc` accepts the `--extern=CRATE_NAME` flag which automatically adds
+the given crate name in a way similar to `extern crate`. Build tools may use
+this to inject sysroot crates into the crate's prelude. Cargo does not have a
+general way to express this, though it uses it for `proc_macro` crates.
+
+Some examples of needing to explicitly import sysroot crates are:
+
+* [`std`]: Usually this is not neccesary, because `std` is automatically
+  imported unless the crate is marked with [`#![no_std]`][no_std].
+* [`core`]: Usually this is not necessary, because `core` is automatically
+  imported, unless the crate is marked with [`#![no_core]`][no_core]. For
+  example, some of the internal crates used by the standard library itself
+  need this.
+* [`proc_macro`]: This is automatically imported by Cargo if it is a
+  proc-macro crate starting in 1.42. `extern crate proc_macro;` would be
+  needed if you want to support older releases, or if using another build tool
+  that does not pass the appropriate `--extern` flags to `rustc`.
+* [`alloc`]: Items in the `alloc` crate are usually accessed via re-exports in
+  the `std` crate. If you are working with a `no_std` crate that supports
+  allocation, then you may need to explicitly import `alloc`.
+* [`test`]: This is only available on the [nightly channel], and is usually
+  only used for the unstable benchmark support.
+
+[`alloc`]: ../../../alloc/index.html
+[`core`]: ../../../core/index.html
+[`proc_macro`]: ../../../proc_macro/index.html
+[`std`]: ../../../std/index.html
+[`test`]: ../../../test/index.html
+[nightly channel]: ../../../book/appendix-07-nightly-rust.html
+[no_core]: https://github.com/rust-lang/rust/issues/29639
+[no_std]: ../../../reference/crates-and-source-files.html#preludes-and-no_std
+
+#### Macros
+
+One other use for `extern crate` was to import macros; that's no longer needed.
+Check [the macro section](../macros/macro-changes.md) for more.
+
+#### Renaming crates
+
+If you've been using `as` to rename your crate like this:
+
+```rust,ignore
+extern crate futures as f;
+
+use f::Future;
+```
+
+then removing the `extern crate` line on its own won't work. You'll need to do this:
+
+```rust,ignore
+use futures as f;
+
+use self::f::Future;
+```
+
+This change will need to happen in any module that uses `f`.
+
+### The `crate` keyword refers to the current crate
 
 In `use` declarations and in other code, you can refer to the root of the
 current crate with the `crate::` prefix. For instance, `crate::foo::bar` will
@@ -88,21 +136,115 @@ The prefix `::` previously referred to either the crate root or an external
 crate; it now unambiguously refers to an external crate. For instance,
 `::foo::bar` always refers to the name `bar` inside the external crate `foo`.
 
-### Uniform paths variant
+### Extern crate paths
 
-The uniform paths variant of Rust 2018 simplifies and unifies path handling
-compared to Rust 2015. In Rust 2015, paths work differently in `use`
-declarations than they do elsewhere. In particular, paths in `use`
-declarations would always start from the crate root, while paths in other code
-implicitly started from the current module. Those differences didn't have any
-effect in the top-level module, which meant that everything would seem
-straightforward until working on a project large enough to have submodules.
+Previously, using an external crate in a module without a `use` import
+required a leading `::` on the path.
 
-In the uniform paths variant of Rust 2018, paths in `use` declarations and in
-other code always work the same way, both in the top-level module and in any
-submodule. You can always use a relative path from the current module, a path
-starting from an external crate name, or a path starting with `crate`, `super`,
-or `self`.
+```rust,ignore
+// Rust 2015
+
+extern crate chrono;
+
+fn foo() {
+    // this works in the crate root
+    let x = chrono::Utc::now();
+}
+
+mod submodule {
+    fn function() {
+        // but in a submodule it requires a leading :: if not imported with `use`
+        let x = ::chrono::Utc::now();
+    }
+}
+```
+
+Now, extern crate names are in scope in the entire crate, including
+submodules.
+
+```rust,ignore
+// Rust 2018
+
+fn foo() {
+    // this works in the crate root
+    let x = chrono::Utc::now();
+}
+
+mod submodule {
+    fn function() {
+        // crates may be referenced directly, even in submodules
+        let x = chrono::Utc::now();
+    }
+}
+```
+
+### No more `mod.rs`
+
+In Rust 2015, if you have a submodule:
+
+```rust,ignore
+// This `mod` declaration looks for the `foo` module in
+// `foo.rs` or `foo/mod.rs`.
+mod foo;
+```
+
+It can live in `foo.rs` or `foo/mod.rs`. If it has submodules of its own, it
+*must* be `foo/mod.rs`. So a `bar` submodule of `foo` would live at
+`foo/bar.rs`.
+
+In Rust 2018 the restriction that a module with submodules must be named
+`mod.rs` is lifted. `foo.rs` can just be `foo.rs`,
+and the submodule is still `foo/bar.rs`. This eliminates the special
+name, and if you have a bunch of files open in your editor, you can clearly
+see their names, instead of having a bunch of tabs named `mod.rs`.
+
+<table>
+  <thead>
+    <tr>
+      <th>Rust 2015</th>
+      <th>Rust 2018</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+<pre>
+.
+├── lib.rs
+└── foo/
+    ├── mod.rs
+    └── bar.rs
+</pre>
+    </td>
+    <td>
+<pre>
+.
+├── lib.rs
+├── foo.rs
+└── foo/
+    └── bar.rs
+</pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### `use` paths
+
+![Minimum Rust version: 1.32](https://img.shields.io/badge/Minimum%20Rust%20Version-1.32-brightgreen.svg)
+
+Rust 2018 simplifies and unifies path handling compared to Rust 2015. In Rust
+2015, paths work differently in `use` declarations than they do elsewhere. In
+particular, paths in `use` declarations would always start from the crate
+root, while paths in other code implicitly started from the current scope.
+Those differences didn't have any effect in the top-level module, which meant
+that everything would seem straightforward until working on a project large
+enough to have submodules.
+
+In Rust 2018, paths in `use` declarations and in other code work the same way,
+both in the top-level module and in any submodule. You can use a relative path
+from the current scope, a path starting from an external crate name, or a path
+starting with `crate`, `super`, or `self`.
 
 Code that looked like this:
 
@@ -140,7 +282,7 @@ will look exactly the same in Rust 2018, except that you can delete the `extern
 crate` line:
 
 ```rust,ignore
-// Rust 2018 (uniform paths variant)
+// Rust 2018
 
 use futures::Future;
 
@@ -167,11 +309,10 @@ fn func() {
 }
 ```
 
-With Rust 2018, however, the same code will also work completely unmodified in
-a submodule:
+The same code will also work completely unmodified in a submodule:
 
 ```rust,ignore
-// Rust 2018 (uniform paths variant)
+// Rust 2018
 
 mod submodule {
     use futures::Future;
@@ -208,126 +349,3 @@ module or item with the same name, you'll get an error, and you'll need to
 either rename one of the conflicting names or explicitly disambiguate the path.
 To explicitly disambiguate a path, use `::name` for an external crate name, or
 `self::name` for a local module or item.
-
-### Anchored use paths variant
-
-In the anchored use paths variant of Rust 2018, paths in `use` declarations
-*must* begin with a crate name, `crate`, `self`, or `super`.
-
-Code that looked like this:
-
-```rust,ignore
-// Rust 2015
-
-extern crate futures;
-
-use futures::Future;
-
-mod foo {
-    pub struct Bar;
-}
-
-use foo::Bar;
-```
-
-Now looks like this:
-
-```rust,ignore
-// Rust 2018 (anchored use paths variant)
-
-// 'futures' is the name of a crate
-use futures::Future;
-
-mod foo {
-    pub struct Bar;
-}
-
-// 'crate' means the current crate
-use crate::foo::Bar;
-```
-
-In addition, all of these path forms are available outside of `use`
-declarations as well, which eliminates many sources of confusion. Consider this
-code in Rust 2015:
-
-```rust,ignore
-// Rust 2015
-
-extern crate futures;
-
-mod submodule {
-    // this works!
-    use futures::Future;
-
-    // so why doesn't this work?
-    fn my_poll() -> futures::Poll { ... }
-}
-
-fn main() {
-    // this works
-    let five = std::sync::Arc::new(5);
-}
-
-mod submodule {
-    fn function() {
-        // ... so why doesn't this work
-        let five = std::sync::Arc::new(5);
-    }
-}
-```
-
-In the `futures` example, the `my_poll` function signature is incorrect, because `submodule`
-contains no items named `futures`; that is, this path is considered relative. But because
-`use` is anchored, `use futures::` works even though a lone `futures::` doesn't! With `std`
-it can be even more confusing, as you never wrote the `extern crate std;` line at all. So
-why does it work in `main` but not in a submodule? Same thing: it's a relative path because
-it's not in a `use` declaration. `extern crate std;` is inserted at the crate root, so
-it's fine in `main`, but it doesn't exist in the submodule at all.
-
-Let's look at how this change affects things:
-
-```rust,ignore
-// Rust 2018 (anchored use paths variant)
-
-// no more `extern crate futures;`
-
-mod submodule {
-    // 'futures' is the name of a crate, so this is anchored and works
-    use futures::Future;
-
-    // 'futures' is the name of a crate, so this is anchored and works
-    fn my_poll() -> futures::Poll { ... }
-}
-
-fn main() {
-    // 'std' is the name of a crate, so this is anchored and works
-    let five = std::sync::Arc::new(5);
-}
-
-mod submodule {
-    fn function() {
-        // 'std' is the name of a crate, so this is anchored and works
-        let five = std::sync::Arc::new(5);
-    }
-}
-```
-
-Much more straightforward.
-
-
-### No more `mod.rs`
-
-In Rust 2015, if you have a submodule:
-
-```rust,ignore
-mod foo;
-```
-
-It can live in `foo.rs` or `foo/mod.rs`. If it has submodules of its own, it
-*must* be `foo/mod.rs`. So a `bar` submodule of `foo` would live at
-`foo/bar.rs`.
-
-In Rust 2018, `mod.rs` is no longer needed. `foo.rs` can just be `foo.rs`,
-and the submodule is still `foo/bar.rs`. This eliminates the special
-name, and if you have a bunch of files open in your editor, you can clearly
-see their names, instead of having a bunch of tabs named `mod.rs`.

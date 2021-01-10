@@ -14,24 +14,24 @@ To install Rust through Rustup, you can go to
 so on your platform. This will install both `rustup` itself and the `stable`
 version of `rustc` and `cargo`.
 
-To install a specific Rust version, you can use `rustup install`:
+To install a specific Rust version, you can use `rustup toolchain install`:
 
 ```console
-$ rustup install 1.30.0
+$ rustup toolchain install 1.30.0
 ```
 
 This works for a specific nightly, as well:
 
 ```console
-$ rustup install nightly-2018-08-01
+$ rustup toolchain install nightly-2018-08-01
 ```
 
 As well as any of our release channels:
 
 ```console
-$ rustup install stable
-$ rustup install beta
-$ rustup install nightly
+$ rustup toolchain install stable
+$ rustup toolchain install beta
+$ rustup toolchain install nightly
 ```
 
 ## For updating your installation
@@ -50,7 +50,13 @@ will update anything that has one.
 To set the default toolchain to something other than `stable`:
 
 ```console
-$ rustup toolchain default nightly
+$ rustup default nightly
+```
+
+To uninstall a specific Rust version, you can use `rustup toolchain uninstall`:
+
+```console
+$ rustup toolchain uninstall 1.30.0
 ```
 
 To use a toolchain other than the default, use `rustup run`:
@@ -70,6 +76,11 @@ If you run this inside of a project:
 
 ```console
 $ rustup override set nightly
+```
+
+Or, if you'd like to target a different version of Rust:
+```console
+$ rustup override set 1.30.0
 ```
 
 Then when you're in that directory, any invocations of `rustc` or `cargo`
@@ -128,7 +139,7 @@ contains a copy of Rust's documentation, so that you can read it offline.
 
 This component cannot be removed for now; if that's of interest, please
 comment on [this
-issue](https://github.com/rust-lang-nursery/rustup.rs/issues/998).
+issue](https://github.com/rust-lang/rustup.rs/issues/998).
 
 ### `rust-src` for a copy of Rust's source code
 
@@ -140,15 +151,7 @@ information to know more about the functions you're trying to call.
 $ rustup component add rust-src
 ```
 
-### The "preview" components
-
-There are several components in a "preview" stage. These components currently
-have `-preview` in their name, and this indicates that they're not quite 100%
-ready for general consumption yet. Please try them out and give us feedback,
-but know that they do not follow Rust's stability guarantees, and are still
-actively changing, possibly in backwards-incompatible ways.
-
-#### `rustfmt-preview` for automatic code formatting
+### `rustfmt` for automatic code formatting
 
 ![Minimum Rust version: 1.24](https://img.shields.io/badge/Minimum%20Rust%20Version-1.24-brightgreen.svg)
 
@@ -156,7 +159,7 @@ If you'd like to have your code automatically formatted, you can
 install this component:
 
 ```console
-$ rustup component add rustfmt-preview
+$ rustup component add rustfmt
 ```
 
 This will install two tools, `rustfmt` and `cargo-fmt`, that will reformat your
@@ -168,7 +171,7 @@ $ cargo fmt
 
 will reformat your entire Cargo project.
 
-#### `rls-preview` for IDE integration
+### `rls` for IDE integration
 
 ![Minimum Rust version: 1.21](https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg)
 
@@ -177,17 +180,18 @@ protocol](http://langserver.org/). To gain support for Rust with these IDEs,
 you'll need to install the Rust language sever, aka the "RLS":
 
 ```console
-$ rustup component add rls-preview
+$ rustup component add rls
 ```
 
-Your IDE should take it from there.
+For more information about integrating this into your IDE, see the [RLS
+documentation](https://github.com/rust-lang/rls).
 
-#### `clippy-preview` for more lints
+### `clippy` for more lints
 
 For even more lints to help you write Rust code, you can install `clippy`:
 
 ```console
-$ rustup component add clippy-preview
+$ rustup component add clippy
 ```
 
 This will install `cargo-clippy` for you:
@@ -197,7 +201,15 @@ $ cargo clippy
 ```
 
 For more, check out [clippy's
-documentation](https://github.com/rust-lang-nursery/rust-clippy).
+documentation](https://github.com/rust-lang/rust-clippy).
+
+### The "preview" components
+
+There are several components in a "preview" stage. These components currently
+have `-preview` in their name, and this indicates that they're not quite 100%
+ready for general consumption yet. Please try them out and give us feedback,
+but know that they do not follow Rust's stability guarantees, and are still
+actively changing, possibly in backwards-incompatible ways.
 
 #### `llvm-tools-preview` for using extra LLVM tools
 

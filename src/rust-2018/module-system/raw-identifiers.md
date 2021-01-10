@@ -1,6 +1,6 @@
 # Raw identifiers
 
-![Minimum Rust version: nightly](https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg)
+![Minimum Rust version: 1.30](https://img.shields.io/badge/Minimum%20Rust%20Version-1.30-brightgreen.svg)
 
 Rust, like many programming languages, has the concept of "keywords".
 These identifiers mean something to the language, and so you cannot use them in
@@ -28,9 +28,6 @@ error: expected identifier, found keyword `match`
 You can write this with a raw identifier:
 
 ```rust
-#![feature(rust_2018_preview)]
-#![feature(raw_identifiers)]
-
 fn r#match(needle: &str, haystack: &str) -> bool {
     haystack.contains(needle)
 }
@@ -40,9 +37,9 @@ fn main() {
 }
 ```
 
-Note the `r#` prefix on both the function name, as well as the call.
+Note the `r#` prefix on both the function name as well as the call.
 
-## More details
+## Motivation
 
 This feature is useful for a few reasons, but the primary motivation was
 inter-edition situations. For example, `try` is not a keyword in the 2015

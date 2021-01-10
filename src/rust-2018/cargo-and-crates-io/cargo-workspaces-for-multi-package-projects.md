@@ -11,8 +11,8 @@ Cargo now has an additional level:
 
 * A *workspace* contains one or more packages
 
-This can be useful for larger projects. For example, [the `futures`
-respository] is a *workspace* that contains many related packages:
+This can be useful for larger projects. For example, [the `futures` package]
+is a *workspace* that contains many related packages:
 
 * futures
 * futures-util
@@ -21,7 +21,7 @@ respository] is a *workspace* that contains many related packages:
 
 and more.
 
-[the `futures` package]: https://github.com/rust-lang-nursery/futures-rs
+[the `futures` package]: https://github.com/rust-lang/futures-rs
 
 Workspaces allow these packages to be developed individually, but they share
 a single set of dependencies, and therefore have a single target directory

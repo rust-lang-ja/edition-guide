@@ -41,10 +41,3 @@ stable releases are made.  In some cases however, mainly when new keywords are
 added, but sometimes for other reasons, there may be new features that are only
 available in later editions.  You only need to upgrade if you want to take
 advantage of such features.
-
-## Trying out the 2018 edition
-
-At the time of writing, there are two editions: 2015 and 2018. 2015 is today's
-Rust; Rust 2018 will ship later this year. To transition to the 2018 edition
-from the 2015 edition, you'll want to get started with the [transition
-section](transitioning-your-code-to-a-new-edition.html).
