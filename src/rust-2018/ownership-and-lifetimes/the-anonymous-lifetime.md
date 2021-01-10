@@ -1,6 +1,6 @@
 # `'_`, the anonymous lifetime
 
-![Minimum Rust version: nightly](https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg)
+![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 
 Rust 2018 allows you to explicitly mark where a lifetime is elided, for types
 where this elision might otherwise be unclear. To do this, you can use the
@@ -16,11 +16,9 @@ struct StrWrap<'a>(&'a str);
 In Rust 2015, you might have written:
 
 ```rust
-// Rust 2015
-
-use std::fmt;
-
+# use std::fmt;
 # struct StrWrap<'a>(&'a str);
+// Rust 2015
 
 fn make_wrapper(string: &str) -> StrWrap {
     StrWrap(string)
@@ -36,11 +34,8 @@ impl<'a> fmt::Debug for StrWrap<'a> {
 In Rust 2018, you can instead write:
 
 ```rust
-#![feature(rust_2018_preview)]
-
 # use std::fmt;
 # struct StrWrap<'a>(&'a str);
-
 // Rust 2018
 
 fn make_wrapper(string: &str) -> StrWrap<'_> {
@@ -84,8 +79,6 @@ impl<'a, 'b: 'a> Foo<'a, 'b> {
 We can rewrite this as:
 
 ```rust
-#![feature(rust_2018_preview)]
-
 # struct Foo<'a, 'b: 'a> {
 #     field: &'a &'b str,
 # }

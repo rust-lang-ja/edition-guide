@@ -2,7 +2,7 @@
 
 ![Minimum Rust version: 1.16](https://img.shields.io/badge/Minimum%20Rust%20Version-1.16-brightgreen.svg)
 
-`cargo check` is a new subcommand should speed up the development
+`cargo check` is a new subcommand that should speed up the development
 workflow in many cases.
 
 What does it do? Let's take a step back and talk about how `rustc` compiles
@@ -14,7 +14,7 @@ correct, all that stuff. Second, once it's satisfied that everything is in
 order, it produces the actual binary code that you end up executing.
 
 It turns out that that second step takes a lot of time. And most of the time,
-it's not neccesary. That is, when you're working on some Rust code, many
+it's not necessary. That is, when you're working on some Rust code, many
 developers will get into a workflow like this:
 
 1. Write some code.
@@ -47,7 +47,7 @@ So how much speedup do you actually get? Like most performance related
 questions, the answer is "it depends." Here are some very un-scientific
 benchmarks at the time of writing.
 
-|  build | performance | check performance | speedup |
+|  use case | build performance | check performance | speedup |
 |--------|-------------|-------------------|---------|
 | initial compile | 11s | 5.6s | 1.96x |
 | second compile (no changes) | 3s | 1.9s | 1.57x |

@@ -15,6 +15,7 @@
 ## Rust 2018
 
 - [Rust 2018](rust-2018/index.md)
+    - [2018-Specific Changes](rust-2018/edition-changes.md)
     - [Module system](rust-2018/module-system/index.md)
       - [Raw identifiers](rust-2018/module-system/raw-identifiers.md)
       - [Path clarity](rust-2018/module-system/path-clarity.md)
@@ -53,6 +54,7 @@
     - [Macros](rust-2018/macros/index.md)
       - [Custom Derive](rust-2018/macros/custom-derive.md)
       - [Macro changes](rust-2018/macros/macro-changes.md)
+      - [At most one repetition](rust-2018/macros/at-most-once.md)
     - [The compiler](rust-2018/the-compiler/index.md)
       - [Improved error messages](rust-2018/the-compiler/improved-error-messages.md)
       - [Incremental Compilation for faster compiles](rust-2018/the-compiler/incremental-compilation-for-faster-compiles.md)
@@ -84,4 +86,21 @@
       - [MUSL support for fully static binaries](rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.md)
       - [`cdylib` crates for C interoperability](rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.md)
 
-- [Unstable feature status](unstable-feature-status.md)
+## The Next Edition
+
+- [The Next Edition](rust-next/index.md)
+    - [Next-Specific Changes](rust-next/edition-changes.md)
+    - [The dbg! macro](rust-next/dbg-macro.md)
+    - [No jemalloc by default](rust-next/no-jemalloc.md)
+    - [Uniform Paths](rust-next/uniform-paths.md)
+    - [`literal` macro matcher](rust-next/literal-macro-matcher.md)
+    - [`?` operator in macros](rust-next/qustion-mark-operator-in-macros.md)
+    - [const fn](rust-next/const-fn.md)
+    - [Pinning](rust-next/pin.md)
+    - [No more FnBox](rust-next/no-more-fnbox.md)
+    - [Alternative Cargo Registries](rust-next/alternative-cargo-registries.md)
+    - [TryFrom and TryInto](rust-next/tryfrom-and-tryinto.md)
+    - [The Future trait](rust-next/future.md)
+    - [The alloc crate](rust-next/alloc.md)
+    - [MaybeUninit<T>](rust-next/maybe-uninit.md)
+    - [cargo vendor](rust-next/cargo-vendor.md)
