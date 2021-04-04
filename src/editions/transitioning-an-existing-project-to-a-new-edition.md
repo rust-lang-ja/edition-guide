@@ -224,7 +224,7 @@ Rust 2018の体験の一部として、シームレスなイディオム移行�
 With that out of the way, we can instruct Cargo to fix our code snippet with:
 -->
 
-以下のコマンドでCargoがイディオムの修正を行います。
+以上を踏まえたうえで、私たちのコード片をCargoに修正させてみましょう。
 
 ```console
 $ cargo fix --edition-idioms
