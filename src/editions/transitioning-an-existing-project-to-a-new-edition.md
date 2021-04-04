@@ -93,7 +93,7 @@ In this case, since it had no name, `cargo fix` will replace it with `_`,
 which is conventional for unused variables.
 -->
 
-パラメータ名が追加された形でコードが書き換えられています。
+トレイトオブジェクトのためのパラメータ名が追加された形でコードが書き換えられています。
 この場合は、パラメータ名がなかったので、使用されていないパラメータの慣習に従って `_` を付加しています。
 
 <!--
