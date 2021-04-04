@@ -30,7 +30,8 @@ If you'd prefer to use an older edition, you can change the value in that
 key, for example:
 -->
 
-この `edition = "2018"` によってあなたのパッケージが Rust 2018 を利用するように設定されます。これ以外は必要ありません。
+この `edition = "2018"` によってあなたのパッケージが Rust 2018 を利用するように設定されます。
+これ以外は必要ありません。
 
 もし、他の古いエディションを使いたい場合は、その設定の値を変更できます。例えば、
 

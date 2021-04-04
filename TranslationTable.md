@@ -217,6 +217,6 @@
 | variant                        | ヴァリアント
 | vector                         | ベクタ
 | version                        | バージョン
-| warning                        | ウォーニング
+| warning                        | 警告
 | wildcard                       | ワイルドカード
 | wrapper                        | ラッパ
