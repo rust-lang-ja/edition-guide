@@ -1,13 +1,15 @@
-<!-- # Creating a new project
+<!--
+# Creating a new project
 
 When you create a new project with Cargo, it will automatically add
-configuration for the latest edition: -->
+configuration for the latest edition:
+-->
 
 # 新しいプロジェクトを作成する
 
 Cargoは新たなプロジェクトを作成する際に自動で最新のエディションをコンフィギュレーションに追加します。
 
-```Console
+```console
 > cargo +nightly new foo
      Created binary (application) `foo` project
 > cat .\foo\Cargo.toml
@@ -20,11 +22,13 @@ edition = "2018"
 [dependencies]
 ```
 
-<!-- That `edition = "2018"` setting will configure your package to use Rust 2018.
+<!--
+That `edition = "2018"` setting will configure your package to use Rust 2018.
 No more configuration needed!
 
 If you'd prefer to use an older edition, you can change the value in that
-key, for example: -->
+key, for example:
+-->
 
 この `edition = "2018"` によってあなたのパッケージが Rust 2018 を利用するように設定されます。これ以外は必要ありません。
 
@@ -40,6 +44,8 @@ edition = "2015"
 [dependencies]
 ```
 
-<!-- This will build your package in Rust 2015. -->
+<!--
+This will build your package in Rust 2015.
+-->
 
 とすると、あなたのパッケージは Rust 2015 でビルドされます。
