@@ -4,4 +4,5 @@ multilingual = false
 src = "src"
 title = "The Edition Guide"
 
+[output.html]
 additional-css = ["theme/em-to-bold.css"]
