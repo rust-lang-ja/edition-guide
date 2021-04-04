@@ -23,7 +23,7 @@ fully updated documentation and tooling. New editions ship through the usual
 release process.
 -->
 
-2,3年に一度、Rustの新しい「リビジョン」を作成します。
+2,3年に一度、Rustの新しい「エディション」を作成します。
 各エディションはそれまでRustに加えられた変更をまとめ上げたもので、最新のドキュメントとツールもそれに含まれます。
 新しいエディションは通常のリリースプロセスを経てリリースされます。
 
