@@ -17,6 +17,7 @@
 | allocate                       | アロケートする
 | allocation                     | アロケーション
 | allocator                      | アロケータ
+| anonymous parameter            | 無名パラメータ
 | antipattern                    | アンチパターン
 | application                    | アプリケーション
 | arity                          | アリティ
@@ -70,6 +71,7 @@
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
 | early return                   | 早期リターン
+| edition                        | エディション
 | empty tuple                    | 空タプル
 | encode                         | エンコード
 | entry point                    | エントリポイント
@@ -215,6 +217,6 @@
 | variant                        | ヴァリアント
 | vector                         | ベクタ
 | version                        | バージョン
-| warning                        | ウォーニング
+| warning                        | 警告
 | wildcard                       | ワイルドカード
 | wrapper                        | ラッパ
