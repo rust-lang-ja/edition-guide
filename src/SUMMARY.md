@@ -1,12 +1,27 @@
+<!--
 # The Edition Guide
+-->
+# エディションガイド
 
+<!--
 [Introduction](introduction.md)
+-->
+[序文](introduction.md)
 
+<!--
 ## What are editions?
+-->
+## エディションとは？
 
+<!--
 - [What are editions?](editions/index.md)
   - [Creating a new project](editions/creating-a-new-project.md)
   - [Transitioning an existing project to a new edition](editions/transitioning-an-existing-project-to-a-new-edition.md)
+-->
+
+- [エディションとは？](editions/index.md)
+  - [新しいプロジェクトを作成する](editions/creating-a-new-project.md)
+  - [既存のプロジェクトのエディションを移行する](editions/transitioning-an-existing-project-to-a-new-edition.md)
 
 ## Rust 2015
 
