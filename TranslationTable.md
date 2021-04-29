@@ -180,6 +180,7 @@
 | slicing                        | スライシング
 | specialized                    | 特殊化された
 | standard library               | 標準ライブラリ
+| statement                      | 文
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
