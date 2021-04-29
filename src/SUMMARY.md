@@ -100,12 +100,32 @@
       - [MSVC toolchain support](rust-2018/platform-and-target-support/msvc-toolchain-support.md)
       - [MUSL support for fully static binaries](rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.md)
       - [`cdylib` crates for C interoperability](rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.md)
-
+<!--
 ## The Next Edition
+ -->
+## 次のエディション
 
+<!--
 - [The Next Edition](rust-next/index.md)
     - [Next-Specific Changes](rust-next/edition-changes.md)
     - [The dbg! macro](rust-next/dbg-macro.md)
+    - [No jemalloc by default](rust-next/no-jemalloc.md)
+    - [Uniform Paths](rust-next/uniform-paths.md)
+    - [`literal` macro matcher](rust-next/literal-macro-matcher.md)
+    - [`?` operator in macros](rust-next/qustion-mark-operator-in-macros.md)
+    - [const fn](rust-next/const-fn.md)
+    - [Pinning](rust-next/pin.md)
+    - [No more FnBox](rust-next/no-more-fnbox.md)
+    - [Alternative Cargo Registries](rust-next/alternative-cargo-registries.md)
+    - [TryFrom and TryInto](rust-next/tryfrom-and-tryinto.md)
+    - [The Future trait](rust-next/future.md)
+    - [The alloc crate](rust-next/alloc.md)
+    - [MaybeUninit<T>](rust-next/maybe-uninit.md)
+    - [cargo vendor](rust-next/cargo-vendor.md)
+-->
+- [次のエディション](rust-next/index.md)
+    - [次のエディションに特有の変更](rust-next/edition-changes.md)
+    - [dbg! マクロ](rust-next/dbg-macro.md)
     - [No jemalloc by default](rust-next/no-jemalloc.md)
     - [Uniform Paths](rust-next/uniform-paths.md)
     - [`literal` macro matcher](rust-next/literal-macro-matcher.md)
