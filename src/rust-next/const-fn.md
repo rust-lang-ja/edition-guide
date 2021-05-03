@@ -33,6 +33,7 @@ with it. This is why we didn't add `const fn` to the Rust 2018 section; it
 truly didn't become useful until after the release of the 2018 edition. This
 means that if you read this document top to bottom, the earlier versions may
 describe restrictions that are relaxed in later versions.
+
 -->
 const fnでは任意のコードを実行することは出来ません。
 というのは、簡単に言うと型システムを壊してしまうことになるからです。
