@@ -122,6 +122,7 @@
 | lint                           | リント
 | literal                        | リテラル
 | lock                           | ロック
+| maintainer                     | メンテナ
 | mangling                       | マングリング
 | match                          | マッチ
 | match guards                   | マッチガード
@@ -154,6 +155,7 @@
 | pattern                        | パターン
 | performance                    | パフォーマンス
 | platform                       | プラットフォーム
+| primitive                      | プリミティブ
 | pointer                        | ポインタ
 | process                        | プロセス
 | range                          | 範囲

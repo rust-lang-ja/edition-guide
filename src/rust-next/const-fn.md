@@ -3,7 +3,7 @@
 <!--
 Initially added: ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 -->
- 最初に導入されたのは: ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
+![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)で最初に導入されました。
 
 <!--
 Expanded in many releases, see each aspect below for more details.
