@@ -29,14 +29,6 @@ Building the book requires [mdBook] 0.2. To get it:
 $ cargo install mdbook
 ```
 
-(日本語訳版追記)
-日本語翻訳版のビルドには `rust-lang-ja` にあるmdBookのフォークを使う必要があります。
-
-```bash
-$ cargo install mdbook --git https://github.com/rust-lang-ja/mdBook \
-    --branch summary-with-html-comments
-```
-
 ### Building
 
 The most straight-forward way to build and view the book locally is to use the following command:
