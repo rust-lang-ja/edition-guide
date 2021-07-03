@@ -24,4 +24,4 @@ fn main() {
 `literal` matches against literals of any type; string literals, numeric
 literals, `char` literals.
 -->
-リテラルマッチャは、文字列リテラル、数値リテラル、文字リテラルなど、どんなタイプのリテラルにもマッチします。
+`literal`は、文字列リテラル、数値リテラル、文字リテラルなど、どんなタイプのリテラルにもマッチします。

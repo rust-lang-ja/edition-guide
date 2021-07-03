@@ -136,7 +136,7 @@ const fn foo() {
 <!--
 You can call `const fn` from a `const fn`:
 -->
-const関数からconst関数を呼び出すことができます。
+`const fn`から`const fn`を呼び出すことができます。
 
 
 ```rust
@@ -152,7 +152,7 @@ const fn bar() -> i32 {
 <!--
 ## Index expressions on arrays and slices
 -->
-## 配列やスライス
+## 配列やスライスの添字式
 
 ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 
@@ -223,7 +223,7 @@ const fn foo() -> i32 {
 <!--
 Note that this is *only* `const`, not `static`.
 -->
-読み出せるのは `const`指定された定数で、`static`指定された変数は読み出せません。
+読み出せるのは `const`指定された定数*のみ*で、`static`指定された変数は読み出せません。
 
 <!--
 ## & and * of references
@@ -248,7 +248,7 @@ const fn foo(r: &i32) {
 <!--
 ## Casts, except for raw pointer to integer casts
 -->
-## 整数の生ポインタ以外のキャスト
+## キャスト。ただし生ポインタから整数へのキャストは除く
 
 ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
 
@@ -301,7 +301,7 @@ place that uses irrefutable patterns.
 <!--
 You can use both mutable and immutable `let` bindings:
 -->
-ミュータブルな束縛とイミュータブルな束縛の双方を使うことができます。
+ミュータブルとイミュータブルの双方の`let`束縛を使うことができます。
 
 ```rust
 const fn foo() {

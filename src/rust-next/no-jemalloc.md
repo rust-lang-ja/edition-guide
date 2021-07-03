@@ -25,7 +25,7 @@ it was only the default on some platforms. Notably, the MSVC target on
 Windows has shipped the system allocator for a long time.
 -->
 さらに、jemallocは特定のプラットフォームでのみデフォルトなので、それが常にデフォルトだと言うのはややUnix偏重主義でしょう。
-特にWindowsプラットフォーム上のMSVCターゲットは、長い間、システムのアロケータで出荷されています。
+特にWindows上のMSVCターゲットは、長い間、システムのアロケータで出荷されています。
 
 <!--
 While jemalloc usually has great performance, that's not always the case.
