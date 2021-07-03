@@ -101,8 +101,12 @@
       - [MUSL support for fully static binaries](rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.md)
       - [`cdylib` crates for C interoperability](rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.md)
 
+<!--
 ## The Next Edition
+ -->
+## 次のエディション
 
+<!--
 - [The Next Edition](rust-next/index.md)
     - [Next-Specific Changes](rust-next/edition-changes.md)
     - [The dbg! macro](rust-next/dbg-macro.md)
@@ -117,5 +121,22 @@
     - [TryFrom and TryInto](rust-next/tryfrom-and-tryinto.md)
     - [The Future trait](rust-next/future.md)
     - [The alloc crate](rust-next/alloc.md)
+    - [MaybeUninit<T>](rust-next/maybe-uninit.md)
+    - [cargo vendor](rust-next/cargo-vendor.md)
+-->
+- [次のエディション](rust-next/index.md)
+    - [次のエディションに特有の変更](rust-next/edition-changes.md)
+    - [dbg! マクロ](rust-next/dbg-macro.md)
+    - [デフォルトでjemallocを使わない](rust-next/no-jemalloc.md)
+    - [統一的なパス](rust-next/uniform-paths.md)
+    - [リテラルマクロマッチャ](rust-next/literal-macro-matcher.md)
+    - [マクロ内の`?`演算子](rust-next/qustion-mark-operator-in-macros.md)
+    - [const fn](rust-next/const-fn.md)
+    - [ピン留め](rust-next/pin.md)
+    - [FnBoxは不要に](rust-next/no-more-fnbox.md)
+    - [Cargoレジストリが選択できるように](rust-next/alternative-cargo-registries.md)
+    - [TryFromとTryInto](rust-next/tryfrom-and-tryinto.md)
+    - [Futureトレイト](rust-next/future.md)
+    - [allocクレート](rust-next/alloc.md)
     - [MaybeUninit<T>](rust-next/maybe-uninit.md)
     - [cargo vendor](rust-next/cargo-vendor.md)
