@@ -108,6 +108,7 @@
 | interpolate                    | 補間する
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
+| irrefutable                    | 論駁不可能
 | key                            | キー
 | keyword                        | キーワード
 | Lang Items                     | Lang Item
@@ -119,10 +120,13 @@
 | lifetime parameter             | ライフタイムパラメータ
 | link                           | リンク
 | lint                           | リント
+| literal                        | リテラル
 | lock                           | ロック
+| maintainer                     | メンテナ
 | mangling                       | マングリング
 | match                          | マッチ
 | match guards                   | マッチガード
+| matcher                        | マッチャ
 | memory                         | メモリ
 | method                         | メソッド
 | monomorphization               | 単相化
@@ -136,6 +140,7 @@
 | offline                        | オフライン
 | opaque                         | オペーク
 | open source                    | オープンソース
+| operator                       | 演算子
 | option                         | オプション
 | output lifetime                | 出力ライフタイム
 | overflow                       | オーバーフロー
@@ -150,6 +155,7 @@
 | pattern                        | パターン
 | performance                    | パフォーマンス
 | platform                       | プラットフォーム
+| primitive                      | プリミティブ
 | pointer                        | ポインタ
 | process                        | プロセス
 | range                          | 範囲
@@ -159,6 +165,7 @@
 | rebind                         | 再束縛
 | reference                      | 参照
 | reference count                | 参照カウント
+| refutable                      | 論駁可能
 | regression                     | リグレッション
 | release                        | リリース
 | (lockの) release               | 解放
@@ -180,6 +187,7 @@
 | slicing                        | スライシング
 | specialized                    | 特殊化された
 | standard library               | 標準ライブラリ
+| statement                      | 文
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
