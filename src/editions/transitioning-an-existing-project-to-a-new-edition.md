@@ -4,52 +4,79 @@
 # 既存のプロジェクトのエディションを移行する
 
 <!--
-New editions might change the way you write Rust – they add new syntax,
-language, and library features, and also remove features. For example, `try`,
-`async`, and `await` are keywords in Rust 2018, but not Rust 2015. If you
-have a project that's using Rust 2015, and you'd like to use Rust 2018 for it
-instead, there's a few steps that you need to take.
+Rust includes tooling to automatically transition a project from one edition to the next.
+It will update your source code so that it is compatible with the next edition.
+Briefly, the steps to update to the next edition are:
 -->
 
-新たなエディションによってRustの書き方が変わるかも知れません。
-新しい構文や新たなライブラリ機能の追加、そして時に機能の削除もあります。
-例えば、`try`、`async`、`await`は Rust 2018ではキーワードですが、Rust 2015ではそうではありません。
-もしあなたが Rust 2015のプロジェクトを持っていて、それを Rust 2018に移行したい場合には、やらなければならないことが幾つかあります。
+Rust には、プロジェクトのエディションを進めるための自動移行ツールが付属しています。
+このツールは、あなたのソースコードを書き換えて次のエディションに適合させます。
+簡単にいうと、新しいエディションに進むためには次のようにすればよいです。
+
+<!--
+1. Run `cargo fix --edition`
+2. Edit `Cargo.toml` and set the `edition` field to the next edition, for example `edition = "2021"`
+3. Run `cargo build` or `cargo test` to verify the fixes worked.
+-->
+
+1. `cargo fix --edition` を実行する
+2. `Cargo.toml` の `edition` フィールドを新しいエディションに設定する。たとえば、 `edition = "2021"` とする
+3. `cargo build` や `cargo test` を実行して、修正がうまくいったことを検証する。
+
+<!--
+The following sections dig into the details of these steps, and some of the issues you may encounter along the way.
+-->
+
+以下のセクションで、これらの手順の詳細と、その途中で起こりうる問題点について詳しく説明します。
 
 <!--
 > It's our intention that the migration to new editions is as smooth an
-> experience as possible. If it's difficult for you to upgrade to Rust 2018,
+> experience as possible. If it's difficult for you to upgrade to the latest edition,
 > we consider that a bug. If you run into problems with this process, please
-> [file a bug](https://github.com/rust-lang/rust/issues/new). Thank you!
+> [file a bug](https://github.com/rust-lang/rust/issues/new/choose). Thank you!
 -->
 
 > 我々は、新しいエディションへの移行をできるだけスムーズに行えるようにしたいと考えています。
-> もし、Rust 2018へアップグレードするのが大変な場合は、我々はそれをバグとみなします。
-> もし移行時に問題があった場合には[バグ登録](https://github.com/rust-lang/rust/issues/new)してください。
+> もし、最新のエディションにアップグレードするのが大変な場合は、我々はそれをバグとみなします。
+> もし移行時に問題があった場合には[バグ登録](https://github.com/rust-lang/rust/issues/new/choose)してください。
+> よろしくお願いします！
 >
 > 訳注：Rustの日本語コミュニティもあります。
 > Slackを使用しており[こちら](https://rust-jp.herokuapp.com/)から登録できます。
 
 <!--
-Here's an example. Imagine we have a crate that has this code in
-`src/lib.rs`:
+## Starting the migration
 -->
 
-ここに例を挙げます。`src/lib.rs`に以下のコードがあるクレートがあるとします。
+## 移行の開始
+
+<!--
+As an example, let's take a look at transitioning from the 2015 edition to the 2018 edition.
+The steps are essentially the same when transitioning to other editions like 2021.
+-->
+
+例えば、2015エディションから2018エディションに移行する場合を見てみましょう。
+ここで説明する手順は、例えば2021エディションのように、別のエディションに移行する場合も実質的に同様です。
+
+<!--
+Imagine we have a crate that has this code in `src/lib.rs`:
+-->
+
+`src/lib.rs`に以下のコードがあるクレートがあるとします。
 
 ```rust
 trait Foo {
-    fn foo(&self, Box<Foo>);
+    fn foo(&self, i32);
 }
 ```
 
 <!--
-This code uses an anonymous parameter, that `Box<Foo>`. This is [not
+This code uses an anonymous parameter, that `i32`. This is [not
 supported in Rust 2018](../rust-2018/trait-system/no-anon-params.md), and
 so this would fail to compile. Let's get this code up to date!
 -->
 
-このコードは `Box<Foo>`という無名パラメータを使用しています。
+このコードは `i32` という無名パラメータを使用しています。
 これは [Rust 2018ではサポートされておらず](../rust-2018/trait-system/no-anon-params.md)、コンパイルに失敗します。
 このコードを更新してみましょう。
 
@@ -60,17 +87,17 @@ so this would fail to compile. Let's get this code up to date!
 ## あなたのコードを新しいエディションでコンパイルできるようにする
 
 <!--
-Your code may or may not use features that are incompatible with the new
-edition. In order to help transition to Rust 2018, we've included a new
-subcommand with Cargo. To start, let's run it:
+Your code may or may not use features that are incompatible with the new edition.
+In order to help transition to the next edition, Cargo includes the [`cargo fix`] subcommand to automatically update your source code.
+To start, let's run it:
 -->
 
 あなたのコードは互換性のない機能を使っているかも知れないし、使っていないかも知れません。
-Rust 2018への移行を助けるためにCargoに新しいサブコマンドを追加しました。
-まず初めにそれを起動してみましょう。
+cargo には [`cargo fix`] というサブコマンドがあり、これがあなたのコードを自動的に更新して Rust 2018 への移行を補助してくれます。
+まず初めに、これを実行してみましょう。
 
 ```console
-> cargo fix --edition
+cargo fix --edition
 ```
 
 <!--
@@ -83,44 +110,32 @@ Let's look at `src/lib.rs` again:
 
 ```rust
 trait Foo {
-    fn foo(&self, _: Box<Foo>);
+    fn foo(&self, _: i32);
 }
 ```
 
 <!--
-It's re-written our code to introduce a parameter name for that trait object.
+It's re-written our code to introduce a parameter name for that `i32` value.
 In this case, since it had no name, `cargo fix` will replace it with `_`,
 which is conventional for unused variables.
 -->
 
-トレイトオブジェクトのためのパラメータ名が追加された形でコードが書き換えられています。
+`i32` 値をとるパラメータに名前が追加された形でコードが書き換えられています。
 この場合は、パラメータ名がなかったので、使用されていないパラメータの慣習に従って `_` を付加しています。
 
 <!--
 `cargo fix` can't always fix your code automatically.
 If `cargo fix` can't fix something, it will print the warning that it cannot fix
-to the console. If you see one of these warnings, you'll have to update your code
-manually. See the corresponding section of this guide for help, and if you have
-problems, please seek help at the [user's forums](https://users.rust-lang.org/).
+to the console. If you see one of these warnings, you'll have to update your code manually.
+See the [Advanced migration strategies] chapter for more on working with the migration process, and read the chapters in this guide which explain which changes are needed.
+If you have problems, please seek help at the [user's forums](https://users.rust-lang.org/).
 -->
 
-`Cargo fix`は常に自動的にコードを修正してくれるわけではありません。
+`cargo fix`は常に自動的にコードを修正してくれるわけではありません。
 もし、`cargo fix`がコードを修正できない時にはコンソールに修正できなかったという警告を表示します。
 その場合は手動でコードを修正してください。
-助けが必要な時は、このガイドの対応するセクションを参照してください。
-問題がある場合は、 [ユーザーフォーラム](https://users.rust-lang.org/)で助けを求めてください。
-
-<!--
-Keep running `cargo fix --edition` until you have no more warnings.
--->
-
-そして警告が出なくなるまで `cargo fix --edition` を繰り返し実行してください。
-
-<!--
-Congrats! Your code is now valid in both Rust 2015 and Rust 2018!
--->
-
-おめでとうございます！ あなたのコードはRust 2015とRust 2018の双方で正しいコードになりました。
+「[発展的な移行戦略]」<!-- TODO: 章の名前に合わせてリンク名を変える必要があるかもしれません -->の章では、移行に関するより多くの情報があります。また、このガイドの他の章では、どのような変更が必要かについても説明しますので、併せてご参照ください。
+問題が発生したときは、[ユーザーフォーラム](https://users.rust-lang.org/) で助けを求めてください。
 
 <!--
 ## Enabling the new edition to use new features
@@ -130,12 +145,12 @@ Congrats! Your code is now valid in both Rust 2015 and Rust 2018!
 
 <!--
 In order to use some new features, you must explicitly opt in to the new
-edition. Once you're ready to commit, change your `Cargo.toml` to add the new
+edition. Once you're ready to continue, change your `Cargo.toml` to add the new
 `edition` key/value pair. For example:
 -->
 
 新しいエディションの新機能を使うには明示的にオプトインする必要があります。
-コミットする準備ができたら、`Cargo.toml`に新しいエディションのキーバリューペアを追加してください。
+準備がよければ、`Cargo.toml` に新しい `edition` のキーバリューペアを追加してください。
 例えば以下のような形になります。
 
 
@@ -143,152 +158,41 @@ edition. Once you're ready to commit, change your `Cargo.toml` to add the new
 [package]
 name = "foo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
 edition = "2018"
 ```
 
 <!--
 If there's no `edition` key, Cargo will default to Rust 2015. But in this case,
-we've chosen `2018`, and so our code is compiling with Rust 2018!
+we've chosen `2018`, and so our code will compile with Rust 2018!
 -->
 
-もし `edition`キーがなければCargoはデフォルトで Rust 2015をエディションとして使います。
-しかし上記の例では、`2018`を明示的に指定しているのでコードは Rust 2018でビルドされます。
+もし `edition` キーがなければCargoはデフォルトで Rust 2015をエディションとして使います。
+しかし、上記の例では `2018` を明示的に指定しているので、コードは Rust 2018 でコンパイルされます！
 
 <!--
-## Writing idiomatic code in a new edition
+The next step is to test your project on the new edition.
+Run your project tests to verify that everything still works, such as running [`cargo test`].
+If new warnings are issued, you may want to consider running `cargo fix` again (without the `--edition` flag) to apply any suggestions given by the compiler.
 -->
 
-## 新しいエディションで慣用的なコードを書く
+次に、新しいエディション上であなたのプロジェクトをテストしましょう。
+[`cargo test`] を実行するなどして、プロジェクトのテストを走らせ、すべてが元のまま動くことを確認してください。
+新たに警告が出た場合、(`--edition` なしの) `cargo fix` をもう一度実行することで、コンパイラからの提案を受け入れてみるのも良いかもしれません。
 
 <!--
-Editions are not only about new features and removing old ones. In any programming
-language, idioms change over time, and Rust is no exception. While old code
-will continue to compile, it might be written with different idioms today.
+Congrats! Your code is now valid in both Rust 2015 and Rust 2018!
 -->
 
-エディションは新機能を追加したり機能を削除するだけのものではありません。
-どのようなプログラミング言語でも、イディオム（プログラムの書き方のスタイル）は時と共に変化していきます。
-Rustも例外ではありません。
-古いスタイルのコードは引き続きコンパイル可能ですが、新しいエディションでは違った書き方で書いた方が良いかも知れません。
+わーい。今やあなたのコードは Rust 2015 と Rust 2018 の両方で有効です！
 
 <!--
-Our sample code contains an outdated idiom. Here it is again:
+[`cargo fix`]: ../../cargo/commands/cargo-fix.html
+[`cargo test`]: ../../cargo/commands/cargo-test.html
+[Advanced migration strategies]: advanced-migrations.md
+[nightly channel]: ../../book/appendix-07-nightly-rust.html
 -->
 
-我々のサンプルコードは古いスタイルを含んでいます。
-もう一度ここにそのコードを示します。
-
-```rust
-trait Foo {
-    fn foo(&self, _: Box<Foo>);
-}
-```
-
-<!--
-In Rust 2018, it's considered idiomatic to use the [`dyn`
-keyword](../rust-2018/trait-system/dyn-trait-for-trait-objects.md) for
-trait objects.
--->
-
-Rust 2018では、トレイトオブジェクトに [`dyn` キーワード](../rust-2018/trait-system/dyn-trait-for-trait-objects.md) を付けるのが良いとされています。
-
-<!--
-Eventually, we want `cargo fix` to fix all these idioms automatically in the same
-manner we did for upgrading to the 2018 edition. **Currently,
-though, the *"idiom lints"* are not ready for widespread automatic fixing.** The
-compiler isn't making `cargo fix`-compatible suggestions in many cases right
-now, and it is making incorrect suggestions in others. Enabling the idiom lints,
-even with `cargo fix`, is likely to leave your crate either broken or with many
-warnings still remaining.
--->
-
-いずれ、`cargo fix`によってこのようなイディオムの変更も、2018エディションへアップグレードしたときのように自動的に行いたいと考えています。
-**ただし今現在は、イディオムチェッカーが広範囲の自動修正をできるレベルにはなっていません。**
-今のところ、コンパイラは多くの場合 `cargo fix`互換のサジェスチョンを出さなかったり、間違ったサジェスチョンを出したりします。
- `cargo fix`と共にイディオムチェッカーを有効にすると、おそらくはあなたのコードを壊してしまったり、多くの警告が残り続けるということになってしまいます。
-
-<!--
-We have plans to make these idiom migrations a seamless part of the Rust 2018
-experience, but we're not there yet. As a result the following instructions are
-recommended only for the intrepid who are willing to work through a few
-compiler/Cargo bugs!
--->
-
-Rust 2018の体験の一部として、シームレスなイディオム移行を提供する計画があります。
-しかしまだそこには至っていません。
-したがって、以下の手順はコンパイラやCargoのバグを乗り越えることを厭わない勇猛な方のみにお勧めします。
-
-
-<!--
-With that out of the way, we can instruct Cargo to fix our code snippet with:
--->
-
-以上を踏まえたうえで、私たちのコード片をCargoに修正させてみましょう。
-
-```console
-$ cargo fix --edition-idioms
-```
-
-<!--
-Afterwards, `src/lib.rs` looks like this:
--->
-
-実行後は `src/lib.rs`は以下のようになります。
-
-
-```rust
-trait Foo {
-    fn foo(&self, _: Box<dyn Foo>);
-}
-```
-
-<!--
-We're now more idiomatic, and we didn't have to fix our code manually!
--->
-
-これでコードはより新しいスタイルになりました。
-手修正する必要はありませんでした。
-
-<!--
-Note that `cargo fix` may still not be able to automatically update our code.
-If `cargo fix` can't fix something, it will print a warning to the console, and
-you'll have to fix it manually.
--->
-
-なお、`cargo fix`はコードを自動的に改修することができない場合もあることを覚えておいてください。
-その場合は `cargo fix`は警告メッセージを出すので、それを見て手動でコードを修正してください。
-
-<!--
-As mentioned before, there are known bugs around the idiom lints which
-means they're not all ready for prime time yet. You may get a scary-looking
-warning to report a bug to Cargo, which happens whenever a fix proposed by
-`rustc` actually caused code to stop compiling by accident. If you'd like `cargo
-fix` to make as much progress as possible, even if it causes code to stop
-compiling, you can execute:
--->
-
-上でも述べたようにイディオムチェッカーには幾つかわかっているバグがあり、まだ実践登用できるレベルではありません。
-Cargoのバグレポートを出すようにという恐ろしげな警告を見るかも知れませんが、これは `rustc`によって提案された修正が誤ってコードをコンパイルできなくしてしまった時に起こります。
-もしコンパイルが止まったとしても `cargo fix`を使ってできるだけ自動修正をしたい場合には以下のコマンドを使います。
-
-```console
-$ cargo fix --edition-idioms --broken-code
-```
-
-<!--
-This will instruct `cargo fix` to apply automatic suggestions regardless of
-whether they work or not. Like usual, you'll see the compilation result after
-all fixes are applied. If you notice anything wrong or unusual, please feel free
-to report an issue to Cargo and we'll help prioritize and fix it.
--->
-
-これは、動くかどうかは関係なく`cargo fix`に自動修正を行わせます。
-全ての修正が適用された後にコードはコンパイルされてその結果を見ることができます。
-もし何か間違いや異常に気がついた時は、お気軽にCargoにバグ報告してください。
-
-<!--
-Enjoy the new edition!
--->
-
-それでは、新しいエディションをお楽しみください！
+[`cargo fix`]: ../../cargo/commands/cargo-fix.html
+[`cargo test`]: ../../cargo/commands/cargo-test.html
+[Advanced migration strategies]: advanced-migrations.md <!-- TODO: 章の名前に合わせてリンク名を変える必要があるかもしれません -->
+[nightly channel]: ../../book/appendix-07-nightly-rust.html
