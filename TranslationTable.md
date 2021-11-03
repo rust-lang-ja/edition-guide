@@ -71,6 +71,7 @@
 | diverging                      | 発散する〜（上の diverge を修飾語として使った場合）
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
+| dynamic dispatch               | 動的ディスパッチ
 | early return                   | 早期リターン
 | edition                        | エディション
 | empty tuple                    | 空タプル
@@ -89,6 +90,7 @@
 | foreign                        | 他言語
 | free                           | 解放する
 | free-standing function         | フリースタンディングな関数
+| fully qualified syntax         | 完全修飾構文
 | garbage collector              | ガベージコレクタ
 | generic parameter              | ジェネリックパラメータ
 | generics                       | ジェネリクス
@@ -101,6 +103,7 @@
 | immutable                      | イミュータブル
 | immutability                   | イミュータビリティ
 | implement                      | 実装する
+| inherent method                | 固有メソッド
 | initialize                     | 初期化する
 | input lifetime                 | 入力ライフタイム
 | interior                       | 内側の
@@ -154,6 +157,7 @@
 | parametric polymorphism        | パラメトリック多相
 | parse                          | パース、パースする
 | patch                          | パッチ
+| path                           | パス
 | pattern                        | パターン
 | performance                    | パフォーマンス
 | platform                       | プラットフォーム
@@ -166,7 +170,8 @@
 | raw string literal             | 生文字列リテラル
 | re-assignment                  | 再代入
 | rebind                         | 再束縛
-| reference                      | 参照
+| reference (名詞)               | 参照
+| reference (動詞)               | 参照付け (to dereference の対義語として)
 | reference count                | 参照カウント
 | refutable                      | 論駁可能
 | regression                     | リグレッション
@@ -191,6 +196,7 @@
 | specialized                    | 特殊化された
 | standard library               | 標準ライブラリ
 | statement                      | 文
+| static dispatch                | 静的ディスパッチ
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
