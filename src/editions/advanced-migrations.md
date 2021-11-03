@@ -186,6 +186,7 @@ Afterwards, the line with `extern crate rand;` in `src/lib.rs` will be removed.
 
 We're now more idiomatic, and we didn't have to fix our code manually!
 
+<!--
 [`cargo check`]: ../../cargo/commands/cargo-check.html
 [`cargo fix`]: ../../cargo/commands/cargo-fix.html
 [`explicit-outlives-requirements`]:  ../../rustc/lints/listing/allowed-by-default.html#explicit-outlives-requirements
@@ -206,5 +207,28 @@ We're now more idiomatic, and we didn't have to fix our code manually!
 [proc macros]: ../../reference/procedural-macros.html
 [Rust Analyzer extension]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
 [rustdoc-annotation]: ../../rustdoc/documentation-tests.html#attributes
+[rustfix-examples]: https://github.com/rust-lang/rustfix/tree/master/examples
+[Visual Studio Code]: https://code.visualstudio.com/
+-->
+[`cargo check`]: https://doc.rust-lang.org/cargo/commands/cargo-check.html
+[`cargo fix`]: https://doc.rust-lang.org/cargo/commands/cargo-fix.html
+[`explicit-outlives-requirements`]:  https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#explicit-outlives-requirements
+[`keyword-idents`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#keyword-idents
+[`rustfix`]: https://github.com/rust-lang/rustfix
+[`unused-extern-crates`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unused-extern-crates
+[Cargo features]: https://doc.rust-lang.org/cargo/reference/features.html
+[Cargo package]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-package-section
+[Cargo targets]: https://doc.rust-lang.org/cargo/reference/cargo-targets.html
+[Cargo workspace]: https://doc.rust-lang.org/cargo/reference/workspaces.html
+[CLI flag]: https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag
+[Code generation]: https://doc.rust-lang.org/cargo/reference/build-script-examples.html#code-generation
+[conditional compilation]: https://doc.rust-lang.org/reference/conditional-compilation.html
+[documentation tests]: https://doc.rust-lang.org/rustdoc/documentation-tests.html
+[JSON messages]: https://doc.rust-lang.org/rustc/json.html
+[lint group]: https://doc.rust-lang.org/rustc/lints/groups.html
+[lints]: https://doc.rust-lang.org/rustc/lints/index.html
+[proc macros]: https://doc.rust-lang.org/reference/procedural-macros.html
+[Rust Analyzer extension]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
+[rustdoc-annotation]: https://doc.rust-lang.org/rustdoc/documentation-tests.html#attributes
 [rustfix-examples]: https://github.com/rust-lang/rustfix/tree/master/examples
 [Visual Studio Code]: https://code.visualstudio.com/

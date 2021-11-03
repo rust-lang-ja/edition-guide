@@ -55,7 +55,10 @@ more symmetric, and therefore a bit nicer, than "`impl Trait` vs `Trait`".
 In the new edition, you should therefore prefer `dyn Trait` to just `Trait`
 where you need a trait object.
 
+<!--
 [impl-trait]: ../../rust-by-example/trait/impl_trait.html
+-->
+[impl-trait]: https://doc.rust-jp.rs/rust-by-example-ja/rust-by-example/trait/impl_trait.html
 
 ### `async` and `await`
 

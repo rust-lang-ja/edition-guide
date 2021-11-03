@@ -99,6 +99,7 @@ Some examples of needing to explicitly import sysroot crates are:
 * [`test`]: This is only available on the [nightly channel], and is usually
   only used for the unstable benchmark support.
 
+<!--
 [`alloc`]: ../../alloc/index.html
 [`core`]: ../../core/index.html
 [`proc_macro`]: ../../proc_macro/index.html
@@ -107,6 +108,15 @@ Some examples of needing to explicitly import sysroot crates are:
 [nightly channel]: ../../book/appendix-07-nightly-rust.html
 [no_core]: https://github.com/rust-lang/rust/issues/29639
 [no_std]: ../../reference/names/preludes.html#the-no_std-attribute
+-->
+[`alloc`]: https://doc.rust-lang.org/alloc/index.html
+[`core`]: https://doc.rust-lang.org/core/index.html
+[`proc_macro`]: https://doc.rust-lang.org/proc_macro/index.html
+[`std`]: https://doc.rust-lang.org/std/index.html
+[`test`]: https://doc.rust-lang.org/test/index.html
+[nightly channel]: https://doc.rust-jp.rs/book-ja/appendix-07-nightly-rust.html
+[no_core]: https://github.com/rust-lang/rust/issues/29639
+[no_std]: https://doc.rust-lang.org/reference/names/preludes.html#the-no_std-attribute
 
 #### Macros
 

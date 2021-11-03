@@ -15,8 +15,13 @@ The [`TryFrom`](../../std/convert/trait.TryFrom.html) and
 [`Into`](../../std/convert/trait.Into.html) traits, except that they return a
 result, meaning that they may fail.
 -->
-[`TryFrom`](../../std/convert/trait.TryFrom.html)と[`TryInto`](../../std/convert/trait.TryInto.html)トレイトは[`From`](../../std/convert/trait.From.html)と[`Into`](../../std/convert/trait.Into.html)トレイトと似ていますが、Result型を返すという点で異なっています。
+[`TryFrom`][try-from-trait]と[`TryInto`][try-into-trait]トレイトは[`From`][from-trait]と[`Into`][into-trait]トレイトと似ていますが、`Result`型を返すという点で異なっています。
 つまり、これらの呼び出しは失敗することがあります。
+
+[try-from-trait]: https://doc.rust-lang.org/std/convert/trait.TryFrom.html
+[try-into-trait]: https://doc.rust-lang.org/std/convert/trait.TryInto.html
+[from-trait]: https://doc.rust-lang.org/std/convert/trait.From.html
+[into-trait]: https://doc.rust-lang.org/std/convert/trait.Into.html
 
 <!--
 For example, the `from_be_bytes` and related methods on integer types take
