@@ -1,40 +1,99 @@
+<!--
 # Additions to the prelude
+-->
 
+# Prelude への追加
+
+<!--
 ## Summary
+-->
 
+## 概要
+
+<!--
 - The `TryInto`, `TryFrom` and `FromIterator` traits are now part of the prelude.
 - This might make calls to trait methods ambiguous which could make some code fail to compile.
+-->
 
+- `TryInto`, `TryFrom`, `FromIterator` がプレリュードに追加されました。
+- これにより、トレイトメソッドへの呼び出しに曖昧性が発生して、コンパイルに失敗するようになるコードがあるかもしれません。
+
+<!--
 ## Details
+-->
 
+## 詳細
+
+<!--
 The [prelude of the standard library](https://doc.rust-lang.org/stable/std/prelude/index.html)
 is the module containing everything that is automatically imported in every module.
 It contains commonly used items such as `Option`, `Vec`, `drop`, and `Clone`.
+-->
 
+[標準ライブラリの prelude](https://doc.rust-lang.org/stable/std/prelude/index.html) モジュールには、
+すべてのモジュールにインポートされるものが余すことなく定義されています。
+そこには、`Option`, `Vec`, `drop`, `Clone` などの、頻繁に使われるアイテムが含まれます。
+
+<!--
 The Rust compiler prioritizes any manually imported items over those
 from the prelude, to make sure additions to the prelude will not break any existing code.
 For example, if you have a crate or module called `example` containing a `pub struct Option;`,
 then `use example::*;` will make `Option` unambiguously refer to the one from `example`;
 not the one from the standard library.
+-->
 
+Rust コンパイラは、手動で<!-- TODO: 明示的に、のほうがいいか？-->インポートされたアイテムをプレリュードからのものより優先します。
+これにより、プレリュードに追加があっても既存のコードは壊れないようになっています。
+たとえば、 `example` という名前のクレートに `pub struct Option;` が含まれていたら、
+`use example::*;` とすることで `Option` は曖昧性なく `example` に含まれるものを指し示し、
+標準ライブラリのものは意味しません。
+
+<!--
 However, adding a _trait_ to the prelude can break existing code in a subtle way.
 For example, a call to `x.try_into()` which comes from a `MyTryInto` trait might fail 
 to compile if `std`'s `TryInto` is also imported, because the call to `try_into` is now 
 ambiguous and could come from either trait. This is the reason we haven't added `TryInto` 
 to the prelude yet, since there is a lot of code that would break this way.
+-->
 
+ところが、_トレイト_ をプレリュードに追加すると、捉えがたい形でコードが壊れることがあります。
+たとえば、`MyTryInto` トレイトで定義されている `x.try_into()` という呼び出しは、
+`std` の `TryInto` もインポートされていると、動かなくなる場合があります。
+なぜなら、`try_into` の呼び出しは今や曖昧で、どちらのトレイトから来ているかわからないからです。
+だからこそ我々は、このような問題が起こりうるコードが沢山あるがために、
+`TryInto` を未だにプレリュードに追加していませんでした。
+<!-- 代案: だからこそ我々は、 `TryInto` を未だにプレリュードに追加していませんでした。
+追加してしまうと、多くのコードでそのような問題が起こりうるからです。 -->
+
+<!--
 As a solution, Rust 2021 will use a new prelude.
 It's identical to the current one, except for three new additions:
+-->
+
+解決策として、Rust 2021 は新たなプレリュードを使用します。
+変更点は、以下の3つが追加されたということだけです。
 
 - [`std::convert::TryInto`](https://doc.rust-lang.org/stable/std/convert/trait.TryInto.html)
 - [`std::convert::TryFrom`](https://doc.rust-lang.org/stable/std/convert/trait.TryFrom.html)
 - [`std::iter::FromIterator`](https://doc.rust-lang.org/stable/std/iter/trait.FromIterator.html)
 
+<!--
 The tracking issue [can be found here](https://github.com/rust-lang/rust/issues/85684).
+-->
 
+Tracking issue は[こちらです](https://github.com/rust-lang/rust/issues/85684)。
+
+<!--
 ## Migration 
+-->
 
+## 移行
+
+<!--
 As a part of the 2021 edition a migration lint, `rust_2021_prelude_collisions`, has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
+-->
+
+Rust 2018 から Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prelude_collisions` が追加されています。
 
 In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
 

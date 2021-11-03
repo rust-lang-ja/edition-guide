@@ -35,6 +35,7 @@
 | boxed                          | ボックス化された
 | bug                            | バグ
 | byte string                    | バイト列
+| call                           | 呼び出し
 | capture                        | キャプチャ
 | case analysis                  | 場合分け
 | channel                        | チャネル
@@ -109,6 +110,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| item                           | アイテム
 | key                            | キー
 | keyword                        | キーワード
 | Lang Items                     | Lang Item
@@ -157,6 +159,7 @@
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
+| prelude                        | プレリュード (or prelude)
 | process                        | プロセス
 | range                          | 範囲
 | raw pointer                    | 生ポインタ
@@ -204,6 +207,7 @@
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
 | trait                          | トレイト
+| tracking issue                 | tracking issue? (定訳がない気がしますし、少なくとも issue はカタカナで表現するのは不自然な気がします)
 | tuple                          | タプル
 | token trees                    | トークン木
 | type alias                     | 型エイリアス
