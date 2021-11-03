@@ -24,9 +24,9 @@ jobs:
       - store_artifacts:
           path: /tmp/docs.txz
           destination: docs.txz
-      - run:
-          name: Testing book
-          command: mdbook test
+      # - run:
+      #     name: Testing book
+      #     command: mdbook test
       # - run:
       #     name: Check for broken links
       #     command: |
