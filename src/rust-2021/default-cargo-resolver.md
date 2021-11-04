@@ -210,8 +210,8 @@ The features will be unified, as long as they match the unification rules of the
 -->
 
 * 現在ビルドされていないターゲットに対するプラットフォーム特有の依存関係で有効化されているフィーチャは、無視されます。
-* ビルド依存関係と手続き的マクロでは、通常の依存関係とは独立したフィーチャが使用されます。
-* 開発用依存関係では、(テストや examples などの) ターゲットをビルドするときに必要でない限り、フィーチャは有効化されません。
+* build-dependencies と proc-macro では、通常の依存関係とは独立したフィーチャが使用されます。
+* dev-dependencies では、(tests や examples などの) ターゲットをビルドするときに必要でない限り、フィーチャは有効化されません。
 
 <!--
 A real-world example is using [`diesel`](https://crates.io/crates/diesel) and [`diesel_migrations`](https://crates.io/crates/diesel_migrations).
@@ -240,7 +240,7 @@ After updating to the new resolver, it fails to build because now there are two 
 A solution here is to add `diesel` as a build-dependency with the required features, for example:
 -->
 
-ここでの解決策は、`diesel` をビルド依存関係として追加し、そこに必要なフィーチャを指定することです。例えば以下のようになります。
+ここでの解決策は、`diesel` をビルド時の依存として追加し、そこに必要なフィーチャを指定することです。例えば以下のようになります。
 
 ```toml
 [build-dependencies]
@@ -252,7 +252,7 @@ This causes Cargo to add "postgres" as a feature for host dependencies (proc-mac
 Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled, and it will build correctly.
 -->
 
-これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（手続き的マクロとビルド依存関係）のフィーチャとして "postgres" を追加します。
+これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（proc-macro と build-dependencies）のフィーチャとして "postgres" を追加します。
 これで、 `diesel_migrations` の手続き的マクロは "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
 
 <!--
@@ -355,7 +355,7 @@ We can further see that `bstr`'s  "default" feature enables "unicode" (among oth
 -->
 
 この出力例からは、`foo` が `bar` に "default" フィーチャ付きで依存していることがわかり、
-`bar` はビルド依存関係として `bstr` に "default" フィーチャ付きで依存していることもわかります。
+`bar` はビルド時の依存として `bstr` に "default" フィーチャ付きで依存していることもわかります。
 さらに、`bstr` の "default" フィーチャによって "unicode" フィーチャ（と、他のフィーチャも）が有効になっていることもわかります。
 
 <!--

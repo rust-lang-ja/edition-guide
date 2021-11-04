@@ -34,6 +34,7 @@
 | bounds                         | 境界
 | boxed                          | ボックス化された
 | bug                            | バグ
+| build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
 | capture                        | キャプチャ
 | cargo                          | cargo
@@ -65,7 +66,7 @@
 | dereferencing                  | 参照外し
 | destructor                     | デストラクタ
 | destructuring                  | 分配
-| dev-dependencies               | 開発用依存関係
+| dev-dependencies               | 開発用依存関係 (Cargo.toml のセクション名としては dev-dependencies をそのまま採用)
 | directive                      | ディレクティブ
 | directory                      | ディレクトリ
 | discriminant                   | 判別子
@@ -84,7 +85,7 @@
 | ergonomic                      | エルゴノミック（人間にとって扱いやすいもの）
 | error                          | エラー
 | error handling                 | エラーハンドリング
-| examples (cargo のプロジェクトレイアウト上の) | examples
+| examples                       | examples  (cargo のプロジェクトレイアウト上におけるフォルダ名として使われている場合のみ)
 | executable                     | 実行可能形式
 | existentially quantified type  | 存在量型
 | expression statement           | 式文
@@ -207,6 +208,7 @@
 | system                         | システム
 | tagged union                   | タグ付き共用体
 | term                           | 項
+| tests                          | tests  (cargo のプロジェクトレイアウト上におけるフォルダ名として使われている場合のみ)
 | third-party                    | サードパーティ
 | thread-locality                | スレッドローカル性
 | threadsafe                     | スレッドセーフ
