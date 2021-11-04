@@ -56,8 +56,7 @@ crates that are depended on in multiple ways.
 See [the announcement of Rust 1.51][5] for details.
 -->
 
-新しいフィーチャリゾルバは、クレートへの依存に異なるフィーチャが設定されていても
-それらをマージしないようになりました。
+新しいフィーチャリゾルバは、クレートへの依存に異なるフィーチャが設定されていてもそれらをマージしないようになりました。
 詳細は [the announcement of Rust 1.51][5] に記載されています。
 
 <!--
@@ -72,7 +71,7 @@ See [the announcement of Rust 1.51][5] for details.
 [5]: https://blog.rust-lang.org/2021/03/25/Rust-1.51.0.html#cargos-new-feature-resolver
 [ワークスペース]: https://doc.rust-lang.org/cargo/reference/workspaces.html
 [仮想ワークスペース]: https://doc.rust-lang.org/cargo/reference/workspaces.html#virtual-manifest
-[`resolver` field]: https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
+[`resolver` フィールド]: https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions
 
 <!--
 ## Migration
@@ -117,7 +116,11 @@ This lets you know that certain dependencies will no longer be built with the gi
 
 これにより、記載されたフィーチャがその依存先で使われずにビルドされるようになることがわかります。
 
+<!--
 ### Build failures
+-->
+
+### ビルドの失敗
 
 <!--
 There may be some circumstances where your project may not build correctly after the change.
@@ -173,7 +176,7 @@ Since `bstr` is now being built without the "unicode" feature, the `words_with_b
 我々のパッケージでは、今までは `bstr` の [`words_with_breaks`](https://docs.rs/bstr/0.2.16/bstr/trait.ByteSlice.html#method.words_with_breaks) 関数を使用していたとします。この関数は(本来<!--訳注: わかりにくかったので勝手に入れました-->) `bstr` の "unicode" フィーチャを有効化しないと使えないものです。
 歴史的事情から、今まではこれでもうまくいきました。というのも、cargo は2つのパッケージで使われている `bstr` のフィーチャを共通化していたからです。
 しかしながら、Rust 2021 へのアップデート後、 `bstr` は1回目(ビルド依存関係として)はデフォルトのフィーチャで、2回目(我々のパッケージの通常の依存先として)はフィーチャなしで、合計2回ビルドされます。
-今やは `bstr` は "unicode" フィーチャなしでb理ウドされるので、 `words_with_breaks` メソッドは存在せず、メソッドがないというエラーが発生してビルドは失敗します。
+今や `bstr` は "unicode" フィーチャなしでビルドされるので、 `words_with_breaks` メソッドは存在せず、メソッドがないというエラーが発生してビルドは失敗します。
 
 <!--
 The solution here is to ensure that the dependency is declared with the features you are actually using.
@@ -198,7 +201,7 @@ The features will be unified, as long as they match the unification rules of the
 ときには、あなたが直接いじることのできないサードパーティな依存先で問題が発生することもあります。
 その場合は、問題が起こっている依存関係について、正しくフィーチャを指定するように、そのプロジェクトにパッチを送るのもよいでしょう。
 あるいは、自身の `Cargo.toml` に記載する依存関係にフィーチャを追加することもできます。
-以下の併合規則が満たされる限り、フィーチャは併合されます。すなわち、
+新しいリゾルバには以下のような併合ルールがあり、その下でフィーチャは併合されます。すなわち、
 
 <!--
 * Features enabled on platform-specific dependencies for targets not currently being built are ignored.
@@ -231,7 +234,7 @@ After updating to the new resolver, it fails to build because now there are two 
 
 ここで問題なのは、 `diesel_migrations` は内部に `diesel` に依存する proc macro をもちます。
 この proc macro は、自身が使用する `diesel` で有効化されているフィーチャが、依存関係木の他の場所で有効化されているものと同じであると仮定します。
-新しいリゾルバが使用されると、2つの `diesel` が使用され、そのうち proc macro 用のものは "postgres" フィーチャなしでビルドされるために、ビルドに失敗します。
+ところが、新しいリゾルバが使用されると、2つの `diesel` が使用され、そのうち proc macro 用のものは "postgres" フィーチャなしでビルドされるために、ビルドに失敗します。
 
 <!--
 A solution here is to add `diesel` as a build-dependency with the required features, for example:
@@ -249,7 +252,7 @@ This causes Cargo to add "postgres" as a feature for host dependencies (proc-mac
 Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled, and it will build correctly.
 -->
 
-これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->(proc macro とビルド依存関係)のフィーチャとして "postgres" を追加します。
+これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（proc macro とビルド依存関係）のフィーチャとして "postgres" を追加します。
 これで、 `diesel_migrations` の proc macro は "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
 
 <!--
@@ -269,7 +272,7 @@ The [`cargo tree`] command has had substantial improvements to help with the mig
 `cargo tree` can be used to explore the dependency graph, and to see which features are being enabled, and importantly *why* they are being enabled.
 -->
 
-[`cargo tree`] の価値ある新機能が、新しいリゾルバに移行するための助けになります。
+[`cargo tree`] には、新しいリゾルバへの以降を補助する、素晴らしい新機能が含まれています。
 `cargo tree` を使えば、依存関係木を探索して、どのフィーチャが有効化されているか、そしてなにより*なぜ*それが有効化されているのかが分かります。
 
 <!--
@@ -312,7 +315,7 @@ cargo tree -f '{p} {f}'
 This tells Cargo to change the "format" of the output, where it will print both the package and the enabled features.
 -->
 
-こうすると、Cargo は出力の「フォーマット」を変更して、パッケージと有効化されているフィーチャの双方を表示するようになります。
+こうすると、cargo は出力の「フォーマット」を変更して、パッケージと有効化されているフィーチャの双方を表示するようになります。
 
 <!--
 You can also use the `-e` flag to tell it which "edges" to display.
@@ -323,7 +326,7 @@ For example, let's say the dependency graph is large, and we're not quite sure w
 -->
 
 さらに、`-e` フラグを使用してどの「辺」を表示してほしいか指定することもできます。
-例えば、`cargo tree -e features` とすれば、各依存関係の間に、それがどのフィーチャを追加しているのか表示されます。
+例えば、`cargo tree -e features` とすれば、各依存関係の間に、各依存関係がどのフィーチャを追加しているのかが表示されます。
 `-i` フラグを使って木を「反転」させると、このオプションはより便利になります。
 例えば、依存関係木があまりにも大きくて、何が `bstr` に依存してるのかよくわからなくても、次のコマンドを実行すればいいです:
 
