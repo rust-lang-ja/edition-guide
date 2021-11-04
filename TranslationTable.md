@@ -36,6 +36,7 @@
 | bug                            | バグ
 | byte string                    | バイト列
 | capture                        | キャプチャ
+| cargo                          | cargo
 | case analysis                  | 場合分け
 | channel                        | チャネル
 | closure                        | クロージャ
@@ -59,9 +60,12 @@
 | deadlock                       | デッドロック
 | deallocate                     | デアロケートする
 | declaration statement          | 宣言文
+| dependency                     | 依存関係、依存先
+| dependency tree                | 依存関係木
 | dereferencing                  | 参照外し
 | destructor                     | デストラクタ
 | destructuring                  | 分配
+| dev-dependencies               | 開発用依存関係
 | directive                      | ディレクティブ
 | directory                      | ディレクトリ
 | discriminant                   | 判別子
@@ -80,6 +84,7 @@
 | ergonomic                      | エルゴノミック（人間にとって扱いやすいもの）
 | error                          | エラー
 | error handling                 | エラーハンドリング
+| examples (cargo のプロジェクトレイアウト上の) | examples
 | executable                     | 実行可能形式
 | existentially quantified type  | 存在量型
 | expression statement           | 式文
@@ -157,6 +162,7 @@
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
+| proc macro                     | proc macro
 | process                        | プロセス
 | range                          | 範囲
 | raw pointer                    | 生ポインタ
@@ -169,6 +175,7 @@
 | regression                     | リグレッション
 | release                        | リリース
 | (lockの) release               | 解放
+| resolver                       | リゾルバ
 | return                         | 返す
 | return type                    | リターン型
 | return value                   | 戻り値
@@ -200,6 +207,7 @@
 | system                         | システム
 | tagged union                   | タグ付き共用体
 | term                           | 項
+| third-party                    | サードパーティ
 | thread-locality                | スレッドローカル性
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
@@ -225,6 +233,8 @@
 | variant                        | ヴァリアント
 | vector                         | ベクタ
 | version                        | バージョン
+| virtual workspace              | 仮想ワークスペース
 | warning                        | 警告
 | wildcard                       | ワイルドカード
+| workspace                      | ワークスペース
 | wrapper                        | ラッパ
