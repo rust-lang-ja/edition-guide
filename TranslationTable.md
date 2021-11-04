@@ -213,7 +213,7 @@
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
 | trait                          | トレイト
-| tracking issue                 | tracking issue? (定訳がない気がしますし、少なくとも issue はカタカナで表現するのは不自然な気がします)
+| tracking issue                 | 追跡用の Issue
 | tuple                          | タプル
 | token trees                    | トークン木
 | type alias                     | 型エイリアス

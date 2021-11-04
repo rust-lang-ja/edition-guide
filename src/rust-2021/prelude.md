@@ -81,7 +81,7 @@ It's identical to the current one, except for three new additions:
 The tracking issue [can be found here](https://github.com/rust-lang/rust/issues/85684).
 -->
 
-Tracking issue は[こちら](https://github.com/rust-lang/rust/issues/85684)です。
+追跡用の Issue は[こちら](https://github.com/rust-lang/rust/issues/85684)です。
 
 <!--
 ## Migration 
