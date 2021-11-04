@@ -109,6 +109,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| iterate                        | 列挙する
 | key                            | キー
 | keyword                        | キーワード
 | Lang Items                     | Lang Item
