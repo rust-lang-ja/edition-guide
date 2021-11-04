@@ -156,8 +156,10 @@ For method calls of `into_iter` on arrays, the elements being implemented will c
 配列に対する `into_iter` のメソッド呼び出しに関しては、(<!--訳注-->イテレータの)要素が参照でなく所有権を持った値となります。
 
 <!--
-例えば：
+For example:
 -->
+
+例えば：
 
 <!--
 ```rust
