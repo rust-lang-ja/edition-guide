@@ -162,7 +162,7 @@
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
-| proc macro                     | proc macro
+| proc macro                     | 手続き的マクロ
 | process                        | プロセス
 | range                          | 範囲
 | raw pointer                    | 生ポインタ

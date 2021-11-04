@@ -210,7 +210,7 @@ The features will be unified, as long as they match the unification rules of the
 -->
 
 * 現在ビルドされていないターゲットに対するプラットフォーム特有の依存関係で有効化されているフィーチャは、無視されます。
-* ビルド依存関係と proc macro では、通常の依存関係とは独立したフィーチャが使用されます。
+* ビルド依存関係と手続き的マクロでは、通常の依存関係とは独立したフィーチャが使用されます。
 * 開発用依存関係では、(テストや examples などの) ターゲットをビルドするときに必要でない限り、フィーチャは有効化されません。
 
 <!--
@@ -232,9 +232,9 @@ The problem is that `diesel_migrations` has an internal proc-macro which itself 
 After updating to the new resolver, it fails to build because now there are two copies of `diesel`, and the one built for the proc-macro is missing the "postgres" feature.
 -->
 
-ここで問題なのは、 `diesel_migrations` は内部に `diesel` に依存する proc macro をもちます。
-この proc macro は、自身が使用する `diesel` で有効化されているフィーチャが、依存関係木の他の場所で有効化されているものと同じであると仮定します。
-ところが、新しいリゾルバが使用されると、2つの `diesel` が使用され、そのうち proc macro 用のものは "postgres" フィーチャなしでビルドされるために、ビルドに失敗します。
+ここで問題なのは、 `diesel_migrations` は内部に `diesel` に依存する手続き的マクロをもちます。
+この手続き的マクロは、自身が使用する `diesel` で有効化されているフィーチャが、依存関係木の他の場所で有効化されているものと同じであると仮定します。
+ところが、新しいリゾルバが使用されると、2つの `diesel` が使用され、そのうち手続き的マクロ用のものは "postgres" フィーチャなしでビルドされるために、ビルドに失敗します。
 
 <!--
 A solution here is to add `diesel` as a build-dependency with the required features, for example:
@@ -252,8 +252,8 @@ This causes Cargo to add "postgres" as a feature for host dependencies (proc-mac
 Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled, and it will build correctly.
 -->
 
-これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（proc macro とビルド依存関係）のフィーチャとして "postgres" を追加します。
-これで、 `diesel_migrations` の proc macro は "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
+これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（手続き的マクロとビルド依存関係）のフィーチャとして "postgres" を追加します。
+これで、 `diesel_migrations` の手続き的マクロは "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
 
 <!--
 The 2.0 release of `diesel` (currently in development) does not have this problem as it has been restructured to not have this dependency requirement.
