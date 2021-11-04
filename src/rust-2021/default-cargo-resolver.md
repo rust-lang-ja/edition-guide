@@ -84,7 +84,7 @@ There are no automated migration tools for updating for the new resolver.
 For most projects, there are usually few or no changes as a result of updating.
 -->
 
-新しいリゾルバに適合させるための自動化された以降ツールはありません。
+新しいリゾルバに適合させるための自動化された移行ツールはありません。
 ほとんどのプロジェクトでは、更新後に必要な変更はあっても微々たるものでしょう。
 
 <!--
@@ -272,7 +272,7 @@ The [`cargo tree`] command has had substantial improvements to help with the mig
 `cargo tree` can be used to explore the dependency graph, and to see which features are being enabled, and importantly *why* they are being enabled.
 -->
 
-[`cargo tree`] には、新しいリゾルバへの以降を補助する、素晴らしい新機能が含まれています。
+[`cargo tree`] には、新しいリゾルバへの移行を補助する、素晴らしい新機能が含まれています。
 `cargo tree` を使えば、依存関係木を探索して、どのフィーチャが有効化されているか、そしてなにより*なぜ*それが有効化されているのかが分かります。
 
 <!--
