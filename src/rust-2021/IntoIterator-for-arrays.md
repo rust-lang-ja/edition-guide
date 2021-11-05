@@ -128,7 +128,7 @@ then it should already be ready to go for Rust 2021!
 -->
 
 `into_iter()` への呼び出しのうち、Rust 2021 で意味が変わるようなものに対しては、
-`array_into_iter` という新しいリントが発生します。
+`array_into_iter` というリントが発生します。
 1.41 のリリース以降、`array_into_iter` リントはすでにデフォルトで警告として発出されています（1.55 ではさらにいくつかの機能追加が行われました）。
 警告が今現在出ていないコードは、今すぐにでも Rust 2021 に進むことができます！
 
