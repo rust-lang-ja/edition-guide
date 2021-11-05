@@ -51,7 +51,7 @@ such as [`matches!()`](https://doc.rust-lang.org/1.51.0/std/macro.matches.html)
 use something like `$($_:pat)|+`. 
 -->
 
-ところが、この変更は [`macro_rules` マクロ](https://doc.rust-lang.org/stable/reference/macros-by-example.html) にも影響します。
+ところが、この変更は [`macro_rules` で定義されたマクロ](https://doc.rust-lang.org/stable/reference/macros-by-example.html) にも影響します。
 `macro_rules` では、`:pat` というフラグメント指定子で、パターンを受け付けることができます。
 現在のところ、`:pat` はトップレベルの `|` にマッチ*しません*。
 なぜなら Rust 1.53 以前は、全てのパターンが（どのネストレベルにでも）`|` を含むことができるわけではなかったからです。
