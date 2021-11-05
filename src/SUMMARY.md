@@ -75,7 +75,7 @@
   - [Default Cargo feature resolver](rust-2021/default-cargo-resolver.md)
   - [IntoIterator for arrays](rust-2021/IntoIterator-for-arrays.md)
   - [Disjoint capture in closures](rust-2021/disjoint-capture-in-closures.md)
-  - [Panic macro consistency](rust-2021/panic-macro-consistency.md)
+  - [panic マクロの一貫性](rust-2021/panic-macro-consistency.md)
   - [Reserving syntax](rust-2021/reserving-syntax.md)
   - [Warnings promoted to errors](rust-2021/warnings-promoted-to-error.md)
   - [Or patterns in macro-rules](rust-2021/or-patterns-macro-rules.md)
