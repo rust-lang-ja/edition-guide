@@ -71,7 +71,7 @@
 -->
 
 - [Rust 2021](rust-2021/index.md)
-  - [Additions to the prelude](rust-2021/prelude.md)
+  - [Prelude への追加](rust-2021/prelude.md)
   - [Default Cargo feature resolver](rust-2021/default-cargo-resolver.md)
   - [IntoIterator for arrays](rust-2021/IntoIterator-for-arrays.md)
   - [Disjoint capture in closures](rust-2021/disjoint-capture-in-closures.md)
