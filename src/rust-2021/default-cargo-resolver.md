@@ -92,7 +92,7 @@ When updating with `cargo fix --edition`, Cargo will display a report if the new
 It may look something like this:
 -->
 
-`cargo fix --edition` でのアップデート時に、cargo は新しいリゾルバで依存先のフィーチャに変更があるかどうかを表示します。
+`cargo fix --edition` でのアップデート時に、Cargo は新しいリゾルバで依存先のフィーチャに変更があるかどうかを表示します。
 たとえば、このように表示されます:
 
 > note: Switching to Edition 2021 will enable the use of the version 2 feature resolver in Cargo.
@@ -318,7 +318,7 @@ cargo tree -f '{p} {f}'
 This tells Cargo to change the "format" of the output, where it will print both the package and the enabled features.
 -->
 
-こうすると、cargo は出力の「フォーマット」を変更して、パッケージと有効化されているフィーチャの双方を表示するようになります。
+こうすると、Cargo は出力の「フォーマット」を変更して、パッケージと有効化されているフィーチャの双方を表示するようになります。
 
 <!--
 You can also use the `-e` flag to tell it which "edges" to display.
