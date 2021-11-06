@@ -2,7 +2,7 @@
 # Default Cargo feature resolver
 -->
 
-# デフォルトの cargo のフィーチャリゾルバ
+# デフォルトの Cargo のフィーチャリゾルバ
 
 <!--
 ## Summary
@@ -27,7 +27,7 @@ Since Rust 1.51.0, Cargo has opt-in support for a [new feature resolver][4]
 which can be activated with `resolver = "2"` in `Cargo.toml`.
 -->
 
-Rust 1.51.0 から、cargo には[新しいフィーチャリゾルバ][4]がオプトインできるようになっています。
+Rust 1.51.0 から、Cargo には[新しいフィーチャリゾルバ][4]がオプトインできるようになっています。
 これは、`Cargo.toml` で `resolver = "2"` と書くことで有効化できます。
 
 <!--
@@ -174,7 +174,7 @@ Since `bstr` is now being built without the "unicode" feature, the `words_with_b
 -->
 
 我々のパッケージでは、今までは `bstr` の [`words_with_breaks`](https://docs.rs/bstr/0.2.16/bstr/trait.ByteSlice.html#method.words_with_breaks) 関数を使用していたとします。この関数は(本来<!--訳注: わかりにくかったので勝手に入れました-->) `bstr` の "unicode" フィーチャを有効化しないと使えないものです。
-歴史的事情から、今まではこれでもうまくいきました。というのも、cargo は2つのパッケージで使われている `bstr` のフィーチャを共通化していたからです。
+歴史的事情から、今まではこれでもうまくいきました。というのも、Cargo は2つのパッケージで使われている `bstr` のフィーチャを共通化していたからです。
 しかしながら、Rust 2021 へのアップデート後、 `bstr` は1回目(ビルド依存関係として)はデフォルトのフィーチャで、2回目(我々のパッケージの通常の依存先として)はフィーチャなしで、合計2回ビルドされます。
 今や `bstr` は "unicode" フィーチャなしでビルドされるので、 `words_with_breaks` メソッドは存在せず、メソッドがないというエラーが発生してビルドは失敗します。
 
