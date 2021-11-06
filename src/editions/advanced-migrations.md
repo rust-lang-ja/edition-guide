@@ -89,7 +89,7 @@ If you want to migrate feature code individually, you can use the `--features` f
 You can migrate a large project incrementally to make the process easier if you run into problems.
 -->
 
-大きなプロジェクトで問題が発生した場合、作業を単純にするために、少しずつ移行範囲を広げていくこともできます。
+大きなプロジェクトで問題が発生した場合、作業を単純にするために、段階的に移行していくこともできます。
 
 <!--
 In a [Cargo workspace], each package defines its own edition, so the process naturally involves migrating one package at a time.
@@ -123,37 +123,83 @@ This usually should not be required, but is an option if you have a lot of targe
 
 おそらく普通はこれは必要ありませんが、ターゲットがたくさんあって全部いっぺんに移行作業できないような場合には一つの選択肢になるでしょう。
 
+<!--
 ## Partial migration with broken code
+-->
 
+## 壊れたコードを元に部分的に移行する
+
+<!--
 Sometimes the fixes suggested by the compiler may fail to work.
 When this happens, Cargo will report a warning indicating what happened and what the error was.
 However, by default it will automatically back out the changes it made.
 It can be helpful to keep the code in the broken state and manually resolve the issue.
 Some of the fixes may have been correct, and the broken fix maybe be *mostly* correct, but just need minor tweaking.
+-->
 
+ときどき、コンパイラに提案された修正ではうまくいかないことがあります。
+すると、Cargo は何が起こったかとどんなエラーが出たかを示す警告を報告しますが、デフォルトでは Cargo は変更を巻き戻します。
+しかし、Cargo にはコードを壊れたままにしておいてもらい、手作業で問題を解決する、というのも有効な手段です。
+ほとんどの修正は正しいかもしれませんし、壊れた修正も*だいたい*正しくて、一捻り加えれば問題ないあかもしれないのです。
+
+<!--
 In this situation, use the `--broken-code` option with `cargo fix` to tell Cargo not to back out the changes.
 Then, you can go manually inspect the error and investigate what is needed to fix it.
+-->
 
+そんなときは、`cargo fix` コマンドを実行するときに `--broken-code` オプションをつけて、Cargo が変更を巻き戻さないように使ってください。
+そうすれば、エラーを実際に見に行くことも、修正点を確認することもできます。
+
+<!--
 Another option to incrementally migrate a project is to apply individual fixes separately, one at a time.
 You can do this by adding the individual lints as warnings, and then either running `cargo fix` (without the `--edition` flag) or using your editor or IDE to apply its suggestions if it supports "Quick Fixes".
+-->
 
+プロジェクトを段階的に移行するもう一つの方法は、それぞれの修正を一つずつ適用することです。
+このためには、各リントを警告として追加して、（`--edition` なしの）`cargo fix` を実行するか、お手持ちのエディタや IDE が「クイックフィックス」をサポートしていればそれを使って提案を適用すればよいです。
+
+<!--
 For example, the 2018 edition uses the [`keyword-idents`] lint to fix any conflicting keywords.
 You can add `#![warn(keyword_idents)]` to the top of each crate (like at the top of `src/lib.rs` or `src/main.rs`).
 Then, running `cargo fix` will apply just the suggestions for that lint.
+-->
 
+例えば、2018 エディションには [`keyword-idents`] という、キーワードとの衝突をすべて修正するためのリントがあります。
+各クレートのトップ（例えば `src/lib.rs` や `src/main.rs` の先頭）に `#![warn(keyword_idents)]` を追加して、`cargo fix` を実行すれば、そのリントによる提案だけを受け入れることができます。
+
+<!--
 You can see the list of lints enabled for each edition in the [lint group] page, or run the `rustc -Whelp` command.
+-->
 
+各エディションで有効化されるリントの一覧は、[リントグループ]のページを見るか、 `rustc -Whelp` コマンドを実行すれば確認できます。
+
+<!--
 ## Migrating macros
+-->
 
+## マクロの移行
+
+<!--
 Some macros may require manual work to fix them for the next edition.
 For example, `cargo fix --edition` may not be able to automatically fix a macro that generates syntax that does not work in the next edition.
+-->
+
+マクロの中には、エディションを進めるにあたって手作業が必要なものがあります。
+例えば、`cargo fix --edition` は、次のエディションで動作しない文法を生成するマクロを自動修正することは難しいかもしれません。
 
 This may be a problem for both [proc macros] and `macro_rules`-style macros.
 `macro_rules` macros can sometimes be automatically updated if the macro is used within the same crate, but there are several situations where it cannot.
 Proc macros in general cannot be automatically fixed at all.
 
+これは、[手続き型マクロ]と `macro_rules` を使ったマクロの双方で問題になります。
+`macro_rules` を使ったマクロは、マクロが同じクレートに属していたら自動でアップデートできる場合もありますが、いくつかの状況ではできません。
+手続き型マクロは原則、全く修正できないと言っていいでしょう。
+
 For example, if we migrate a crate containing this (contrived) macro `foo` from 2015 to 2018, `foo` would not be automatically fixed.
 
+例えば、この(わざとらしい)マクロ `foo` を含むクレートを 2015 から 2018 に移行しようとしても、`foo` は自動修復されません。
+
+<!--
 ```rust
 #[macro_export]
 macro_rules! foo {
@@ -163,17 +209,45 @@ macro_rules! foo {
     };
 }
 ```
+-->
 
+```rust
+#[macro_export]
+macro_rules! foo {
+    () => {
+        let dyn = 1;
+        println!("これは {} です", dyn);
+    };
+}
+```
+
+<!--
 When this macro is defined in a 2015 crate, it can be used from a crate of any other edition due to macro hygiene (discussed below).
 In 2015, `dyn` is a normal identifier and can be used without restriction.
+-->
 
+マクロが 2015 のクレートで定義されている場合、マクロの衛生性（後述）のおかげでこれは他のエディションのクレートからも使用することができます。
+2015 では、`dyn` は通常の識別子で、制限なく使用できます。
+
+<!--
 However, in 2018, `dyn` is no longer a valid identifier.
 When using `cargo fix --edition` to migrate to 2018, Cargo won't display any warnings or errors at all.
 However, `foo` won't work when called from any crate.
+-->
 
+一方で、2018 では、`dyn` はもはや正当な識別子ではありません。
+`cargo fix --edition` で 2018 へ移行するとき、Cargo は警告やエラーを一切表示しません。
+しかし、`foo` はどのクレートで呼び出されても動作しません。
+
+<!--
 If you have macros, you are encouraged to make sure you have tests that fully cover the macro's syntax.
 You may also want to test the macros by importing and using them in crates from multiple editions, just to ensure it works correctly everywhere.
 If you run into issues, you'll need to read through the chapters of this guide to understand how the code can be changed to work across all editions.
+-->
+
+あなたのコードにマクロがある場合、そのマクロを十分に網羅するテストがあることが推奨されます。
+また、そのマクロを複数のエディションのクレートの中でインポートして使用し、どこでも動くということを確認するのも良いでしょう。
+問題に突き当たった場合、このガイドの本章に目を通して、全エディションで動作するようにするためにどうすればいいか理解する必要があります。
 
 ### Macro hygiene
 
