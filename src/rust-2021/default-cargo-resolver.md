@@ -100,7 +100,7 @@ It may look something like this:
 > More information about the resolver changes may be found at <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/default-cargo-resolver.html><br>
 > When building the following dependencies, the given features will no longer be used:
 >
-> _(訳)_ 2021 エディションに切り替えると、フィーチャリゾルバがバージョン 2 に切り替わります。
+> _(訳)_ 2021 エディションに切り替えると、Cargoのフィーチャリゾルバがバージョン 2 に切り替わります。
 > 切り替え後、いくつかの依存先では有効化されるフィーチャが減少することがあります。
 > リゾルバの変更点については、 <https://doc.rust-lang.org/nightly/edition-guide/rust-2021/default-cargo-resolver.html> もご覧ください。<br>
 > 以下の依存先をビルドするときに、以下のフィーチャが使われなくなります:
@@ -252,7 +252,10 @@ This causes Cargo to add "postgres" as a feature for host dependencies (proc-mac
 Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled, and it will build correctly.
 -->
 
-これにより、 cargo はホスト依存関係<!--TODO: ホスト依存関係とは何ですか-->（proc-macro と build-dependencies）のフィーチャとして "postgres" を追加します。
+これにより、 Cargo はホスト依存関係（proc-macro と build-dependencies）のフィーチャとして "postgres" を追加します。
+
+> 訳注：ホスト依存関係とは、コンパイラホスト（コンパイラを実行しているプラットフォーム）向けにビルド・実行される依存を指し、proc-macroクレートやbuild-dependencies配下の依存クレートが該当します。
+> 一方、通常の依存関係はコンパイルターゲットのプラットフォーム向けにビルドされます。
 これで、 `diesel_migrations` の手続き的マクロは "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
 
 <!--
@@ -272,7 +275,7 @@ The [`cargo tree`] command has had substantial improvements to help with the mig
 `cargo tree` can be used to explore the dependency graph, and to see which features are being enabled, and importantly *why* they are being enabled.
 -->
 
-[`cargo tree`] には、新しいリゾルバへの移行を補助する、素晴らしい新機能が含まれています。
+[`cargo tree`] コマンドには、新しいリゾルバへの移行を補助する、素晴らしい新機能が含まれています。
 `cargo tree` を使えば、依存関係木を探索して、どのフィーチャが有効化されているか、そしてなにより*なぜ*それが有効化されているのかが分かります。
 
 <!--
