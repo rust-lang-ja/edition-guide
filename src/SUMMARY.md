@@ -23,7 +23,7 @@
 - [エディションとは？](editions/index.md)
   - [新しいプロジェクトを作成する](editions/creating-a-new-project.md)
   - [既存のプロジェクトのエディションを移行する](editions/transitioning-an-existing-project-to-a-new-edition.md)
-  - [Advanced migrations](editions/advanced-migrations.md)
+  - [発展的な以降戦略](editions/advanced-migrations.md)
 
 ## Rust 2015
 
