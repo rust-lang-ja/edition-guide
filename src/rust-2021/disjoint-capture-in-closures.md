@@ -118,8 +118,8 @@ Changing the variables captured by a closure can cause programs to change behavi
 - changes to which traits a closure implements ([details](#trait-implementations)).
 -->
 
-- ドロップの順序や、デストラクタが走るタイミングが変わる場合（[詳細](#drop-order)）
-- クロージャが実装するトレイトが変わる場合（[詳細](#drop-order)）
+- ドロップの順序や、デストラクタが走るタイミングが変わる場合（[詳細](#ドロップの順序)）
+- クロージャが実装するトレイトが変わる場合（[詳細](#トレイト実装)）
 
 <!--
 Whenever any of the scenarios below are detected, `cargo fix` will insert a "dummy let" into your closure to force it to capture the entire variable:
