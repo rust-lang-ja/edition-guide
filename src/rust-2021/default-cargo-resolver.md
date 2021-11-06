@@ -256,6 +256,7 @@ Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled,
 
 > 訳注：ホスト依存関係とは、コンパイラホスト（コンパイラを実行しているプラットフォーム）向けにビルド・実行される依存を指し、proc-macroクレートやbuild-dependencies配下の依存クレートが該当します。
 > 一方、通常の依存関係はコンパイルターゲットのプラットフォーム向けにビルドされます。
+
 これで、 `diesel_migrations` の手続き的マクロは "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。
 
 <!--
