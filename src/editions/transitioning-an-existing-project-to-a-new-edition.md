@@ -92,8 +92,8 @@ In order to help transition to the next edition, Cargo includes the [`cargo fix`
 To start, let's run it:
 -->
 
-あなたのコードは互換性のない機能を使っているかも知れないし、使っていないかも知れません。
-cargo には [`cargo fix`] というサブコマンドがあり、これがあなたのコードを自動的に更新して Rust 2018 への移行を補助してくれます。
+あなたのコードは新しいエディションに互換性のない機能を使っているかもしれないし、使っていないかもしれません。
+cargo には [`cargo fix`] というサブコマンドがあり、これがあなたのコードを自動的に更新して次のエディションへの移行を補助してくれます。
 まず初めに、これを実行してみましょう。
 
 ```console
