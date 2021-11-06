@@ -52,6 +52,7 @@
 | composable                     | 合成可能
 | computer science               | コンピュータサイエンス
 | concurrency                    | 並行性
+| conditional compilation        | 条件付きコンパイル
 | constant                       | 定数
 | constructor                    | コンストラクタ
 | continuous integration         | 継続的インテグレーション

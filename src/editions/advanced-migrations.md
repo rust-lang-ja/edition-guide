@@ -1,45 +1,115 @@
+<!--
 # Advanced migration strategies
+-->
 
+# 発展的な以降戦略
+
+<!--
 ## How migrations work
+-->
 
+## 移行ツールの仕組み
+
+<!--
 [`cargo fix --edition`][`cargo fix`] works by running the equivalent of [`cargo check`] on your project with special [lints] enabled which will detect code that may not compile in the next edition.
 These lints include instructions on how to modify the code to make it compatible on both the current and the next edition.
 `cargo fix` applies these changes to the source code, and then runs `cargo check` again to verify that the fixes work.
 If the fixes fail, then it will back out the changes and display a warning.
+-->
 
+[`cargo fix --edition`][`cargo fix`] コマンドは、[`cargo check`] コマンドと同様のコマンドを、次のエディションでコンパイルされなくなるコードを検知する特別な[リント]が有効になった状態で実行することで機能します。
+このリントには、どうコードを変更したら現在と次のエディションの双方に適合するかの指示も含まれています。
+`cargo fix` コマンドはソースコードをそのように変更し、再び `cargo check` を実行して修正がうまく行ったか確認します。
+うまく行かなかった場合、変更を巻き戻して警告を表示します。
+
+<!--
 Changing the code to be simultaneously compatible with both the current and next edition makes it easier to incrementally migrate the code.
 If the automated migration does not completely succeed, or requires manual help, you can iterate while staying on the original edition before changing `Cargo.toml` to use the next edition.
+-->
 
+現在と次のエディションの両方に同時に適合したコードに書き換えると、コードを段階的に移行することが楽になります。
+自動移行が完全には成功しなかったか、手作業で変えてやる必要がある場合は、元ののエディション留まったまま同じことを繰り返してから<!-- TODO: iterate がどういう意味で使われているかわかりません…… --> `Cargo.toml` を編集して次のエディションに進めてもよいです。
+
+<!--
 The lints that `cargo fix --edition` apply are part of a [lint group].
 For example, when migrating from 2018 to 2021, Cargo uses the `rust-2021-compatibility` group of lints to fix the code.
 Check the [Partial migration](#partial-migration-with-broken-code) section below for tips on using individual lints to help with migration.
+-->
 
+`cargo fix --edition` が適用するリントは、[リントグループ]の一部です。
+例えば、2018 から 2021 に移行する場合、Cargo は `rust-2021-compatibility` というリントグループをコードの修正に使用します。
+それぞれのリントを移行に役立てるコツについては、後の「[部分的な移行](#部分的な移行)」の章をご覧ください。
+
+<!--
 `cargo fix` may run `cargo check` multiple times.
 For example, after applying one set of fixes, this may trigger new warnings which require further fixes.
 Cargo repeats this until no new warnings are generated.
+-->
 
+`cargo fix` は、`cargo check` を複数回実行する可能性があります。
+たとえば、一通りの修正を終えても、修正によって新たな警告が出て、さらなる修正が必要になるかもしれません。
+Cargo は、新しく警告が出なくなるまでこれを繰り返し続けます。
+
+<!--
 ## Migrating multiple configurations
+-->
 
+## 複数の設定を移行する
+
+<!--
 `cargo fix` can only work with a single configuration at a time.
 If you use [Cargo features] or [conditional compilation], then you may need to run `cargo fix` multiple times with different flags.
+-->
 
+`cargo fix` は一度に1つの設定でしか動きません。
+[Cargo のフィーチャ]や[条件付きコンパイル]を使用している場合、`cargo fix` を異なるフラグで複数回実行する必要があるかもしれません。
+
+<!--
 For example, if you have code that uses `#[cfg]` attributes to include different code for different platforms, you may need to run `cargo fix` with the `--target` option to fix for different targets.
 This may require moving your code between machines if you don't have cross-compiling available.
+-->
 
+例えば、あなたのコードが `#[cfg]` を使ってプラットフォームによって違うコードを含むようになっていた場合、`cargo fix` を `--target` オプションつきで実行して、ターゲットごとに修正をする必要があるかもしれません。
+
+<!--
 Similarly, if you have conditions on Cargo features, like `#[cfg(feature = "my-optional-thing")]`, it is recommended to use the `--all-features` flag to allow `cargo fix` to migrate all the code behind those feature gates.
 If you want to migrate feature code individually, you can use the `--features` flag to migrate one at a time.
+-->
 
+同様に、フィーチャによる条件分岐、例えば `#[cfg(feature = "my-optional-thing")]` のようなものがある場合、`--all-features` フラグを使って、フィーチャの間仕切りを超えて `cargo fix` がすべてのコードを変更できるようにするとよいでしょう。
+フィーチャごとに別々にコードを移行したい場合は、`--features` フラグを使って一つずつ移行作業をすることもできます。
+
+<!--
 ## Migrating a large project or workspace
+-->
 
+## 巨大なプロジェクトやワークスペースの移行
+
+<!--
 You can migrate a large project incrementally to make the process easier if you run into problems.
+-->
 
+大きなプロジェクトで問題が発生した場合、作業を単純にするために、少しずつ移行範囲を広げていくこともできます。
+
+<!--
 In a [Cargo workspace], each package defines its own edition, so the process naturally involves migrating one package at a time.
+-->
 
+[Cargo のワークスペース]では、エディションはパッケージごとに定義されているため、自然とパッケージ1つずつ移行をすることになります。
+
+<!--
 Within a [Cargo package], you can either migrate the entire package at once, or migrate individual [Cargo targets] one at a time.
 For example, if you have multiple binaries, tests, and examples, you can use specific target selection flags with `cargo fix --edition` to migrate just that one target.
 By default, `cargo fix` uses `--all-targets`.
+-->
 
+[Cargo のパッケージ]においては、全パッケージを同時に移行することも、各[Cargo ターゲット]を1つずつ移行することもできます。
+
+<!--
 For even more advanced cases, you can specify the edition for each individual target in `Cargo.toml` like this:
+-->
+
+より発展的には、`Cargo.toml` 中に各ターゲットで使用するエディションを指定することもできます:
 
 ```toml
 [[bin]]
@@ -47,7 +117,11 @@ name = "my-binary"
 edition = "2018"
 ```
 
+<!--
 This usually should not be required, but is an option if you have a lot of targets and are having difficulty migrating them all together.
+-->
+
+おそらく普通はこれは必要ありませんが、ターゲットがたくさんあって全部いっぺんに移行作業できないような場合には一つの選択肢になるでしょう。
 
 ## Partial migration with broken code
 
