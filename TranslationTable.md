@@ -37,7 +37,7 @@
 | build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
 | capture                        | キャプチャ
-| cargo                          | cargo
+| cargo                          | Cargo
 | case analysis                  | 場合分け
 | channel                        | チャネル
 | closure                        | クロージャ
