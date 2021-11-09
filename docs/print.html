@@ -2854,55 +2854,46 @@ pub fn my_function(_trait_object: &amp;MyTrait) { // should be `&amp;dyn MyTrait
                                               // `&amp;dyn MyTrait` と書かなくてはならない
   unimplemented!()
 }
-
-## `ellipsis_inclusive_range_patterns`:
-
-&lt;!--
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#ellipsis_inclusive_range_patterns" id="ellipsis_inclusive_range_patterns"><code>ellipsis_inclusive_range_patterns</code>:</a></h3>
+<!--
 The [deprecated `...` syntax](https://doc.rust-lang.org/stable/reference/patterns.html#range-patterns)
 for inclusive range patterns (i.e., ranges where the end value is *included* in the range) is no longer 
 accepted in Rust 2021. It has been superseded by `..=`, which is consistent with expressions.
---&gt;
-
-閉区間パターン（つまり、終端の値を*含む*範囲）を表す、[非推奨の `...` 構文](https://doc.rust-lang.org/stable/reference/patterns.html#range-patterns)は、Rust 2021 では使えなくなります。
-式との統一性のため、`..=` を使うことが推奨されていました。
-
-&lt;!--
+-->
+<p>閉区間パターン（つまり、終端の値を<em>含む</em>範囲）を表す、<a href="https://doc.rust-lang.org/stable/reference/patterns.html#range-patterns">非推奨の <code>...</code> 構文</a>は、Rust 2021 では使えなくなります。
+式との統一性のため、<code>..=</code> を使うことが推奨されていました。</p>
+<!--
 For example, the following code which uses `...` in a pattern will produce an error instead of 
 just a lint in Rust 2021:
---&gt;
-
-例えば、次のコードはパターンとして `...` を使っているため、Rust 2021 ではただのリントではなくエラーが発生します:
-
-&lt;!--
-```rust
-pub fn less_or_eq_to_100(n: u8) -&gt; bool {
+-->
+<p>例えば、次のコードはパターンとして <code>...</code> を使っているため、Rust 2021 ではただのリントではなくエラーが発生します:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn less_or_eq_to_100(n: u8) -&gt; bool {
   matches!(n, 0...100) // should be `0..=100`
                        // `0..=100` と書かなくてはならない
 }
-
-&lt;!--
-# Migrations 
---&gt;
-
-# 移行
-
-&lt;!--
+<span class="boring">}
+</span></code></pre></pre>
+<!--
+## Migrations 
+-->
+<h2><a class="header" href="#移行-1" id="移行-1">移行</a></h2>
+<!--
 If your Rust 2015 or 2018 code does not produce any warnings for `bare_trait_objects` 
 or `ellipsis_inclusive_range_patterns` and you've not allowed these lints through the 
 use of `#![allow()]` or some other mechanism, then there's no need to migrate.
---&gt;
-
-あなたの Rust 2015 か 2018 のコードで、`bare_trait_objects` や `ellipsis_inclusive_range_patterns` といったエラーが出ず、`#![allow()]` などを使ってこれらのリントを許可する設定をしていなければ、移行の際にやることはありません。
-
-&lt;!--
+-->
+<p>あなたの Rust 2015 か 2018 のコードで、<code>bare_trait_objects</code> や <code>ellipsis_inclusive_range_patterns</code> といったエラーが出ず、<code>#![allow()]</code> などを使ってこれらのリントを許可する設定をしていなければ、移行の際にやることはありません。</p>
+<!--
 To automatically migrate any crate that uses `...` in patterns or does not use `dyn` with
 trait objects, you can run `cargo fix --edition`.
---&gt;
-
-`...` をパターンに使用していたり、トレイトオブジェクトに `dyn` を使っていないクレートがある場合は、
-`cargo fix --edition` を実行すればよいです。
-<span class="boring">}
-</span></code></pre></pre>
+-->
+<p><code>...</code> をパターンに使用していたり、トレイトオブジェクトに <code>dyn</code> を使っていないクレートがある場合は、
+<code>cargo fix --edition</code> を実行すればよいです。</p>
 <h1><a class="header" href="#or-patterns-in-macro-rules" id="or-patterns-in-macro-rules">Or patterns in macro-rules</a></h1>
 <h2><a class="header" href="#summary-10" id="summary-10">Summary</a></h2>
 <ul>
