@@ -35,7 +35,7 @@ The use of the `dyn` keyword to identify [trait objects](https://doc.rust-lang.o
 will be mandatory in Rust 2021.
 -->
 
-Rust 2021 では、[トレイトオブジェクト](https://doc.rust-lang.org/book/ch17-02-trait-objects.html)を表すために、`dyn` キーワードを使用することが必須になりました。
+Rust 2021 では、[トレイトオブジェクト](https://doc.rust-jp.rs/book-ja/ch17-02-trait-objects.html)を表すために、`dyn` キーワードを使用することが必須になりました。
 
 <!--
 For example, the following code which does not include the `dyn` keyword in `&MyTrait`
