@@ -51,6 +51,7 @@ pub fn my_function(_trait_object: &MyTrait) { // should be `&dyn MyTrait`
                                               // `&dyn MyTrait` と書かなくてはならない
   unimplemented!()
 }
+```
 
 ### `ellipsis_inclusive_range_patterns`:
 
@@ -70,12 +71,12 @@ just a lint in Rust 2021:
 
 例えば、次のコードはパターンとして `...` を使っているため、Rust 2021 ではただのリントではなくエラーが発生します:
 
-<!--
 ```rust
 pub fn less_or_eq_to_100(n: u8) -> bool {
   matches!(n, 0...100) // should be `0..=100`
                        // `0..=100` と書かなくてはならない
 }
+```
 
 <!--
 ## Migrations 
