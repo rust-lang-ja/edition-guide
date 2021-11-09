@@ -2,7 +2,7 @@
 # Path and module system changes
 -->
 
-パスとモジュールシステムへの変更
+# パスとモジュールシステムへの変更
 
 <!--
 ![Minimum Rust version: 1.31](https://img.shields.io/badge/Minimum%20Rust%20Version-1.31-brightgreen.svg)
@@ -118,6 +118,10 @@ mod submodule {
 }
 ```
 
+<!--
+After:
+-->
+
 これから:
 
 ```rust,ignore
@@ -180,6 +184,7 @@ Some examples of needing to explicitly import sysroot crates are:
 
 例えば、以下のような場合には明示的に sysroot のクレートをインポートする必要があります:
 
+<!--
 * [`std`]: Usually this is not neccesary, because `std` is automatically
   imported unless the crate is marked with [`#![no_std]`][no_std].
 * [`core`]: Usually this is not necessary, because `core` is automatically
@@ -195,6 +200,7 @@ Some examples of needing to explicitly import sysroot crates are:
   allocation, then you may need to explicitly import `alloc`.
 * [`test`]: This is only available on the [nightly channel], and is usually
   only used for the unstable benchmark support.
+-->
 
 * [`std`]: 通常はは不要です。
   クレートに [`#![no_std]`][no_std] が指定されていない限り、`std` は自動的にインポートされるからです。
@@ -226,11 +232,19 @@ Some examples of needing to explicitly import sysroot crates are:
 [no_core]: https://github.com/rust-lang/rust/issues/29639
 [no_std]: https://doc.rust-lang.org/reference/names/preludes.html#the-no_std-attribute
 
+<!--
 #### Macros
+-->
+
+#### マクロ
 
 One other use for `extern crate` was to import macros; that's no longer needed.
 Macros may be imported with `use` like any other item. For example, the
 following use of `extern crate`:
+
+`extern crate` のもう一つの使い道は、マクロのインポートでしたが、これも必要なくなりました。
+マクロは、他のアイテムと同様、`use` でインポートできます。
+たとえば、以下の `extern crate` は:
 
 ```rust,ignore
 #[macro_use]
@@ -241,7 +255,11 @@ fn main() {
 }
 ```
 
+<!--
 Can be changed to something like the following:
+-->
+
+こんな感じに変えることができます:
 
 ```rust,ignore
 use bar::baz;
@@ -251,9 +269,17 @@ fn main() {
 }
 ```
 
+<!--
 #### Renaming crates
+-->
 
+#### クレートの名前変更
+
+<!--
 If you've been using `as` to rename your crate like this:
+-->
+
+今までは `as` を使ってクレートを違う名前でインポートしていたとします:
 
 ```rust,ignore
 extern crate futures as f;
@@ -261,7 +287,11 @@ extern crate futures as f;
 use f::Future;
 ```
 
+<!--
 then removing the `extern crate` line on its own won't work. You'll need to do this:
+-->
+
+その場合、 `extern crate` の行を消すだけではうまくいきません。こう書く必要があります:
 
 ```rust,ignore
 use futures as f;
@@ -269,24 +299,51 @@ use futures as f;
 use self::f::Future;
 ```
 
+<!--
 This change will need to happen in any module that uses `f`.
+-->
 
+`f` を使っているすべてのモジュールに対して、同様の変更が必要です。
+
+<!--
 ### The `crate` keyword refers to the current crate
+-->
 
+### `crate` キーワードは自身のクレートを指す
+
+<!--
 In `use` declarations and in other code, you can refer to the root of the
 current crate with the `crate::` prefix. For instance, `crate::foo::bar` will
 always refer to the name `bar` inside the module `foo`, from anywhere else in
 the same crate.
+-->
 
+`use` 宣言や他のコードでは、`crate::` プレフィクスを使って自身のクレートを指すことができます。
+たとえば、`crate::foo::bar` と書けば、それがどこに書かれていようと、`foo` モジュール内の `bar` という名前を指します。
+
+<!--
 The prefix `::` previously referred to either the crate root or an external
 crate; it now unambiguously refers to an external crate. For instance,
 `::foo::bar` always refers to the name `bar` inside the external crate `foo`.
+-->
 
+`::` というプレフィクスは、かつてはクレートのルートまたは外部クレートのいずれかを指していましたが、今は常に外部クレートを指します。
+例えば、`::foo::bar` と書くと、これは常に `foo` というクレートの `bar` という名前を指します。
+
+<!--
 ### Extern crate paths
+-->
 
+### 外部クレートのパス
+
+<!--
 Previously, using an external crate in a module without a `use` import
 required a leading `::` on the path.
+-->
 
+かつては、`use` によるインポートなしで外部クレートを使用するには、`::` から始まるパスを書かなくてはなりませんでした。
+
+<!--
 ```rust,ignore
 // Rust 2015
 
@@ -304,10 +361,34 @@ mod submodule {
     }
 }
 ```
+-->
 
+```rust,ignore
+// Rust 2015
+
+extern crate chrono;
+
+fn foo() {
+    // クレートのルートでは、このように書ける
+    let x = chrono::Utc::now();
+}
+
+mod submodule {
+    fn function() {
+        // 一方、サブモジュールでは `use` でインポートしない限り :: から始目ないといけない
+        let x = ::chrono::Utc::now();
+    }
+}
+```
+
+<!--
 Now, extern crate names are in scope in the entire crate, including
 submodules.
+-->
 
+今は、外部クレートの名前はサブモジュールを含むクレート全体でスコープに含まれます。
+
+<!--
 ```rust,ignore
 // Rust 2018
 
@@ -323,26 +404,68 @@ mod submodule {
     }
 }
 ```
+-->
 
+```rust,ignore
+// Rust 2018
+
+fn foo() {
+    // クレートのルートでは、このように書ける
+    let x = chrono::Utc::now();
+}
+
+mod submodule {
+    fn function() {
+        // サブモジュール内でも、クレートを直接参照できる
+        let x = chrono::Utc::now();
+    }
+}
+```
+
+<!--
 ### No more `mod.rs`
+-->
 
+### さようなら、`mod.rs`
+
+<!--
 In Rust 2015, if you have a submodule:
+-->
 
+Rust 2015 では、サブモジュールは:
+
+<!--
 ```rust,ignore
 // This `mod` declaration looks for the `foo` module in
 // `foo.rs` or `foo/mod.rs`.
 mod foo;
 ```
+-->
 
+```rust,ignore
+// この `mod` 宣言は、`foo` モジュールを `foo.rs` または `foo/mod.rs` のいずれかに探す
+mod foo;
+```
+
+<!--
 It can live in `foo.rs` or `foo/mod.rs`. If it has submodules of its own, it
 *must* be `foo/mod.rs`. So a `bar` submodule of `foo` would live at
 `foo/bar.rs`.
+-->
+
+`foo.rs` か `foo/mod.rs` のどちらにも書けました。
+もしサブモジュールがある場合、*必ず* `foo/mod.rs` に書かなくてはなりませんでした。
+したがって、`foo` のサブモジュール `bar` は、`foo/bar.rs` に書かれることになりました。
 
 In Rust 2018 the restriction that a module with submodules must be named
 `mod.rs` is lifted. `foo.rs` can just be `foo.rs`,
 and the submodule is still `foo/bar.rs`. This eliminates the special
 name, and if you have a bunch of files open in your editor, you can clearly
 see their names, instead of having a bunch of tabs named `mod.rs`.
+
+Rust 2018 では、サブモジュールのあるモジュールは `mod.rs` に書かなくてはならないという制限はなくなりました。
+`foo.rs` は `foo.rs` のままで、サブモジュールは `foo/bar.rs` のままでよくなりました。
+これにより、特殊な名前がなくなり、エディタ上でたくさんのファイルを開いても、`mod.rs` だらけのタブでなく、ちゃんとそれぞれの名前を確認することができるでしょう。
 
 <table>
   <thead>
@@ -375,10 +498,19 @@ see their names, instead of having a bunch of tabs named `mod.rs`.
   </tbody>
 </table>
 
+<!--
 ### `use` paths
+-->
 
+### `use` におけるパス
+
+<!--
 ![Minimum Rust version: 1.32](https://img.shields.io/badge/Minimum%20Rust%20Version-1.32-brightgreen.svg)
+-->
 
+![導入 Rust バージョン: 1.32](https://img.shields.io/badge/%E5%B0%8E%E5%85%A5%20Rust%20%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3-1.32-brightgreen.svg)
+
+<!--
 Rust 2018 simplifies and unifies path handling compared to Rust 2015. In Rust
 2015, paths work differently in `use` declarations than they do elsewhere. In
 particular, paths in `use` declarations would always start from the crate
@@ -386,13 +518,28 @@ root, while paths in other code implicitly started from the current scope.
 Those differences didn't have any effect in the top-level module, which meant
 that everything would seem straightforward until working on a project large
 enough to have submodules.
+-->
 
+Rust 2018 では、Rust 2015 に比べてパスの扱いが単純化・統一されています。
+Rust 2015 では、`use` 宣言におけるパスは他の場所と異なった挙動を示しました。
+特に、`use` 宣言におけるパスは常にクレートのルートを基準にしたのに対し、プログラム中の他の場所でのパスは暗黙に現在のスコープが基準になっていました。
+トップレベルモジュールでは、この2つに違いはなく、プロジェクトがサブモジュールを導入するほど大きくない限りはすべては単純に見えました。
+
+<!--
 In Rust 2018, paths in `use` declarations and in other code work the same way,
 both in the top-level module and in any submodule. You can use a relative path
 from the current scope, a path starting from an external crate name, or a path
 starting with `crate`, `super`, or `self`.
+-->
 
+Rust 2018 では、トップレベルモジュールかサブモジュールかに関わらず、`use` 宣言でのパスと他のプログラム中のパスは同じように使用できます。
+現在のスコープからの相対パスも、外部クレート名から始まるパスも、`crate`, `super`, `self` から始まるパスも使用できます。
+
+<!--
 Code that looked like this:
+-->
+
+今まではこう書いていたコードは:
 
 ```rust,ignore
 // Rust 2015
@@ -424,8 +571,12 @@ fn func() {
 }
 ```
 
+<!--
 will look exactly the same in Rust 2018, except that you can delete the `extern
 crate` line:
+-->
+
+Rust 2018 でも全く同じように書けます。ただし、`extern crate` の行は消すことができます。
 
 ```rust,ignore
 // Rust 2018
@@ -455,7 +606,11 @@ fn func() {
 }
 ```
 
+<!--
 The same code will also work completely unmodified in a submodule:
+-->
+
+サブモジュール内でも、コードを全く変えずに、同じように書けます。
 
 ```rust,ignore
 // Rust 2018
@@ -487,11 +642,19 @@ mod submodule {
 }
 ```
 
+<!--
 This makes it easy to move code around in a project, and avoids introducing
 additional complexity to multi-module projects.
+-->
+
+これにより、コードを他の場所に移動することが簡単になり、マルチモジュールなプロジェクトがより複雑になるのを防止できます。
 
 If a path is ambiguous, such as if you have an external crate and a local
 module or item with the same name, you'll get an error, and you'll need to
 either rename one of the conflicting names or explicitly disambiguate the path.
 To explicitly disambiguate a path, use `::name` for an external crate name, or
 `self::name` for a local module or item.
+
+もし、例えば外部モジュールとローカルのモジュールが同名であるなど、パスが曖昧な場合は、エラーになります。
+その場合、他と衝突している名前のうち一方を変更するか、明示的にパスの曖昧性をなくす必要があります。
+パスの曖昧性をなくすには、`::name` と書いて外部クレート名であることを明示するか、`self::name` と書いてローカルのモジュールやアイテムであることを明示すればよいです。
