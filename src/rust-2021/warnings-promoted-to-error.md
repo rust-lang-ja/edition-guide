@@ -44,23 +44,13 @@ will produce an error instead of just a lint in Rust 2021:
 
 例えば、以下のコードでは `&MyTrait` に `dyn` キーワードが含まれていないため、Rust 2021 ではただのリントではなくエラーが発生します:
 
-<!--
 ```rust
 pub trait MyTrait {}
 
 pub fn my_function(_trait_object: &MyTrait) { // should be `&dyn MyTrait`
+                                              // `&dyn MyTrait` と書かなくてはならない
   unimplemented!()
 }
-```
--->
-
-```rust
-pub trait MyTrait {}
-
-pub fn my_function(_trait_object: &MyTrait) { // `&dyn MyTrait` と書かなくてはならない
-  unimplemented!()
-}
-```
 
 ### `ellipsis_inclusive_range_patterns`:
 
@@ -84,15 +74,8 @@ just a lint in Rust 2021:
 ```rust
 pub fn less_or_eq_to_100(n: u8) -> bool {
   matches!(n, 0...100) // should be `0..=100`
+                       // `0..=100` と書かなくてはならない
 }
-```
--->
-
-```rust
-pub fn less_or_eq_to_100(n: u8) -> bool {
-  matches!(n, 0...100) // `0..=100` と書かなくてはならない
-}
-```
 
 <!--
 ## Migrations 
