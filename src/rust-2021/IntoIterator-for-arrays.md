@@ -189,7 +189,7 @@ by calling `iter()` which also iterates over owned arrays by reference:
 -->
 
 移行のための最も簡単な方法は、前のエディションと完全に同じ挙動をするように、
-所有権を持った配列上を参照でイテレートするもう一つの関数 `iter()` を呼び出すことです:
+所有権を持った配列上を参照でイテレートするもう一つのメソッド `iter()` を呼び出すことです:
 
 <!--
 ```rust
