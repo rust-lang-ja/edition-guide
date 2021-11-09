@@ -23,7 +23,7 @@
 -->
 
 - `use` 宣言中のパスが、他のパスと同じように扱われるようになりました。
-- `::` から始まるパスの直後には、外部クレートが指定されなければならなくなりました。
+- `::` から始まるパスの直後には、常に外部クレートが続くようになりました。
 - `pub(in path)` という可視性修飾子中の<!-- TODO: in がわかりません -->パスは、`crate`, `self`, `super` のいずれかで始まらなくてはならなくなりました。
 
 <!--
@@ -75,8 +75,10 @@ Here's a brief summary:
 * `foo.rs` と `foo/` サブディレクトリは共存できます。サブディレクトリにサブモジュールを置く場合でも、`mod.rs` は必要なくなりました。
 * `use` 宣言におけるパスも、他の場所のパスと同じように書けます。
 
+<!--
 These may seem like arbitrary new rules when put this way, but the mental
 model is now significantly simplified overall. Read on for more details!
+-->
 
 こうして並べられると、一見これらの新しい規則はてんでバラバラですが、これにより、総じて今までよりはるかに「こうすればこう動くだろう」という直感が通じるようになりました。
 詳しく説明していきましょう！
@@ -140,7 +142,7 @@ keep doing what you were doing there as well.
 -->
 
 今や、プロジェクトに新しくクレートを追加したかったら、`Cargo.toml` に追記して、それで終わりです。
-Cargo を使用していない場合は、`rustc` に外部クレートの場所を `--extern` フラグを渡しているでしょうが、それをそのまま続けていればよいです。
+Cargo を使用していない場合は、`rustc` に外部クレートの場所を `--extern` フラグを渡しているでしょうが、これを変える必要はありません。
 
 <!--
 > One small note here: `cargo fix` will not currently automate this change. We may
@@ -202,10 +204,8 @@ Some examples of needing to explicitly import sysroot crates are:
   only used for the unstable benchmark support.
 -->
 
-* [`std`]: 通常はは不要です。
-  クレートに [`#![no_std]`][no_std] が指定されていない限り、`std` は自動的にインポートされるからです。
-* [`core`]: 通常はは不要です。
-  クレートに [`#![no_core]`][no_core] が指定されていない限り、`core` は自動的にインポートされるからです。
+* [`std`]: 通常はは不要です。クレートに [`#![no_std]`][no_std] が指定されていない限り、`std` は自動的にインポートされるからです。
+* [`core`]: 通常はは不要です。クレートに [`#![no_core]`][no_core] が指定されていない限り、`core` は自動的にインポートされるからです。
   例えば、標準ライブラリに使用されている一部の内部クレートではこれが必要です。
 * [`proc_macro`]: 1.42 以降、proc-macro ではこれは自動的にインポートされます。
   それより古いリリースをサポートしたい場合か、Cargo 以外のビルドツールを使っていてそれが `rustc` に適切な `--extern` フラグを渡さない場合は、`extern crate proc_macro;` と書く必要があります。
@@ -238,9 +238,11 @@ Some examples of needing to explicitly import sysroot crates are:
 
 #### マクロ
 
+<!--
 One other use for `extern crate` was to import macros; that's no longer needed.
 Macros may be imported with `use` like any other item. For example, the
 following use of `extern crate`:
+-->
 
 `extern crate` のもう一つの使い道は、マクロのインポートでしたが、これも必要なくなりました。
 マクロは、他のアイテムと同様、`use` でインポートできます。
@@ -457,11 +459,13 @@ It can live in `foo.rs` or `foo/mod.rs`. If it has submodules of its own, it
 もしサブモジュールがある場合、*必ず* `foo/mod.rs` に書かなくてはなりませんでした。
 したがって、`foo` のサブモジュール `bar` は、`foo/bar.rs` に書かれることになりました。
 
+<!--
 In Rust 2018 the restriction that a module with submodules must be named
 `mod.rs` is lifted. `foo.rs` can just be `foo.rs`,
 and the submodule is still `foo/bar.rs`. This eliminates the special
 name, and if you have a bunch of files open in your editor, you can clearly
 see their names, instead of having a bunch of tabs named `mod.rs`.
+-->
 
 Rust 2018 では、サブモジュールのあるモジュールは `mod.rs` に書かなくてはならないという制限はなくなりました。
 `foo.rs` は `foo.rs` のままで、サブモジュールは `foo/bar.rs` のままでよくなりました。
@@ -523,7 +527,7 @@ enough to have submodules.
 Rust 2018 では、Rust 2015 に比べてパスの扱いが単純化・統一されています。
 Rust 2015 では、`use` 宣言におけるパスは他の場所と異なった挙動を示しました。
 特に、`use` 宣言におけるパスは常にクレートのルートを基準にしたのに対し、プログラム中の他の場所でのパスは暗黙に現在のスコープが基準になっていました。
-トップレベルモジュールでは、この2つに違いはなく、プロジェクトがサブモジュールを導入するほど大きくない限りはすべては単純に見えました。
+トップレベルモジュールではこの2つに違いはなかったので、プロジェクトがサブモジュールを導入するほど大きくない限りはすべては単純に見えました。
 
 <!--
 In Rust 2018, paths in `use` declarations and in other code work the same way,
@@ -649,11 +653,13 @@ additional complexity to multi-module projects.
 
 これにより、コードを他の場所に移動することが簡単になり、マルチモジュールなプロジェクトがより複雑になるのを防止できます。
 
+<!--
 If a path is ambiguous, such as if you have an external crate and a local
 module or item with the same name, you'll get an error, and you'll need to
 either rename one of the conflicting names or explicitly disambiguate the path.
 To explicitly disambiguate a path, use `::name` for an external crate name, or
 `self::name` for a local module or item.
+-->
 
 もし、例えば外部モジュールとローカルのモジュールが同名であるなど、パスが曖昧な場合は、エラーになります。
 その場合、他と衝突している名前のうち一方を変更するか、明示的にパスの曖昧性をなくす必要があります。
