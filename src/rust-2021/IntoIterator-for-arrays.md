@@ -39,17 +39,12 @@ but not over `[1, 2, 3]` directly.
 Rust 1.53 より前は、配列の*参照*だけが `IntoIterator` を実装していました。
 すなわち、`&[1, 2, 3]` と `&mut [1, 2, 3]` に対しては列挙できる一方で、`[1, 2, 3]` に対して列挙することはできませんでした。
 
-<!--
 ```rust,ignore
 for &e in &[1, 2, 3] {} // Ok :)
+                        // OK :)
 
 for e in [1, 2, 3] {} // Error :(
-```
--->
-```rust,ignore
-for &e in &[1, 2, 3] {} // OK :)
-
-for e in [1, 2, 3] {} // エラー :(
+                      // エラー :(
 ```
 
 <!--
@@ -161,22 +156,12 @@ For example:
 
 例えば：
 
-<!--
 ```rust
 fn main() {
   let array = [1u8, 2, 3];
   for x in array.into_iter() {
     // x is a `&u8` in Rust 2015 and Rust 2018
     // x is a `u8` in Rust 2021
-  }
-}
-```
--->
-
-```rust
-fn main() {
-  let array = [1u8, 2, 3];
-  for x in array.into_iter() {
     // Rust 2015 と Rust 2018 では、x は `&u8`
     // Rust 2021 では、x は `u8`
   }
@@ -191,21 +176,12 @@ by calling `iter()` which also iterates over owned arrays by reference:
 移行のための最も簡単な方法は、前のエディションと完全に同じ挙動をするように、
 所有権を持った配列上を参照でイテレートするもう一つのメソッド `iter()` を呼び出すことです:
 
-<!--
 ```rust
 fn main() {
   let array = [1u8, 2, 3];
   for x in array.iter() { // <- This line changed
+                          // <- この行を書き換えた
     // x is a `&u8` in all editions
-  }
-}
-```
--->
-
-```rust
-fn main() {
-  let array = [1u8, 2, 3];
-  for x in array.iter() { // <- この行を書き換えた
     // x はすべてのエディションで `&u8`
   }
 }
