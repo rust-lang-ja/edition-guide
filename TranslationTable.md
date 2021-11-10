@@ -170,11 +170,8 @@
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
-<<<<<<< HEAD
 | prelude                        | プレリュード (or prelude)
-=======
 | proc macro                     | 手続き的マクロ
->>>>>>> master
 | process                        | プロセス
 | range                          | 範囲
 | raw identifier                 | 生識別子
