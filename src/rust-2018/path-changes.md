@@ -345,7 +345,6 @@ required a leading `::` on the path.
 
 かつては、`use` によるインポートなしで外部クレートを使用するには、`::` から始まるパスを書かなくてはなりませんでした。
 
-<!--
 ```rust,ignore
 // Rust 2015
 
@@ -353,30 +352,13 @@ extern crate chrono;
 
 fn foo() {
     // this works in the crate root
-    let x = chrono::Utc::now();
-}
-
-mod submodule {
-    fn function() {
-        // but in a submodule it requires a leading :: if not imported with `use`
-        let x = ::chrono::Utc::now();
-    }
-}
-```
--->
-
-```rust,ignore
-// Rust 2015
-
-extern crate chrono;
-
-fn foo() {
     // クレートのルートでは、このように書ける
     let x = chrono::Utc::now();
 }
 
 mod submodule {
     fn function() {
+        // but in a submodule it requires a leading :: if not imported with `use`
         // 一方、サブモジュールでは `use` でインポートしない限り :: から始目ないといけない
         let x = ::chrono::Utc::now();
     }
@@ -390,34 +372,18 @@ submodules.
 
 今は、外部クレートの名前はサブモジュールを含むクレート全体でスコープに含まれます。
 
-<!--
 ```rust,ignore
 // Rust 2018
 
 fn foo() {
     // this works in the crate root
-    let x = chrono::Utc::now();
-}
-
-mod submodule {
-    fn function() {
-        // crates may be referenced directly, even in submodules
-        let x = chrono::Utc::now();
-    }
-}
-```
--->
-
-```rust,ignore
-// Rust 2018
-
-fn foo() {
     // クレートのルートでは、このように書ける
     let x = chrono::Utc::now();
 }
 
 mod submodule {
     fn function() {
+        // crates may be referenced directly, even in submodules
         // サブモジュール内でも、クレートを直接参照できる
         let x = chrono::Utc::now();
     }
@@ -436,15 +402,9 @@ In Rust 2015, if you have a submodule:
 
 Rust 2015 では、サブモジュールは:
 
-<!--
 ```rust,ignore
 // This `mod` declaration looks for the `foo` module in
 // `foo.rs` or `foo/mod.rs`.
-mod foo;
-```
--->
-
-```rust,ignore
 // この `mod` 宣言は、`foo` モジュールを `foo.rs` または `foo/mod.rs` のいずれかに探す
 mod foo;
 ```
