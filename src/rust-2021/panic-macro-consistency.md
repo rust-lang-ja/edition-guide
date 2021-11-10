@@ -42,18 +42,12 @@ that we can't just change due to backwards compatibility.
 しかし、このマクロには[いくぶん非直感的な挙動](https://github.com/rust-lang/rfcs/blob/master/text/3007-panic-plan.md)がありましたが、
 今までは後方互換性の問題から修正することができませんでした。
 
-<!--
 ```rust,ignore
 // Rust 2018
 panic!("{}", 1); // Ok, panics with the message "1"
+                 // OK。 "1" というメッセージと共にパニックする
 panic!("{}"); // Ok, panics with the message "{}"
-```
--->
-
-```rust,ignore
-// Rust 2018
-panic!("{}", 1); // OK。 "1" というメッセージと共にパニックする
-panic!("{}"); // OK。 "{}" というメッセージと共にパニックする
+              // OK。 "{}" というメッセージと共にパニックする
 ```
 
 <!--
@@ -64,20 +58,13 @@ When invoked with a single argument, it doesn't even look at that argument.
 `panic!()` マクロは、2つ以上の引数が渡されたときだけ、フォーマット文字列を使用します。
 引数が1つのときは、引数の中身に見向きもしません。
 
-<!--
 ```rust,ignore
 // Rust 2018
 let a = "{";
 println!(a); // Error: First argument must be a format string literal
+             // エラー: 第一引数は文字列リテラルでなくてはならない
 panic!(a); // Ok: The panic macro doesn't care
-```
--->
-
-```rust,ignore
-// Rust 2018
-let a = "{";
-println!(a); // エラー: 第一引数は文字列リテラルでなくてはならない
-panic!(a); // OK: panicマクロは気にしない
+           // OK: panicマクロは気にしない
 ```
 
 <!--
@@ -119,20 +106,14 @@ will be the only way to panic with something other than a formatted string.
 フォーマット文字列以外のペイロードと共にパニックさせる唯一の方法は、
 [`panic_any()`](https://doc.rust-lang.org/stable/std/panic/fn.panic_any.html)を使うことだけになりました。
 
-<!--
 ```rust,ignore
 // Rust 2021
 panic!("{}", 1); // Ok, panics with the message "1"
+                 // Ok。"1" というメッセージと共にパニックする
 panic!("{}"); // Error, missing argument
+              // エラー。引数が足りない
 panic!(a); // Error, must be a string literal
-```
--->
-
-```rust,ignore
-// Rust 2021
-panic!("{}", 1); // Ok。"1" というメッセージと共にパニックする
-panic!("{}"); // エラー。引数が足りない
-panic!(a); // エラー。文字列リテラルでないといけない
+           // エラー。文字列リテラルでないといけない
 ```
 
 <!--
