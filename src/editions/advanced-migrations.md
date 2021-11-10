@@ -203,24 +203,13 @@ For example, if we migrate a crate containing this (contrived) macro `foo` from 
 
 例えば、この（わざとらしい）マクロ `foo` を含むクレートを 2015 から 2018 に移行しようとしても、`foo` は自動修復されません。
 
-<!--
 ```rust
 #[macro_export]
 macro_rules! foo {
     () => {
         let dyn = 1;
         println!("it is {}", dyn);
-    };
-}
-```
--->
-
-```rust
-#[macro_export]
-macro_rules! foo {
-    () => {
-        let dyn = 1;
-        println!("これは {} です", dyn);
+              // "これは {} です"
     };
 }
 ```
