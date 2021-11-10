@@ -34,8 +34,10 @@
 | bounds                         | 境界
 | boxed                          | ボックス化された
 | bug                            | バグ
+| build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
 | capture                        | キャプチャ
+| cargo                          | Cargo
 | case analysis                  | 場合分け
 | channel                        | チャネル
 | closure                        | クロージャ
@@ -59,9 +61,12 @@
 | deadlock                       | デッドロック
 | deallocate                     | デアロケートする
 | declaration statement          | 宣言文
+| dependency                     | 依存関係、依存先
+| dependency tree                | 依存関係木
 | dereferencing                  | 参照外し
 | destructor                     | デストラクタ
 | destructuring                  | 分配
+| dev-dependencies               | 開発用依存関係 (Cargo.toml のセクション名としては dev-dependencies をそのまま採用)
 | directive                      | ディレクティブ
 | directory                      | ディレクトリ
 | discriminant                   | 判別子
@@ -80,6 +85,7 @@
 | ergonomic                      | エルゴノミック（人間にとって扱いやすいもの）
 | error                          | エラー
 | error handling                 | エラーハンドリング
+| examples                       | examples  (cargo のプロジェクトレイアウト上におけるフォルダ名として使われている場合のみ)
 | executable                     | 実行可能形式
 | existentially quantified type  | 存在量型
 | expression statement           | 式文
@@ -109,6 +115,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| iterate                        | 列挙する
 | key                            | キー
 | keyword                        | キーワード
 | Lang Items                     | Lang Item
@@ -157,8 +164,10 @@
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
+| proc macro                     | 手続き的マクロ
 | process                        | プロセス
 | range                          | 範囲
+| raw identifier                 | 生識別子
 | raw pointer                    | 生ポインタ
 | raw string literal             | 生文字列リテラル
 | re-assignment                  | 再代入
@@ -169,6 +178,7 @@
 | regression                     | リグレッション
 | release                        | リリース
 | (lockの) release               | 解放
+| resolver                       | リゾルバ
 | return                         | 返す
 | return type                    | リターン型
 | return value                   | 戻り値
@@ -201,6 +211,8 @@
 | system                         | システム
 | tagged union                   | タグ付き共用体
 | term                           | 項
+| tests                          | tests  (cargo のプロジェクトレイアウト上におけるフォルダ名として使われている場合のみ)
+| third-party                    | サードパーティ
 | thread-locality                | スレッドローカル性
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
@@ -226,6 +238,8 @@
 | variant                        | ヴァリアント
 | vector                         | ベクタ
 | version                        | バージョン
+| virtual workspace              | 仮想ワークスペース
 | warning                        | 警告
 | wildcard                       | ワイルドカード
+| workspace                      | ワークスペース
 | wrapper                        | ラッパ
