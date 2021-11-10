@@ -126,15 +126,15 @@ For example:
 
 例えば以下のようになります。
 
-<!--
 ```rust
 macro_rules! my_macro { 
 	($x:pat | $y:pat) => {
 		// TODO: implementation
-	} 
+		// TODO: 実装
 }
 
 // This macro works in Rust 2018 since `$x:pat` does not match against `|`:
+// Rust 2018 では、`$x:pat` が `|` にマッチしないので、以下のマクロは正常に動きます:
 my_macro!(1 | 2);
 
 // In Rust 2021 however, the `$_:pat` fragment matches `|` and is not allowed
@@ -142,27 +142,8 @@ my_macro!(1 | 2);
 // change the macro to the following:
 macro_rules! my_macro { 
 	($x:pat_param | $y:pat) => { // <- this line is different
+	                             //    この行を変えた
 		// TODO: implementation
-	} 
-}
-```
--->
-
-```rust
-macro_rules! my_macro { 
-	($x:pat | $y:pat) => {
-		// TODO: 実装
-	} 
-}
-
-// Rust 2018 では、`$x:pat` が `|` にマッチしないので、以下のマクロは正常に動きます:
-my_macro!(1 | 2);
-
-// 一方 Rust 2021 では、`$_:pat` フラグメントは `|` にもマッチし、
-// `|` が後続してはいけなくなりました。
-// Rust 2021 でもマクロが動作するためには、マクロを以下のように変更しなくてはなりません:
-macro_rules! my_macro { 
-	($x:pat_param | $y:pat) => { // <- この行を変えた
 		// TODO: 実装
 	} 
 }
