@@ -45,21 +45,14 @@ Rust 2018 以前では、クロージャに使われているのが1つのフィ
 例えば、 `|| a.x + 1` は `a.x` への参照だけでなく、`a` への参照をキャプチャします。
 `a` 全体がキャプチャされると、`a` の他のフィールドの値を書き換えたりムーブしたりできなくなります。従って以下のようなコードはコンパイルに失敗します:
 
-<!--
 ```rust,ignore
 let a = SomeStruct::new();
 drop(a.x); // Move out of one field of the struct
+           // 構造体のフィールドの1つをムーブする
 println!("{}", a.y); // Ok: Still use another field of the struct
+                     // OK: 構造体の他のフィールドは、まだ使える
 let c = || println!("{}", a.y); // Error: Tries to capture all of `a`
-c();
-```
--->
-
-```rust,ignore
-let a = SomeStruct::new();
-drop(a.x); // 構造体のフィールドの1つをムーブする
-println!("{}", a.y); // OK: 構造体の他のフィールドは、まだ使える
-let c = || println!("{}", a.y); // エラー: `a` 全体をキャプチャしようとする
+                                // エラー: `a` 全体をキャプチャしようとする
 c();
 ```
 
@@ -127,25 +120,14 @@ Whenever any of the scenarios below are detected, `cargo fix` will insert a "dum
 
 以下のような状況を検知すると、`cargo fix` は "ダミーの let" をクロージャの中に挿入して、強制的に全ての変数がキャプチャされるようにします:
 
-<!--
 ```rust
 let x = (vec![22], vec![23]);
 let c = move || {
     // "Dummy let" that forces `x` to be captured in its entirety
-    let _ = &x;
-
-    // Otherwise, only `x.0` would be captured here
-    println!("{:?}", x.0);
-};
-```
--->
-
-```rust
-let x = (vec![22], vec![23]);
-let c = move || {
     // `x` 全体が強制的にキャプチャされるための "ダミーの let"
     let _ = &x;
 
+    // Otherwise, only `x.0` would be captured here
     // それがないと、`x.0` だけがここでキャプチャされる
     println!("{:?}", x.0);
 };
@@ -169,23 +151,11 @@ Closures now only capture data that needs to be read, which means the following 
 
 クロージャは本当に読む必要のあるデータだけをキャプチャするようになったので、次のコードは `x` をキャプチャしません:
 
-<!--
 ```rust
 let x = 10;
 let c = || {
     let _ = x; // no-op
-};
-
-let c = || match x {
-    _ => println!("Hello World!")
-};
-```
--->
-
-```rust
-let x = 10;
-let c = || {
-    let _ = x; // 何もしない
+               // 何もしない
 };
 
 let c = || match x {
@@ -223,7 +193,6 @@ When a closure takes ownership of a value from a variable `t`, that value is the
 
 クロージャが変数 `t` の所有権を取るとき、`t` がドロップされるのは `t` がスコープ外に出たときではなく、そのクロージャがドロップされたときになります:
 
-<!--
 ```rust
 # fn move_value<T>(_: T){}
 {
@@ -232,19 +201,9 @@ When a closure takes ownership of a value from a variable `t`, that value is the
     {
         let c = || move_value(t); // t is moved here
     } // c is dropped, which drops the tuple `t` as well
+      // c がドロップされ、そのときにタプル `t` もまたドロップされる
 } // t goes out of scope here
-```
--->
-
-```rust
-# fn move_value<T>(_: T){}
-{
-    let t = (vec![0], vec![0]);
-
-    {
-        let c = || move_value(t); // t はここでムーブされる
-    } // c がドロップされ、そのときにタプル `t` もまたドロップされる
-} // t はここでスコープを抜ける
+  // t はここでスコープを抜ける
 ```
 
 <!--
@@ -253,7 +212,6 @@ The above code will run the same in both Rust 2018 and Rust 2021. However, in ca
 
 上記のコードの挙動は Rust 2018 と Rust 2021 で同じです。ところが、クロージャが変数の<!-- -->_一部_<!-- -->の所有権を取るとき、違いが発生します:
 
-<!--
 ```rust
 # fn move_value<T>(_: T){}
 {
@@ -263,46 +221,28 @@ The above code will run the same in both Rust 2018 and Rust 2021. However, in ca
         let c = || {
             // In Rust 2018, captures all of `t`.
             // In Rust 2021, captures only `t.0`
-            move_value(t.0);
-        };
-
-        // In Rust 2018, `c` (and `t`) are both dropped when we
-        // exit this block.
-        //
-        // In Rust 2021, `c` and `t.0` are both dropped when we
-        // exit this block.
-    }
-
-// In Rust 2018, the value from `t` has been moved and is
-// not dropped.
-//
-// In Rust 2021, the value from `t.0` has been moved, but `t.1`
-// remains, so it will be dropped here.
-}
-```
--->
-
-```rust
-# fn move_value<T>(_: T){}
-{
-    let t = (vec![0], vec![0]);
-
-    {
-        let c = || {
             // Rust 2018 では、`t` 全体がキャプチャされる。
             // Rust 2018 では、`t.0` だけがキャプチャされる
             move_value(t.0);
         };
 
+        // In Rust 2018, `c` (and `t`) are both dropped when we
+        // exit this block.
         // Rust 2018 では、 `c` (と `t`) の両方が
         // このブロックを抜けるときにドロップされる。
         //
+        // In Rust 2021, `c` and `t.0` are both dropped when we
+        // exit this block.
         // Rust 2021 では、 `c` と `t.0` の両方が
         // このブロックを抜けるときにドロップされる。
     }
 
+// In Rust 2018, the value from `t` has been moved and is
+// not dropped.
 // Rust 2018 では、`t` はすでにムーブされており、ここではドロップされない
 //
+// In Rust 2021, the value from `t.0` has been moved, but `t.1`
+// remains, so it will be dropped here.
 // Rust 2021 では、`t.0` はムーブされているが、
 // `t.1` は残っており、ここでドロップされる
 }
@@ -372,7 +312,6 @@ With disjoint captures, only the specific field mentioned in the closure gets ca
 
 フィールドごとのキャプチャが導入されると、キャプチャ内で使用されているフィールドだけがキャプチャされますが、フィールドの中身はもともと `Send`/`Sync` でなかったのですから、せっかくラッパーを作っても元の木阿弥です。
 
-<!--
 ```rust
 use std::thread;
 
@@ -388,22 +327,5 @@ let c = thread::spawn(move || {
         *(px.0) += 10;
     }
 }); // Closure captured px.0 which is not Send
-```
--->
-
-```rust
-use std::thread;
-
-struct Ptr(*mut i32);
-unsafe impl Send for Ptr {}
-
-
-let mut x = 5;
-let px = Ptr(&mut x as *mut i32);
-
-let c = thread::spawn(move || {
-    unsafe {
-        *(px.0) += 10;
-    }
-}); // クロージャは px.0 をキャプチャしたが、これは Send ではない
+    // クロージャは px.0 をキャプチャしたが、これは Send ではない
 ```
