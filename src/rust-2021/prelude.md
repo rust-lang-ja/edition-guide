@@ -137,10 +137,10 @@ When two traits that are in scope have the same method name, it is ambiguous whi
 あるスコープに、同じメソッド名を持つ2つのトレイトがある場合、どちらのメソッドが使用されるべきかは曖昧です。例えば：
 
 
-<!--
 ```rust
 trait MyTrait<A> {
   // This name is the same as the `from_iter` method on the `FromIterator` trait from `std`.  
+  // この関数名は、`std` の `FromIterator` トレイトの `from_iter` メソッドと同名。
   fn from_iter(x: Option<A>);
 }
 
@@ -152,25 +152,9 @@ fn main() {
   // Vec<T> implements both `std::iter::FromIterator` and `MyTrait` 
   // If both traits are in scope (as would be the case in Rust 2021),
   // then it becomes ambiguous which `from_iter` method to call
-  <Vec<i32>>::from_iter(None);
-}
-```
--->
-
-```rust
-trait MyTrait<A> {
-  // この関数名は、`std` の `FromIterator` トレイトの `from_iter` メソッドと同名です。
-  fn from_iter(x: Option<A>);
-}
-
-impl<T> MyTrait<()> for Vec<T> {
-  fn from_iter(_: Option<()>) {}
-}
-
-fn main() {
-  // Vec<T> は `std::iter::FromIterator` と `MyTrait` の両方を実装します
-  // もし両方のトレイトがスコープに含まれる場合 (Rust 2021 ではそうなのですが)、
-  // どちらの `from_iter` メソッドを呼び出せばいいかが曖昧になります
+  // Vec<T> は `std::iter::FromIterator` と `MyTrait` の両方を実装する
+  // もし両方のトレイトがスコープに含まれる場合 (Rust 2021 ではそうであるが)、
+  // どちらの `from_iter` メソッドを呼び出せばいいかが曖昧になる
   <Vec<i32>>::from_iter(None);
 }
 ```
@@ -181,18 +165,10 @@ We can fix this by using fully qualified syntax:
 
 完全修飾構文を使えば、これを修正することができます:
 
-<!--
 ```rust,ignore
 fn main() {
   // Now it is clear which trait method we're referring to
-  <Vec<i32> as MyTrait<()>>::from_iter(None);
-}
-```
--->
-
-```rust,ignore
-fn main() {
-  // こうすれば、どちらのトレイトメソッドを指し示しているかが明確になります
+  // こうすれば、どちらのトレイトメソッドを指し示しているかが明確になる
   <Vec<i32> as MyTrait<()>>::from_iter(None);
 }
 ```
@@ -209,7 +185,6 @@ Some users invoke methods on a `dyn Trait` value where the method name overlaps 
 
 `dyn Trait` の値に対してメソッドを呼び出すときに、メソッド名が新しくプレリュードに追加されたトレイトと重複していることがあります:
 
-<!--
 ```rust
 mod submodule {
   pub trait MyTrait {
@@ -219,26 +194,12 @@ mod submodule {
 }
 
 // `MyTrait` isn't in scope here and can only be referred to through the path `submodule::MyTrait`
+// `MyTrait` はここではスコープ内になく、パス付きで `submodule::MyTrait` としか利用できない
 fn bar(f: Box<dyn submodule::MyTrait>) {
   // If `std::convert::TryInto` is in scope (as would be the case in Rust 2021),
   // then it becomes ambiguous which `try_into` method to call
-  f.try_into();
-}
-```
--->
-
-```rust
-mod submodule {
-  pub trait MyTrait {
-    // これは、 `TryInto::try_into` と同じ名前です
-    fn try_into(&self) -> Result<u32, ()>;
-  }
-}
-
-// `MyTrait` はここではスコープ内になく、パス付きで `submodule::MyTrait` としか利用できません
-fn bar(f: Box<dyn submodule::MyTrait>) {
-  // `std::convert::TryInto` がスコープ内にあるときは (Rust 2021 ではそうなのですが)、
-  // どちらの `try_into` メソッドを呼び出せばいいかが曖昧になります
+  // `std::convert::TryInto` がスコープ内にあるときは (Rust 2021 ではそうなのだが)、
+  // どちらの `try_into` メソッドを呼び出せばいいかが曖昧になる
   f.try_into();
 }
 ```
@@ -284,7 +245,6 @@ Many types define their own inherent methods with the same name as a trait metho
 たとえば、以下では `MyStruct` が `from_iter` を実装していますが、
 これは標準ライブラリの `FromIterator` トレイトのメソッドと同名です。
 
-<!--
 ```rust
 use std::iter::IntoIterator;
 
@@ -294,31 +254,6 @@ struct MyStruct {
 
 impl MyStruct {
   // This has the same name as `std::iter::FromIterator::from_iter`
-  fn from_iter(iter: impl IntoIterator<Item = u32>) -> Self {
-    Self {
-      data: iter.into_iter().collect()
-    }
-  }
-}
-
-impl std::iter::FromIterator<u32> for MyStruct {
-    fn from_iter<I: IntoIterator<Item = u32>>(iter: I) -> Self {
-      Self {
-        data: iter.into_iter().collect()
-      }
-    }
-}
-```
--->
-
-```rust
-use std::iter::IntoIterator;
-
-struct MyStruct {
-  data: Vec<u32>
-}
-
-impl MyStruct {
   // これは `std::iter::FromIterator::from_iter` と同名
   fn from_iter(iter: impl IntoIterator<Item = u32>) -> Self {
     Self {
