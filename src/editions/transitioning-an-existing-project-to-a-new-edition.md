@@ -93,7 +93,7 @@ To start, let's run it:
 -->
 
 あなたのコードは新しいエディションに互換性のない機能を使っているかもしれないし、使っていないかもしれません。
-cargo には [`cargo fix`] というサブコマンドがあり、これがあなたのコードを自動的に更新して次のエディションへの移行を補助してくれます。
+Cargo には [`cargo fix`] というサブコマンドがあり、これがあなたのコードを自動的に更新して次のエディションへの移行を補助してくれます。
 まず初めに、これを実行してみましょう。
 
 ```console
@@ -194,5 +194,5 @@ Congrats! Your code is now valid in both Rust 2015 and Rust 2018!
 
 [`cargo fix`]: ../../cargo/commands/cargo-fix.html
 [`cargo test`]: ../../cargo/commands/cargo-test.html
-[Advanced migration strategies]: advanced-migrations.md <!-- TODO: 章の名前に合わせてリンク名を変える必要があるかもしれません -->
+[発展的な移行戦略]: advanced-migrations.md
 [nightly channel]: ../../book/appendix-07-nightly-rust.html

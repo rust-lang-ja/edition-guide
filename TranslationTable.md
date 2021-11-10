@@ -37,7 +37,7 @@
 | build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
 | capture                        | キャプチャ
-| cargo                          | cargo
+| cargo                          | Cargo
 | case analysis                  | 場合分け
 | channel                        | チャネル
 | closure                        | クロージャ
@@ -116,6 +116,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| iterate                        | 列挙する
 | key                            | キー
 | keyword                        | キーワード
 | Lang Items                     | Lang Item
@@ -167,6 +168,7 @@
 | proc macro                     | 手続き的マクロ
 | process                        | プロセス
 | range                          | 範囲
+| raw identifier                 | 生識別子
 | raw pointer                    | 生ポインタ
 | raw string literal             | 生文字列リテラル
 | re-assignment                  | 再代入
