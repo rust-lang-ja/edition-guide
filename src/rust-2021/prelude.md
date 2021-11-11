@@ -15,7 +15,7 @@
 - This might make calls to trait methods ambiguous which could make some code fail to compile.
 -->
 
-- `TryInto`, `TryFrom`, `FromIterator` がプレリュードに追加されました。
+- `TryInto`, `TryFrom`, `FromIterator` トレイトがプレリュードに追加されました。
 - これにより、トレイトメソッドへの呼び出しに曖昧性が発生して、コンパイルに失敗するようになるコードがあるかもしれません。
 
 <!--
@@ -44,9 +44,9 @@ not the one from the standard library.
 
 Rust コンパイラは、手動で<!-- TODO: 明示的に、のほうがいいか？-->インポートされたアイテムをプレリュードからのものより優先します。
 これにより、プレリュードに追加があっても既存のコードは壊れないようになっています。
-たとえば、 `example` という名前のクレートに `pub struct Option;` が含まれていたら、
+たとえば、 `example` という名前のクレートまたはモジュールに `pub struct Option;` が含まれていたら、
 `use example::*;` とすることで `Option` は曖昧性なく `example` に含まれるものを指し示し、
-標準ライブラリのものは意味しません。
+標準ライブラリのものは指しません。
 
 <!--
 However, adding a _trait_ to the prelude can break existing code in a subtle way.
@@ -93,7 +93,7 @@ The tracking issue [can be found here](https://github.com/rust-lang/rust/issues/
 As a part of the 2021 edition a migration lint, `rust_2021_prelude_collisions`, has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
 -->
 
-Rust 2018 から Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prelude_collisions` が追加されています。
+Rust 2018 コードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prelude_collisions` が追加されています。
 
 <!--
 In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
@@ -163,7 +163,7 @@ fn main() {
 We can fix this by using fully qualified syntax:
 -->
 
-完全修飾構文を使えば、これを修正することができます:
+完全修飾構文を使うと、これを修正できます:
 
 ```rust,ignore
 fn main() {
@@ -301,12 +301,12 @@ The lint needs to take a couple of factors into account when determining whether
 -->
 
 - [完全修飾呼び出し]と[ドット呼び出しメソッド構文]のどちらが使われているか？
-  - これは、メソッド呼び出し構文において、自動参照付けと自動参照外しによってどのように名前解決がなされるかに影響します<!--TODO: due to がどこに係るのかわかりません -->。ドット呼び出しメソッド構文では、手動で参照外し/参照付けすることで優先順位を決められますが、完全修飾呼び出しではメソッドパス中に型とトレイト名が指定されていなければなりません (例: `<Type as Trait>::method`)
+  - これは、メソッド呼び出し構文の自動参照付けと自動参照外しによる名前の解決方法に影響します。ドット呼び出しメソッド構文では、手動で参照外し/参照付けすることで優先順位を決められますが、完全修飾呼び出しではメソッドパス中に型とトレイト名が指定されていなければなりません (例: `<Type as Trait>::method`)
 - [固有メソッド]と[トレイトメソッド]のどちらが呼び出されているか？
   - 固有メソッドはトレイトメソッドより優先されるので、`self` を取るトレイトメソッドは、`TryInto::try_into`より優先されますが、`&self` や `&mut self` をとる固有メソッドは、自動参照付けが必要なので優先されません（もっとも、`TryInto` は `self` を取るので、それは当てはまりませんが）
 - そのメソッドは `core` か `std` から来たものか？　（トレイトは自分自身とは衝突しないので）
 - その型は、名前が衝突するようなトレイトを実装しているか？
-- メソッドが動的ディスパッチによって呼び出されているか？  （つまり、それは `self` 型の `dyn Trait` か？）
+- メソッドが動的ディスパッチによって呼び出されているか？  （つまり、それは `self` 型が `dyn Trait` か？）
   - その場合、トレイトのインポートは名前解決に影響しないので、移行リントを出す必要はありません
 
 <!--
