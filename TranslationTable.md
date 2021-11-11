@@ -36,6 +36,7 @@
 | bug                            | バグ
 | build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
+| call                           | 呼び出し
 | capture                        | キャプチャ
 | cargo                          | Cargo
 | case analysis                  | 場合分け
@@ -75,6 +76,7 @@
 | diverging                      | 発散する〜（上の diverge を修飾語として使った場合）
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
+| dynamic dispatch               | 動的ディスパッチ
 | early return                   | 早期リターン
 | edition                        | エディション
 | empty tuple                    | 空タプル
@@ -94,6 +96,7 @@
 | foreign                        | 他言語
 | free                           | 解放する
 | free-standing function         | フリースタンディングな関数
+| fully qualified syntax         | 完全修飾構文
 | garbage collector              | ガベージコレクタ
 | generic parameter              | ジェネリックパラメータ
 | generics                       | ジェネリクス
@@ -106,6 +109,7 @@
 | immutable                      | イミュータブル
 | immutability                   | イミュータビリティ
 | implement                      | 実装する
+| inherent method                | 固有メソッド
 | initialize                     | 初期化する
 | input lifetime                 | 入力ライフタイム
 | interior                       | 内側の
@@ -115,6 +119,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| item                           | アイテム
 | iterate                        | 列挙する
 | key                            | キー
 | keyword                        | キーワード
@@ -159,11 +164,13 @@
 | parametric polymorphism        | パラメトリック多相
 | parse                          | パース、パースする
 | patch                          | パッチ
+| path                           | パス
 | pattern                        | パターン
 | performance                    | パフォーマンス
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
+| prelude                        | プレリュード (or prelude)
 | proc macro                     | 手続き的マクロ
 | process                        | プロセス
 | range                          | 範囲
@@ -172,7 +179,8 @@
 | raw string literal             | 生文字列リテラル
 | re-assignment                  | 再代入
 | rebind                         | 再束縛
-| reference                      | 参照
+| reference (名詞)               | 参照
+| reference (動詞)               | 参照付け (to dereference の対義語として)
 | reference count                | 参照カウント
 | refutable                      | 論駁可能
 | regression                     | リグレッション
@@ -198,6 +206,7 @@
 | specialized                    | 特殊化された
 | standard library               | 標準ライブラリ
 | statement                      | 文
+| static dispatch                | 静的ディスパッチ
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
@@ -216,6 +225,7 @@
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
 | trait                          | トレイト
+| tracking issue                 | 追跡用の Issue
 | tuple                          | タプル
 | token trees                    | トークン木
 | type alias                     | 型エイリアス
