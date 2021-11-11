@@ -150,16 +150,8 @@ And somewhere in our dependency tree, another package has this:
 
 そして依存関係の中にはこんなパッケージもあるとしましょう:
 
-<!--
 ```toml
 # Another package's Cargo.toml
-
-[build-dependencies]
-bstr = "0.2.16"
-```
--->
-
-```toml
 # 別のパッケージの Cargo.toml
 
 [build-dependencies]
