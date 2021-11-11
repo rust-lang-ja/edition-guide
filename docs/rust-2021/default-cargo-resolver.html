@@ -280,15 +280,8 @@ bstr = { version = &quot;0.2.16&quot;, default-features = false }
 And somewhere in our dependency tree, another package has this:
 -->
 <p>そして依存関係の中にはこんなパッケージもあるとしましょう:</p>
-<!--
-```toml
-# Another package's Cargo.toml
-
-[build-dependencies]
-bstr = "0.2.16"
-```
--->
-<pre><code class="language-toml"># 別のパッケージの Cargo.toml
+<pre><code class="language-toml"># Another package's Cargo.toml
+# 別のパッケージの Cargo.toml
 
 [build-dependencies]
 bstr = &quot;0.2.16&quot;
@@ -439,7 +432,7 @@ bstr v0.2.16
 </code></pre>
 <!--
 This snippet of output shows that the project `foo` depends on `bar` with the "default" feature.
-Then, `bar` depends on `bstr` as a build-dependency with the "default" feature
+Then, `bar` depends on `bstr` as a build-dependency with the "default" feature.
 We can further see that `bstr`'s  "default" feature enables "unicode" (among other features).
 -->
 <p>この出力例からは、<code>foo</code> が <code>bar</code> に &quot;default&quot; フィーチャ付きで依存していることがわかり、

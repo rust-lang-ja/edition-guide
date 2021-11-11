@@ -226,7 +226,7 @@ fn main() {
 <p>We can fix this by using fully qualified syntax:</p>
 <pre><code class="language-rust ignore">fn main() {
   // Now it is clear which trait method we're referring to
-  &lt;Vec&lt;i32&gt; as MyTrait&lt;()&gt;::from_iter(None);
+  &lt;Vec&lt;i32&gt; as MyTrait&lt;()&gt;&gt;::from_iter(None);
 }
 </code></pre>
 <h4><a class="header" href="#inherent-methods-on-dyn-trait-objects" id="inherent-methods-on-dyn-trait-objects">Inherent methods on <code>dyn Trait</code> objects</a></h4>
