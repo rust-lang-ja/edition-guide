@@ -60,10 +60,8 @@ to the prelude yet, since there is a lot of code that would break this way.
 たとえば、`MyTryInto` トレイトで定義されている `x.try_into()` という呼び出しは、
 `std` の `TryInto` もインポートされているときは、動かなくなる場合があります。
 なぜなら、`try_into` の呼び出しは今や曖昧で、どちらのトレイトから来ているかわからないからです。
-だからこそ我々は、このような問題が起こりうるコードが沢山あるがために、
-`TryInto` を未だにプレリュードに追加していませんでした。 <!--
-代案: だからこそ我々は、 `TryInto` を未だにプレリュードに追加していませんでした。
-追加してしまうと、多くのコードでそのような問題が起こりうるからです。 -->
+だからこそ我々は、 `TryInto` を未だにプレリュードに追加していませんでした。
+追加してしまうと、多くのコードでそのような問題が起こりうるからです。
 
 <!--
 As a solution, Rust 2021 will use a new prelude.
@@ -222,7 +220,7 @@ ensures that we're calling `try_into` on the `dyn MyTrait` which can only refer 
 
 この場合、さらなる参照外しをするか、もしくはメソッドレシーバーの型を明示することで修正できます。
 これにより、`dyn Trait` のメソッドとプレリュードのトレイトのメソッドのどちらが選ばれているかが明確になります。
-たとえば、上の `f.try_into()` を `(&*f).try_into()` にすると、`dyn MyTrait` に対して `try_into` を呼び出すことがはっきりします。
+たとえば、上の `f.try_into()` を `(&*f).try_into()` にすると、`try_into` が `dyn Trait` に対して呼び出されることがはっきりします。
 これに該当するのは`MyTrait::try_into`メソッドのみです。
 
 <!--
@@ -306,7 +304,7 @@ The lint needs to take a couple of factors into account when determining whether
   - 固有メソッドはトレイトメソッドより優先されるので、`self` を取るトレイトメソッドは、`TryInto::try_into`より優先されますが、`&self` や `&mut self` をとる固有メソッドは、自動参照付けが必要なので優先されません（もっとも、`TryInto` は `self` を取るので、それは当てはまりませんが）
 - そのメソッドは `core` か `std` から来たものか？　（トレイトは自分自身とは衝突しないので）
 - その型は、名前が衝突するようなトレイトを実装しているか？
-- メソッドが動的ディスパッチによって呼び出されているか？  （つまり、それは `self` 型が `dyn Trait` か？）
+- メソッドが動的ディスパッチによって呼び出されているか？  （つまり、 `self` の型が `dyn Trait` か？）
   - その場合、トレイトのインポートは名前解決に影響しないので、移行リントを出す必要はありません
 
 <!--
