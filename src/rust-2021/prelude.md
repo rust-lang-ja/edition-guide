@@ -222,8 +222,8 @@ ensures that we're calling `try_into` on the `dyn MyTrait` which can only refer 
 
 この場合、さらなる参照外しをするか、もしくはメソッドレシーバーの型を明示することで修正できます。
 これにより、`dyn Trait` のメソッドとプレリュードのトレイトのメソッドのどちらが選ばれているかが明確になります。
-たとえば、上の `f.try_into()` を `(&*f).try_into()` にすれば、<!-- 意訳。ここの部分の意味がわかりません-->確実に `MyTrait::try_into` を指し示しているとわかるので<!--ここまで-->、
-`dyn MyTrait` の方の `try_into` が呼び出されていると決定されます。
+たとえば、上の `f.try_into()` を `(&*f).try_into()` にすると、`dyn MyTrait` に対して `try_into` を呼び出すことがはっきりします。
+これに該当するのは`MyTrait::try_into`メソッドのみです。
 
 <!--
 ### No migration needed
