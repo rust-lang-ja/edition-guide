@@ -30,6 +30,7 @@
 | binary                         | バイナリ
 | binding                        | 束縛
 | block                          | ブロック
+| body (関数の)                  | 本体
 | borrowing                      | 借用
 | bounds                         | 境界
 | boxed                          | ボックス化された
