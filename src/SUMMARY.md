@@ -38,24 +38,6 @@
   - [Method dispatch for raw pointers to inference variables](rust-2018/tyvar-behind-raw-pointer.md)
   - [Cargo changes](rust-2018/cargo.md)
 
-## Post Rust 2018
-
-- [Rust 2018以降の変更（期間限定公開）](rust-post-2018/index.md)
-    - [dbg! マクロ](rust-post-2018/dbg-macro.md)
-    - [デフォルトでjemallocを使わない](rust-post-2018/no-jemalloc.md)
-    - [統一的なパス](rust-post-2018/uniform-paths.md)
-    - [リテラルマクロマッチャ](rust-post-2018/literal-macro-matcher.md)
-    - [マクロ内の`?`演算子](rust-post-2018/qustion-mark-operator-in-macros.md)
-    - [const fn](rust-post-2018/const-fn.md)
-    - [ピン留め](rust-post-2018/pin.md)
-    - [FnBoxは不要に](rust-post-2018/no-more-fnbox.md)
-    - [Cargoレジストリが選択できるように](rust-post-2018/alternative-cargo-registries.md)
-    - [TryFromとTryInto](rust-post-2018/tryfrom-and-tryinto.md)
-    - [Futureトレイト](rust-post-2018/future.md)
-    - [allocクレート](rust-post-2018/alloc.md)
-    - [MaybeUninit<T>](rust-post-2018/maybe-uninit.md)
-    - [cargo vendor](rust-post-2018/cargo-vendor.md)
-
 ## Rust 2021
 
 <!--
