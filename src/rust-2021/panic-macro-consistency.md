@@ -20,7 +20,7 @@
 -->
 
 - `panic!(..)` では常に `format_args!(..)` が使われるようになりました。つまり、`println!()` と同じ書き方をすることになります。
-- `panic!("{")` と書くことはできませんでした。`{` を `{{` とエスケープしなくてはなりません。
+- `panic!("{")` と書くことはできなくなりました。`{` を `{{` とエスケープしなくてはなりません。
 - `x` が文字列リテラルでないときに、 `panic!(x)` と書くことはできなくなりました。
   - 文字列でないペイロード付きでパニックしたい場合、 `std::panic::panic_any(x)` を使うようにしてください。
   - もしくは、`x` の `Display` 実装を用いて、`panic!("{}", x)` と書いてください。
@@ -40,7 +40,7 @@ that we can't just change due to backwards compatibility.
 
 `panic!()` は、Rust で最もよく知られたマクロの一つです。
 しかし、このマクロには[いくぶん非直感的な挙動](https://github.com/rust-lang/rfcs/blob/master/text/3007-panic-plan.md)がありましたが、
-今までは後方互換性の問題から修正することができませんでした。
+今までは後方互換性の問題から修正できませんでした。
 
 ```rust,ignore
 // Rust 2018
@@ -100,8 +100,8 @@ will be the only way to panic with something other than a formatted string.
 -->
 
 この紛らわしい状況を解決するために、Rust 2021 の `panic!()` マクロはより一貫したものになりました。
-新しい `panic!()` マクロは、単一引数として任意の型を受け付けることがなくなりました。
-代わりに、`println!()` と同様に、最初の引数をフォーマット文字列として処理するようになりました。
+新しい `panic!()` マクロは、単一引数として任意の式を受け付けることがなくなりました。
+代わりに、`println!()` と同様に、常に最初の引数をフォーマット文字列として処理するようになりました。
 `panic!()` マクロが任意のペイロードを受け付けるわけではなくなったので、
 フォーマット文字列以外のペイロードと共にパニックさせる唯一の方法は、
 [`panic_any()`](https://doc.rust-lang.org/stable/std/panic/fn.panic_any.html)を使うことだけになりました。
@@ -159,7 +159,7 @@ Should you choose or need to manually migrate, you'll need to update all panic i
 formatting as `println` or use `std::panic::panic_any` to panic with non-string data.
 -->
 
-手動で移行する場合は、各 panic の呼び出しについて、 `println` と同様のフォーマットに書き換えるか、`std::panic::panic_any` を用いて非文字列型のデータと共にパニックさせるかを選ぶ必要があります。
+手動で移行することを選んだり、そうする必要がある場合には、各 panic の呼び出しについて、 `println` と同様のフォーマットに書き換えるか、`std::panic::panic_any` を用いて非文字列型のデータと共にパニックさせるかを選ぶ必要があります。
 
 <!--
 For example, in the case of `panic!(MyStruct)`, you'll need to convert to using `std::panic::panic_any` (note
@@ -175,5 +175,5 @@ or by escaping the curly braces (i.e., `panic!("Some curlies: {{}}")`).
 -->
 
 パニックのメッセージに波括弧が含まれているのに、引数の個数が一致しない場合は（例: `panic!("Some curlies: {}")`）、
-`println!` と同じ構文を使うか（つまり `panic!("Some curlies: {{}}")` とするか）、波括弧をエスケープすれば（つまり `panic!("Some curlies: {{}}")` とすれば）、
+`println!` と同じ構文を使うか（つまり `panic!("{}", "Some curlies: {}")` とするか）、波括弧をエスケープすれば（つまり `panic!("Some curlies: {{}}")` とすれば）、
 その文字列リテラルを用いてパニックすることができます。
