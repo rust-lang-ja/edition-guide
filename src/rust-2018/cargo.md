@@ -30,7 +30,7 @@
   Rust 2015 と Rust 2018 の違いは、`Cargo.toml` に明示的にターゲットが1つ以上宣言されている場合（つまり、`[lib]`, `[[bin]]`, `[[test]]`, `[[bench]]`, `[[example]]` のどれかが1つ以上ある場合）に生じます。
   Rust 2015 では、これらのうちどれか1つが指定されていた場合、ターゲットの自動探索は無効化されました。
   Rust 2018 では、その場合であっても、ターゲットの自動探索は無効化されません。<br>
-  詳細は、[Cargo Book の "Target auto-discovery"（英語）][target-auto-discovery]も御覧ください。
+  詳細は、[Cargo Book の "Target auto-discovery"（英語）][target-auto-discovery]もご覧ください。
 
 [^2] *訳注*:
   [WIP] 詳細は不明です。
