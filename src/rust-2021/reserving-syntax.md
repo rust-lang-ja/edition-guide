@@ -24,7 +24,7 @@
 - 主に影響を受けるのはマクロです。例えば、`quote!{ #a#b }` と書くことはできなくなりました。
 - キーワードが特別扱いされることもないので、例えば `match"..." {}` と書くこともできなくなりました。
 - 識別子と後続の `#`, `"`, `'` の間に空白文字を挿入することで、エラーを回避できます。
-- エディション移行ツール<!--訳注: Edition migrations と言った場合にはツールのことを指しますかね？-->は、必要な場所に空白を挿入してくれます。
+- エディション移行ツールは、必要な場所に空白を挿入してくれます。
 
 <!--
 ## Details
@@ -52,7 +52,7 @@ or for permanent syntax if appropriate.
 -->
 
 これにより、将来エディションをまたくごとなく構文を拡張できるようになります。
-この構文は次のエディションまでの一時的なものになるかもしれませんし、必要に応じて恒久的なものになるかもしれません。
+これを、次のエディションまでの一時的な構文のために使ったり、もし適切なら、恒久的な構文のために使ったりするでしょう。
 
 <!--
 Without an edition, this would be a breaking change, since macros can currently
@@ -131,7 +131,7 @@ committed to any of them yet):
 As a part of the 2021 edition a migration lint, `rust_2021_prefixes_incompatible_syntax`, has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
 -->
 
-Rust 2018 から Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prefixes_incompatible_syntax` が追加されています。
+Rust 2018 のコードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prefixes_incompatible_syntax` が追加されています。
 
 <!--
 In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
