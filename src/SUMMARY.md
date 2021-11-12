@@ -56,7 +56,7 @@
   - [Prelude への追加](rust-2021/prelude.md)
   - [デフォルトの Cargo のフィーチャリゾルバ](rust-2021/default-cargo-resolver.md)
   - [配列に対する IntoIterator](rust-2021/IntoIterator-for-arrays.md)
-  - [Disjoint capture in closures](rust-2021/disjoint-capture-in-closures.md)
+  - [クロージャはフィールドごとにキャプチャする](rust-2021/disjoint-capture-in-closures.md)
   - [panic マクロの一貫性](rust-2021/panic-macro-consistency.md)
   - [構文の予約](rust-2021/reserving-syntax.md)
   - [警告からエラーへの格上げ](rust-2021/warnings-promoted-to-error.md)

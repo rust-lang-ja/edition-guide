@@ -76,6 +76,7 @@
 | diverging                      | 発散する〜（上の diverge を修飾語として使った場合）
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
+| drop                           | ドロップ
 | dynamic dispatch               | 動的ディスパッチ
 | early return                   | 早期リターン
 | edition                        | エディション
@@ -143,10 +144,12 @@
 | memory                         | メモリ
 | method                         | メソッド
 | monomorphization               | 単相化
-| move                           | ムーブ
+| move                           | ムーブ(する)
+| move out                       | ムーブする、ムーブアウトする
 | mutability                     | ミュータビリティ
 | mutable                        | ミュータブル
 | mutable binding                | ミュータブルな束縛
+| mutate                         | 変更する、書き換える
 | mutual-exclusion               | 相互排他
 | null                           | ヌル
 | object-safe                    | オブジェクト安全
