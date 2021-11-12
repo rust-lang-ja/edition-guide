@@ -36,7 +36,7 @@
   - [Anonymous trait function parameters deprecated](rust-2018/trait-fn-parameters.md)
   - [New keywords](rust-2018/new-keywords.md)
   - [Method dispatch for raw pointers to inference variables](rust-2018/tyvar-behind-raw-pointer.md)
-  - [Cargo changes](rust-2018/cargo.md)
+  - [Cargo への変更](rust-2018/cargo.md)
 
 ## Rust 2021
 
