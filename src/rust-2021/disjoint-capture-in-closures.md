@@ -118,13 +118,13 @@ Changing the variables captured by a closure can cause programs to change behavi
 Whenever any of the scenarios below are detected, `cargo fix` will insert a "dummy let" into your closure to force it to capture the entire variable:
 -->
 
-以下のような状況を検知すると、`cargo fix` は "ダミーの let" をクロージャの中に挿入して、強制的に全ての変数がキャプチャされるようにします:
+以下のような状況を検知すると、`cargo fix` は「ダミーの let」をクロージャの中に挿入して、強制的に全ての変数がキャプチャされるようにします:
 
 ```rust
 let x = (vec![22], vec![23]);
 let c = move || {
     // "Dummy let" that forces `x` to be captured in its entirety
-    // `x` 全体が強制的にキャプチャされるための "ダミーの let"
+    // `x` 全体が強制的にキャプチャされるための「ダミーの let」
     let _ = &x;
 
     // Otherwise, only `x.0` would be captured here
@@ -289,7 +289,7 @@ Closures automatically implement the following traits based on what values they 
 [`clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 [`send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
 [`sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
-[`unwindsafe`]: https://doc.rust-lang.org/std/marker/trait.UnwindSafe.html
+[`unwindsafe`]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
 
 <!--
 In Rust 2021, since different values are being captured, this can affect what traits a closure will implement. The migration lints test each closure to see whether it would have implemented a given trait before and whether it still implements it now; if they find that a trait used to be implemented but no longer is, then "dummy lets" are inserted.
