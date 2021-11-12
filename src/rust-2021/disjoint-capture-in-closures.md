@@ -32,7 +32,7 @@ automatically capture anything that you refer to from within their body.
 For example, `|| a + 1` automatically captures a reference to `a` from the surrounding context.
 -->
 
-[クロージャ](https://doc.rust-lang.org/book/ch13-01-closures.html)は、本体の中で使用しているすべてのものを自動的にキャプチャします。<!--TODO: 日本語版の TRPL に置き換える？ -->
+[クロージャ](https://doc.rust-jp.rs/book-ja/ch13-01-closures.html)は、本体の中で使用しているすべてのものを自動的にキャプチャします。
 例えば、`|| a + 1` と書くと、周囲のコンテキスト中の `a` への参照が自動的にキャプチャされます。
 
 <!--
@@ -80,7 +80,7 @@ Disjoint capture was proposed as part of [RFC 2229](https://github.com/rust-lang
 As a part of the 2021 edition a migration lint, `rust_2021_incompatible_closure_captures`, has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
 -->
 
-Rust 2018 から Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_incompatible_closure_captures` が追加されています。
+Rust 2018 のコードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_incompatible_closure_captures` が追加されています。
 
 <!--
 In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
@@ -167,7 +167,8 @@ let c = || match x {
 The `let _ = x` statement here is a no-op, since the `_` pattern completely ignores the right-hand side, and `x` is a reference to a place in memory (in this case, a variable).
 -->
 
-`_` パターンは右辺を無視するので、この `let _ = x` は何もせず、`x` はメモリ上のある場所（この場合は変数）を指し示します<!--TODO: 最後どういう意味なんでしょうか。これで訳合ってますか？-->。
+この `let _ = x` は何もしません。
+なぜなら、`_` パターンは右辺を無視し、さらに、`x` はメモリ上のある場所（この場合は変数）への参照だからです。
 
 <!--
 This change by itself (capturing fewer values) doesn't trigger any suggestions, but it may do so in conjunction with the "drop order" change below.
@@ -191,7 +192,7 @@ This change by itself (capturing fewer values) doesn't trigger any suggestions, 
 When a closure takes ownership of a value from a variable `t`, that value is then dropped when the closure is dropped, and not when the variable `t` goes out of scope:
 -->
 
-クロージャが変数 `t` の所有権を取るとき、`t` がドロップされるのは `t` がスコープ外に出たときではなく、そのクロージャがドロップされたときになります:
+クロージャが変数 `t` の値の所有権を取るとき、その値がドロップされるのは `t` がスコープ外に出たときではなく、そのクロージャがドロップされたときになります:
 
 ```rust
 # fn move_value<T>(_: T){}
@@ -253,7 +254,7 @@ In most cases, dropping values at different times just affects when memory is fr
 -->
 
 ほとんどの場合、ドロップのタイミングが変わってもメモリが解放されるタイミングが変わるだけで、さほど問題にはなりません。
-しかし、`Drop` の実装に副作用のある（いわゆるデストラクタである）場合、ドロップの順序が変わるとプログラムの意味も変わってしまいます。
+しかし、`Drop` の実装に副作用のある（いわゆるデストラクタである）場合、ドロップの順序が変わるとプログラムの意味が変わってしまうかもしれません。
 その場合は、コンパイラはダミーの `let` を挿入して変数全体がキャプチャされるように提案します。
 
 <!--
