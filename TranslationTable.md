@@ -204,6 +204,7 @@
 | slice                          | スライス
 | slicing                        | スライシング
 | specialized                    | 特殊化された
+| stablize                       | 安定化する
 | standard library               | 標準ライブラリ
 | statement                      | 文
 | static dispatch                | 静的ディスパッチ
