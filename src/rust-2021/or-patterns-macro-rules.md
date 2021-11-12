@@ -75,8 +75,8 @@ that one still wishes to match pattern fragments followed by a `|`, the fragment
 has been added to retain the older behavior.
 -->
 
-Rust 2021 では、`$_:pat` フラグメントに `|` そのものが後続することはできません。
-パターンフラグメントに `|` が後続するものにマッチさせたいような場合は、新しく追加された `:pat_param` が過去と同じ挙動を示すようになっています。
+Rust 2021 では、`$_:pat` フラグメントに `|` そのものを続けることはできません。
+パターンフラグメントに `|` が続いてるものにマッチさせたいような場合は、新しく追加された `:pat_param` が過去と同じ挙動を示すようになっています。
 
 <!--
 It's important to remember that editions are _per crate_, so the only relevant edition is the edition
@@ -131,6 +131,7 @@ macro_rules! my_macro {
 	($x:pat | $y:pat) => {
 		// TODO: implementation
 		// TODO: 実装
+	}
 }
 
 // This macro works in Rust 2018 since `$x:pat` does not match against `|`:
@@ -140,6 +141,9 @@ my_macro!(1 | 2);
 // In Rust 2021 however, the `$_:pat` fragment matches `|` and is not allowed
 // to be followed by a `|`. To make sure this macro still works in Rust 2021
 // change the macro to the following:
+// 一方 Rust 2021 では、`$_:pat` フラグメントは `|` にもマッチし、
+// `|` が続くのは許されなくなりました。
+// Rust 2021 でもマクロが動作するためには、マクロを以下のように変更しなくてはなりません:
 macro_rules! my_macro { 
 	($x:pat_param | $y:pat) => { // <- this line is different
 	                             //    この行を変えた
