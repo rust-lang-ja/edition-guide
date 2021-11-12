@@ -104,6 +104,7 @@
 | growable                       | 伸張可能
 | guard                          | ガード
 | handle                         | ハンドル
+| hard error                     | ハードエラー
 | hash                           | ハッシュ
 | identifier                     | 識別子
 | immutable                      | イミュータブル
