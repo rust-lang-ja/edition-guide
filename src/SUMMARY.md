@@ -38,24 +38,6 @@
   - [Method dispatch for raw pointers to inference variables](rust-2018/tyvar-behind-raw-pointer.md)
   - [Cargo changes](rust-2018/cargo.md)
 
-## Post Rust 2018
-
-- [Rust 2018以降の変更（期間限定公開）](rust-post-2018/index.md)
-    - [dbg! マクロ](rust-post-2018/dbg-macro.md)
-    - [デフォルトでjemallocを使わない](rust-post-2018/no-jemalloc.md)
-    - [統一的なパス](rust-post-2018/uniform-paths.md)
-    - [リテラルマクロマッチャ](rust-post-2018/literal-macro-matcher.md)
-    - [マクロ内の`?`演算子](rust-post-2018/qustion-mark-operator-in-macros.md)
-    - [const fn](rust-post-2018/const-fn.md)
-    - [ピン留め](rust-post-2018/pin.md)
-    - [FnBoxは不要に](rust-post-2018/no-more-fnbox.md)
-    - [Cargoレジストリが選択できるように](rust-post-2018/alternative-cargo-registries.md)
-    - [TryFromとTryInto](rust-post-2018/tryfrom-and-tryinto.md)
-    - [Futureトレイト](rust-post-2018/future.md)
-    - [allocクレート](rust-post-2018/alloc.md)
-    - [MaybeUninit<T>](rust-post-2018/maybe-uninit.md)
-    - [cargo vendor](rust-post-2018/cargo-vendor.md)
-
 ## Rust 2021
 
 <!--
@@ -71,11 +53,11 @@
 -->
 
 - [Rust 2021](rust-2021/index.md)
-  - [Additions to the prelude](rust-2021/prelude.md)
+  - [Prelude への追加](rust-2021/prelude.md)
   - [デフォルトの Cargo のフィーチャリゾルバ](rust-2021/default-cargo-resolver.md)
   - [配列に対する IntoIterator](rust-2021/IntoIterator-for-arrays.md)
   - [クロージャはフィールドごとにキャプチャする](rust-2021/disjoint-capture-in-closures.md)
-  - [Panic macro consistency](rust-2021/panic-macro-consistency.md)
-  - [Reserving syntax](rust-2021/reserving-syntax.md)
+  - [panic マクロの一貫性](rust-2021/panic-macro-consistency.md)
+  - [構文の予約](rust-2021/reserving-syntax.md)
   - [警告からエラーへの格上げ](rust-2021/warnings-promoted-to-error.md)
-  - [Or patterns in macro-rules](rust-2021/or-patterns-macro-rules.md)
+  - [マクロ規則における OR パターン](rust-2021/or-patterns-macro-rules.md)

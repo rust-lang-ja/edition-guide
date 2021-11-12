@@ -150,16 +150,8 @@ And somewhere in our dependency tree, another package has this:
 
 そして依存関係の中にはこんなパッケージもあるとしましょう:
 
-<!--
 ```toml
 # Another package's Cargo.toml
-
-[build-dependencies]
-bstr = "0.2.16"
-```
--->
-
-```toml
 # 別のパッケージの Cargo.toml
 
 [build-dependencies]
@@ -354,7 +346,7 @@ bstr v0.2.16
 
 <!--
 This snippet of output shows that the project `foo` depends on `bar` with the "default" feature.
-Then, `bar` depends on `bstr` as a build-dependency with the "default" feature
+Then, `bar` depends on `bstr` as a build-dependency with the "default" feature.
 We can further see that `bstr`'s  "default" feature enables "unicode" (among other features).
 -->
 
