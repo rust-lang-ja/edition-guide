@@ -94,6 +94,7 @@
 | exterior                       | 外側の
 | feature                        | フィーチャ
 | foreign                        | 他言語
+| (マクロの) fragment specifier  | フラグメント指定子
 | free                           | 解放する
 | free-standing function         | フリースタンディングな関数
 | fully qualified syntax         | 完全修飾構文
