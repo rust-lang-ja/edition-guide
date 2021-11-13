@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: quay.io/rust-lang-ja/circleci:edition-guide-mdbook-0.4.5
+      - image: quay.io/rust-lang-ja/circleci:edition-guide-mdbook-0.4.13
     steps:
       - checkout
       - run: rustc --version --verbose
@@ -24,9 +24,9 @@ jobs:
       - store_artifacts:
           path: /tmp/docs.txz
           destination: docs.txz
-      # - run:
-      #     name: Testing book
-      #     command: mdbook test
+      - run:
+          name: Testing book
+          command: mdbook test
       # - run:
       #     name: Check for broken links
       #     command: |
