@@ -4,37 +4,25 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Advanced migrations - エディションガイド</title>
-        
-        
 
 
         <!-- Custom HTML head -->
-        
-
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
-        
         <link rel="icon" href="../favicon.svg">
-        
-        
         <link rel="shortcut icon" href="../favicon.png">
-        
         <link rel="stylesheet" href="../css/variables.css">
         <link rel="stylesheet" href="../css/general.css">
         <link rel="stylesheet" href="../css/chrome.css">
-        
         <link rel="stylesheet" href="../css/print.css" media="print">
-        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
-        
         <link rel="stylesheet" href="../fonts/fonts.css">
-        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="../highlight.css">
@@ -42,11 +30,8 @@
         <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
-        
         <link rel="stylesheet" href="../theme/em-to-bold.css">
-        
 
-        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -105,7 +90,6 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -122,33 +106,27 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
-                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
-                        
                     </div>
 
                     <h1 class="menu-title">エディションガイド</h1>
 
                     <div class="right-buttons">
-                        
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
-                        
-                        
                         <a href="https://github.com/rust-lang-ja/edition-guide" title="Git repository" aria-label="Git repository">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
-                        
+
                     </div>
                 </div>
 
-                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -156,7 +134,6 @@
                         </ul>
                     </div>
                 </div>
-                
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
@@ -169,8 +146,8 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#advanced-migration-strategies" id="advanced-migration-strategies">Advanced migration strategies</a></h1>
-<h2><a class="header" href="#how-migrations-work" id="how-migrations-work">How migrations work</a></h2>
+                        <h1 id="advanced-migration-strategies"><a class="header" href="#advanced-migration-strategies">Advanced migration strategies</a></h1>
+<h2 id="how-migrations-work"><a class="header" href="#how-migrations-work">How migrations work</a></h2>
 <p><a href="https://doc.rust-lang.org/cargo/commands/cargo-fix.html"><code>cargo fix --edition</code></a> works by running the equivalent of <a href="https://doc.rust-lang.org/cargo/commands/cargo-check.html"><code>cargo check</code></a> on your project with special <a href="https://doc.rust-lang.org/rustc/lints/index.html">lints</a> enabled which will detect code that may not compile in the next edition.
 These lints include instructions on how to modify the code to make it compatible on both the current and the next edition.
 <code>cargo fix</code> applies these changes to the source code, and then runs <code>cargo check</code> again to verify that the fixes work.
@@ -183,14 +160,14 @@ Check the <a href="#partial-migration-with-broken-code">Partial migration</a> se
 <p><code>cargo fix</code> may run <code>cargo check</code> multiple times.
 For example, after applying one set of fixes, this may trigger new warnings which require further fixes.
 Cargo repeats this until no new warnings are generated.</p>
-<h2><a class="header" href="#migrating-multiple-configurations" id="migrating-multiple-configurations">Migrating multiple configurations</a></h2>
+<h2 id="migrating-multiple-configurations"><a class="header" href="#migrating-multiple-configurations">Migrating multiple configurations</a></h2>
 <p><code>cargo fix</code> can only work with a single configuration at a time.
 If you use <a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo features</a> or <a href="https://doc.rust-lang.org/reference/conditional-compilation.html">conditional compilation</a>, then you may need to run <code>cargo fix</code> multiple times with different flags.</p>
 <p>For example, if you have code that uses <code>#[cfg]</code> attributes to include different code for different platforms, you may need to run <code>cargo fix</code> with the <code>--target</code> option to fix for different targets.
 This may require moving your code between machines if you don't have cross-compiling available.</p>
 <p>Similarly, if you have conditions on Cargo features, like <code>#[cfg(feature = &quot;my-optional-thing&quot;)]</code>, it is recommended to use the <code>--all-features</code> flag to allow <code>cargo fix</code> to migrate all the code behind those feature gates.
 If you want to migrate feature code individually, you can use the <code>--features</code> flag to migrate one at a time.</p>
-<h2><a class="header" href="#migrating-a-large-project-or-workspace" id="migrating-a-large-project-or-workspace">Migrating a large project or workspace</a></h2>
+<h2 id="migrating-a-large-project-or-workspace"><a class="header" href="#migrating-a-large-project-or-workspace">Migrating a large project or workspace</a></h2>
 <p>You can migrate a large project incrementally to make the process easier if you run into problems.</p>
 <p>In a <a href="https://doc.rust-lang.org/cargo/reference/workspaces.html">Cargo workspace</a>, each package defines its own edition, so the process naturally involves migrating one package at a time.</p>
 <p>Within a <a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-package-section">Cargo package</a>, you can either migrate the entire package at once, or migrate individual <a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html">Cargo targets</a> one at a time.
@@ -202,7 +179,7 @@ name = &quot;my-binary&quot;
 edition = &quot;2018&quot;
 </code></pre>
 <p>This usually should not be required, but is an option if you have a lot of targets and are having difficulty migrating them all together.</p>
-<h2><a class="header" href="#partial-migration-with-broken-code" id="partial-migration-with-broken-code">Partial migration with broken code</a></h2>
+<h2 id="partial-migration-with-broken-code"><a class="header" href="#partial-migration-with-broken-code">Partial migration with broken code</a></h2>
 <p>Sometimes the fixes suggested by the compiler may fail to work.
 When this happens, Cargo will report a warning indicating what happened and what the error was.
 However, by default it will automatically back out the changes it made.
@@ -216,7 +193,7 @@ You can do this by adding the individual lints as warnings, and then either runn
 You can add <code>#![warn(keyword_idents)]</code> to the top of each crate (like at the top of <code>src/lib.rs</code> or <code>src/main.rs</code>).
 Then, running <code>cargo fix</code> will apply just the suggestions for that lint.</p>
 <p>You can see the list of lints enabled for each edition in the <a href="https://doc.rust-lang.org/rustc/lints/groups.html">lint group</a> page, or run the <code>rustc -Whelp</code> command.</p>
-<h2><a class="header" href="#migrating-macros" id="migrating-macros">Migrating macros</a></h2>
+<h2 id="migrating-macros"><a class="header" href="#migrating-macros">Migrating macros</a></h2>
 <p>Some macros may require manual work to fix them for the next edition.
 For example, <code>cargo fix --edition</code> may not be able to automatically fix a macro that generates syntax that does not work in the next edition.</p>
 <p>This may be a problem for both <a href="https://doc.rust-lang.org/reference/procedural-macros.html">proc macros</a> and <code>macro_rules</code>-style macros.
@@ -243,7 +220,7 @@ However, <code>foo</code> won't work when called from any crate.</p>
 <p>If you have macros, you are encouraged to make sure you have tests that fully cover the macro's syntax.
 You may also want to test the macros by importing and using them in crates from multiple editions, just to ensure it works correctly everywhere.
 If you run into issues, you'll need to read through the chapters of this guide to understand how the code can be changed to work across all editions.</p>
-<h3><a class="header" href="#macro-hygiene" id="macro-hygiene">Macro hygiene</a></h3>
+<h3 id="macro-hygiene"><a class="header" href="#macro-hygiene">Macro hygiene</a></h3>
 <p>Macros use a system called &quot;edition hygiene&quot; where the tokens within a macro are marked with which edition they come from.
 This allows external macros to be called from crates of varying editions without needing to worry about which edition it is called from.</p>
 <p>Let's take a closer look at the example above that defines a <code>macro_rules</code> macro using <code>dyn</code> as an identifier.
@@ -254,16 +231,16 @@ The parser looks at the edition of the tokens to know how to interpret it.</p>
 Now, those tokens are tagged with the 2018 edition, and those will fail to parse.
 However, since we never called the macro from our crate, <code>cargo fix --edition</code> never had a chance to inspect the macro and fix it.</p>
 <!-- TODO: hopefully someday, the reference will have chapters on how expansion works, and this can link there for actual details. -->
-<h2><a class="header" href="#documentation-tests" id="documentation-tests">Documentation tests</a></h2>
+<h2 id="documentation-tests"><a class="header" href="#documentation-tests">Documentation tests</a></h2>
 <p>At this time, <code>cargo fix</code> is not able to update <a href="https://doc.rust-lang.org/rustdoc/documentation-tests.html">documentation tests</a>.
 After updating the edition in <code>Cargo.toml</code>, you should run <code>cargo test</code> to ensure everything still passes.
 If your documentation tests use syntax that is not supported in the new edition, you will need to update them manually.</p>
 <p>In rare cases, you can manually set the edition for each test.
 For example, you can use the <a href="https://doc.rust-lang.org/rustdoc/documentation-tests.html#attributes"><code>edition2018</code> annotation</a> on the triple backticks to tell <code>rustdoc</code> which edition to use.</p>
-<h2><a class="header" href="#generated-code" id="generated-code">Generated code</a></h2>
+<h2 id="generated-code"><a class="header" href="#generated-code">Generated code</a></h2>
 <p>Another area where the automated fixes cannot apply is if you have a build script which generates Rust code at compile time (see <a href="https://doc.rust-lang.org/cargo/reference/build-script-examples.html#code-generation">Code generation</a> for an example).
 In this situation, if you end up with code that doesn't work in the next edition, you will need to manually change the build script to generate code that is compatible.</p>
-<h2><a class="header" href="#migrating-non-cargo-projects" id="migrating-non-cargo-projects">Migrating non-Cargo projects</a></h2>
+<h2 id="migrating-non-cargo-projects"><a class="header" href="#migrating-non-cargo-projects">Migrating non-Cargo projects</a></h2>
 <p>If your project is not using Cargo as a build system, it may still be possible to make use of the automated lints to assist migrating to the next edition.
 You can enable the migration lints as described above by enabling the appropriate <a href="https://doc.rust-lang.org/rustc/lints/groups.html">lint group</a>.
 For example, you can use the <code>#![warn(rust_2021_compatibility)]</code> attribute or the <code>-Wrust-2021-compatibility</code> or <code>--force-warns=rust-2021-compatibility</code> <a href="https://doc.rust-lang.org/rustc/lints/levels.html#via-compiler-flag">CLI flag</a>.</p>
@@ -278,7 +255,7 @@ Many other editors and IDEs have similar functionality.</li>
 This is the library that Cargo uses internally to take the <a href="https://doc.rust-lang.org/rustc/json.html">JSON messages</a> from the compiler and modify the source code.
 Check the <a href="https://github.com/rust-lang/rustfix/tree/master/examples"><code>examples</code> directory</a> for examples of how to use the library.</li>
 </ul>
-<h2><a class="header" href="#writing-idiomatic-code-in-a-new-edition" id="writing-idiomatic-code-in-a-new-edition">Writing idiomatic code in a new edition</a></h2>
+<h2 id="writing-idiomatic-code-in-a-new-edition"><a class="header" href="#writing-idiomatic-code-in-a-new-edition">Writing idiomatic code in a new edition</a></h2>
 <p>Editions are not only about new features and removing old ones.
 In any programming language, idioms change over time, and Rust is no exception.
 While old code will continue to compile, it might be written with different idioms today.</p>
@@ -338,17 +315,13 @@ If you run into problems, you can try the <code>--broken-code</code> option <a h
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                        
                             <a rel="prev" href="../editions/transitioning-an-existing-project-to-a-new-edition.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                        
 
-                        
                             <a rel="next" href="../rust-2015/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
-                        
 
                         <div style="clear: both"></div>
                     </nav>
@@ -356,49 +329,35 @@ If you run into problems, you can try the <code>--broken-code</code> option <a h
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                
                     <a rel="prev" href="../editions/transitioning-an-existing-project-to-a-new-edition.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                
 
-                
                     <a rel="next" href="../rust-2015/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
-                
             </nav>
 
         </div>
 
-        
 
-        
 
-        
 
-        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
-        
 
-        
 
-        
         <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
-        
 
         <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="../book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
-        
 
-        
 
     </body>
 </html>
