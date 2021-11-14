@@ -425,14 +425,14 @@ Rust 2018 では、外部クレートを使うのに[`extern crate` は必要あ
 >     * [`explicit-outlives-requirements`]
 > * Edition 2021 にイディオムリントはありません。
 >
-> 以下の手順は、コンパイラや Cargo の多少のバグを厭わない恐れ知らずだけにしかお勧めできません！
+> 以下の手順は、コンパイラや Cargo の多少のバグを厭わない恐れ知らずだけにしかお勧めできません！　
 > 不都合が発生する場合は、[前述](#partial-migration-with-broken-code)の `--broken-code` オプションを使ってツールにやれるだけのことをさせ、残った問題を自分の手で解決してもよいでしょう。
 
 <!--
 With that out of the way, we can instruct Cargo to fix our code snippet with:
 -->
 
-それはそうと、先程の短いコードを Cargo に直してもらうにはこうすればよいです:
+ともあれ、先程の短いコードを Cargo に直してもらうにはこうすればよいです:
 
 ```console
 cargo fix --edition-idioms
