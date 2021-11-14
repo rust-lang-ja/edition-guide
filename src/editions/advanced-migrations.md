@@ -2,7 +2,7 @@
 # Advanced migration strategies
 -->
 
-# 発展的な以降戦略
+# 発展的な移行戦略
 
 <!--
 ## How migrations work
