@@ -28,7 +28,7 @@ If the automated migration does not completely succeed, or requires manual help,
 -->
 
 現在と次のエディションの両方に同時に適合したコードに書き換えると、コードを段階的に移行することが楽になります。
-自動移行が完全には成功しなかったか、手作業で変えてやる必要がある場合は、元ののエディション留まったまま同じことを繰り返してから<!-- TODO: iterate がどういう意味で使われているかわかりません…… --> `Cargo.toml` を編集して次のエディションに進めてもよいです。
+自動移行が完全には成功しなかったか、手作業で変えてやる必要がある場合は、元ののエディション留まったまま同じことを繰り返してから、`Cargo.toml` を編集して次のエディションに進めてもよいです。
 
 <!--
 The lints that `cargo fix --edition` apply are part of a [lint group].
@@ -70,6 +70,7 @@ This may require moving your code between machines if you don't have cross-compi
 -->
 
 例えば、あなたのコードが `#[cfg]` を使ってプラットフォームによって違うコードを含むようになっていた場合、`cargo fix` を `--target` オプションつきで実行して、ターゲットごとに修正をする必要があるかもしれません。
+クロスコンパイルができない場合、コードを別のマシンに移して作業せざるを得ないかもしれません。
 
 <!--
 Similarly, if you have conditions on Cargo features, like `#[cfg(feature = "my-optional-thing")]`, it is recommended to use the `--all-features` flag to allow `cargo fix` to migrate all the code behind those feature gates.
@@ -104,6 +105,8 @@ By default, `cargo fix` uses `--all-targets`.
 -->
 
 [Cargo のパッケージ]においては、全パッケージを同時に移行することも、[Cargo ターゲット]ごとに1つずつ移行することもできます。
+例えば、パッケージに複数のバイナリ、テスト、サンプルコード（`example` ターゲット）がある場合、`cargo fix --edition` コマンドに特定のターゲット選択用のフラグを組み合わせることで、一つのターゲットだけを移行することもできます。
+デフォルトでは、`cargo fix` は `--all-targets` が暗黙に指定されていると扱います。
 
 <!--
 For even more advanced cases, you can specify the edition for each individual target in `Cargo.toml` like this:
@@ -140,7 +143,7 @@ Some of the fixes may have been correct, and the broken fix maybe be *mostly* co
 ときどき、コンパイラに提案された修正ではうまくいかないことがあります。
 すると、Cargo は何が起こったかとどんなエラーが出たかを示す警告を報告しますが、デフォルトでは Cargo は変更を巻き戻します。
 しかし、Cargo にはコードを壊れたままにしておいてもらい、手作業で問題を解決する、というのも有効な手段です。
-ほとんどの修正は正しいかもしれませんし、壊れた修正も*だいたい*正しくて、一捻り加えれば問題ないかもしれないのです。
+ほとんどの修正は正しいかもしれませんし、壊れた修正も*だいたい*正しくて、少しいじれば問題ないかもしれないのです。
 
 <!--
 In this situation, use the `--broken-code` option with `cargo fix` to tell Cargo not to back out the changes.
@@ -421,12 +424,15 @@ Rust 2018 では、外部クレートを使うのに[`extern crate` は必要あ
 >     * [`unused-extern-crates`]
 >     * [`explicit-outlives-requirements`]
 > * Edition 2021 にイディオムリントはありません。
+>
+> 以下の手順は、コンパイラや Cargo の多少のバグを厭わない恐れ知らずだけにしかお勧めできません！
+> 不都合が発生する場合は、[前述](#partial-migration-with-broken-code)の `--broken-code` オプションを使ってツールにやれるだけのことをさせ、残った問題を自分の手で解決してもよいでしょう。
 
 <!--
 With that out of the way, we can instruct Cargo to fix our code snippet with:
 -->
 
-それはそうと<!-- 訳注: "with that out of the way" がピンと来てませんがこれでいいんでしょうか -->、先程の短いコードを Cargo に直してもらうにはこうすればよいです:
+それはそうと、先程の短いコードを Cargo に直してもらうにはこうすればよいです:
 
 ```console
 cargo fix --edition-idioms
