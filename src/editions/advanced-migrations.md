@@ -38,7 +38,7 @@ Check the [Partial migration](#partial-migration-with-broken-code) section below
 
 `cargo fix --edition` が適用するリントは、[リントグループ]の一部です。
 例えば、2018 から 2021 に移行する場合、Cargo は `rust-2021-compatibility` というリントグループをコードの修正に使用します。
-それぞれのリントを移行に役立てるコツについては、後の「[部分的な移行](#部分的な移行)」の章をご覧ください。
+それぞれのリントを移行に役立てるコツについては、後の「[部分的な移行](#壊れたコードを元に部分的に移行する)」の章をご覧ください。
 
 <!--
 `cargo fix` may run `cargo check` multiple times.
@@ -426,7 +426,7 @@ Rust 2018 では、外部クレートを使うのに[`extern crate` は必要あ
 > * Edition 2021 にイディオムリントはありません。
 >
 > 以下の手順は、コンパイラや Cargo の多少のバグを厭わない恐れ知らずだけにしかお勧めできません！　
-> 不都合が発生する場合は、[前述](#partial-migration-with-broken-code)の `--broken-code` オプションを使ってツールにやれるだけのことをさせ、残った問題を自分の手で解決してもよいでしょう。
+> 不都合が発生する場合は、[前述](#壊れたコードを元に部分的に移行する)の `--broken-code` オプションを使ってツールにやれるだけのことをさせ、残った問題を自分の手で解決してもよいでしょう。
 
 <!--
 With that out of the way, we can instruct Cargo to fix our code snippet with:
