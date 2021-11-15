@@ -214,6 +214,7 @@
 | standard library               | 標準ライブラリ
 | statement                      | 文
 | static dispatch                | 静的ディスパッチ
+| strict keyword                 | 正格キーワード
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
