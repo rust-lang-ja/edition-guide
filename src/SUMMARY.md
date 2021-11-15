@@ -33,7 +33,7 @@
 
 - [Rust 2018](rust-2018/index.md)
   - [Path and module system changes](rust-2018/path-changes.md)
-  - [Anonymous trait function parameters deprecated](rust-2018/trait-fn-parameters.md)
+  - [トレイト関数の匿名パラメータの非推奨化](rust-2018/trait-fn-parameters.md)
   - [New keywords](rust-2018/new-keywords.md)
   - [Method dispatch for raw pointers to inference variables](rust-2018/tyvar-behind-raw-pointer.md)
   - [Cargo changes](rust-2018/cargo.md)
