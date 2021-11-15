@@ -22,7 +22,7 @@
 - `try` is a [reserved keyword].
 -->
 
-- `dyn` は[正格キーワード][strict]です。2015 では[弱いキーワード][strict]です。
+- `dyn` は[正格キーワード][strict]です。2015 では[弱いキーワード]です。
 - `asnyc` と `await` は[正格キーワード][strict]です。
 - `try` は[予約キーワード]です。
 
@@ -127,7 +127,7 @@ where you need a trait object.
 <!--
 [impl-trait]: ../../rust-by-example/trait/impl_trait.html
 -->
-[impl-trait]: https://doc.rust-jp.rs/rust-by-example-ja/rust-by-example/trait/impl_trait.html
+[impl-trait]: https://doc.rust-jp.rs/rust-by-example-ja/trait/impl_trait.html
 
 
 > [^1] *訳注*:
