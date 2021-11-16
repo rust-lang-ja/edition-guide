@@ -204,10 +204,10 @@ Some examples of needing to explicitly import sysroot crates are:
   only used for the unstable benchmark support.
 -->
 
-* [`std`]: 通常はは不要です。クレートに [`#![no_std]`][no_std] が指定されていない限り、`std` は自動的にインポートされるからです。
-* [`core`]: 通常はは不要です。クレートに [`#![no_core]`][no_core] が指定されていない限り、`core` は自動的にインポートされるからです。
+* [`std`]: 通常は不要です。クレートに [`#![no_std]`][no_std] が指定されていない限り、`std` は自動的にインポートされるからです。
+* [`core`]: 通常は不要です。クレートに [`#![no_core]`][no_core] が指定されていない限り、`core` は自動的にインポートされるからです。
   例えば、標準ライブラリに使用されている一部の内部クレートではこれが必要です。
-* [`proc_macro`]: 1.42 以降、proc-macro ではこれは自動的にインポートされます。
+* [`proc_macro`]: 1.42 以降、proc-macro クレートではこれは自動的にインポートされます。
   それより古いリリースをサポートしたい場合か、Cargo 以外のビルドツールを使っていてそれが `rustc` に適切な `--extern` フラグを渡さない場合は、`extern crate proc_macro;` と書く必要があります。
 * [`alloc`]: `alloc` クレート内のアイテムは、通常は `std` を通して公開されたものが使用されます。
   アロケーションをサポートする `no_std` なクレートにおいては、明示的に `alloc` をインポートすることが必要になります。
@@ -320,7 +320,7 @@ always refer to the name `bar` inside the module `foo`, from anywhere else in
 the same crate.
 -->
 
-`use` 宣言や他のコードでは、`crate::` プレフィクスを使って自身のクレートを指すことができます。
+`use` 宣言や他のコードでは、`crate::` プレフィクスを使って自身のクレートのルートを指すことができます。
 たとえば、`crate::foo::bar` と書けば、それがどこに書かれていようと、`foo` モジュール内の `bar` という名前を指します。
 
 <!--
@@ -359,7 +359,7 @@ fn foo() {
 mod submodule {
     fn function() {
         // but in a submodule it requires a leading :: if not imported with `use`
-        // 一方、サブモジュールでは `use` でインポートしない限り :: から始目ないといけない
+        // 一方、サブモジュールでは `use` でインポートしない限り :: から始めないといけない
         let x = ::chrono::Utc::now();
     }
 }
