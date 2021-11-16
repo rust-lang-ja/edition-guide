@@ -47,10 +47,10 @@ See Rust issue [#46906] for details.
 > このポインタは `as` を使って `*const` ポインタに変換できますが、その際これが「何の型のポインタであるか」を `_` にて省略しています。
 >
 > 2行目では、`*const _` である `s` に対して `.is_null()` を呼び出しています。
-> 任意の型 `T` について、プリミティブ型 `*const T` は [`is_null`] という関連メソッド[^2]を持つので、ここで呼び出されるのはこの関連メソッドです。
+> 任意の型 `T` について、プリミティブ型 `*const T` は [`is_null`] という固有メソッドを持つので、ここで呼び出されるのはこの固有メソッドです。
 >
 > 問題はこの後です。
-> 現在は関連メソッドを呼べる型は[一部の型に限られて][associated-methods]いますが、
+> 現在はメソッド[^2]を呼べる型は[一部の型に限られて][methods]いますが、
 > 将来それを任意の型に拡張しようという[提案][arbitrary_self_types-tracking]が出ています。
 > この新機能は "arbitrary self types" （self の型の任意化）と呼ばれます。
 > しかし、これが導入されると困ったことが起きます。
@@ -75,7 +75,7 @@ See Rust issue [#46906] for details.
 > そして今や、 `is_null` として呼び出せる関数は2つあります。
 > 1つは先程の `*const T` に対して実装された [`is_null`]、
 > もう一つは今 `*const MyType` に対して実装された `is_null` です。
-> つまり、関連メソッドの呼び出しに曖昧性が生じています。
+> つまり、メソッドの呼び出しに曖昧性が生じています。
 >
 > この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです:
 >
@@ -86,16 +86,19 @@ See Rust issue [#46906] for details.
 >
 > こうすることで、`is_null` の候補は `*const T` だけになります。
 > `libc::c_char` は他のクレートで定義された型ですので、
-> この型に対して新しく関連メソッドが実装されることはなく、恒久的に曖昧性がなくなります。
+> この型に対して新しくメソッドが実装されることはなく、恒久的に曖昧性がなくなります。
 >
-> こうした理由から、 `*const _` や `*mut _` など、「未知の型への生ポインタ」に対して関連メソッドを呼び出すと、コンパイラがそれを検知するようになりました。
+> こうした理由から、 `*const _` や `*mut _` など、「未知の型への生ポインタ」に対してメソッドを呼び出すと、コンパイラがそれを検知するようになりました。
 > 最初は警告リントとして導入されましたが、Rust 2018 エディションでハードエラーに格上げされました。これが、本ページで説明されている変更点です。
 
-[^2]: アイテムにドット (`.`) でつなげて関数を呼び出す方法。 `s.is_null()` は `s` の関連メソッド `is_null(...)` を呼び出していることになります。
+[^2]: 関連関数のうち、第一引数が `self` であるものは、メソッド呼び出し演算子（`.`）を用いて呼び出すことができます。
+このような関連関数をメソッドと呼びます。
+`s.is_null()` と書くと、これは `s` に対してメソッド `is_null(...)` を呼び出していることになります。
+（[参考](https://doc.rust-lang.org/reference/items/associated-items.html#methods)）
 
 [`libc::getenv`]: https://docs.rs/libc/0.2.107/i686-pc-windows-msvc/libc/fn.getenv.html
 [`is_null`]: https://doc.rust-lang.org/std/primitive.pointer.html#method.is_null-1
-[associated-methods]: https://doc.rust-lang.org/reference/items/associated-items.html#methods
+[methods]: https://doc.rust-lang.org/reference/items/associated-items.html#methods
 [arbitrary_self_types-tracking]: https://github.com/rust-lang/rust/issues/44874
 
 > *訳注*:
