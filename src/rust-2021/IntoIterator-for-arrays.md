@@ -180,7 +180,7 @@ by calling `iter()` which also iterates over owned arrays by reference:
 fn main() {
   let array = [1u8, 2, 3];
   for x in array.iter() { // <- This line changed
-                          // <- この行を書き換えた
+                          //    この行を書き換えた
     // x is a `&u8` in all editions
     // x はすべてのエディションで `&u8`
   }

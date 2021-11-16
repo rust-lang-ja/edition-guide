@@ -40,7 +40,7 @@ In accordance with RFC [#1685](https://github.com/rust-lang/rfcs/pull/1685),
 parameters in trait method declarations are no longer allowed to be anonymous.
 -->
 
-RFC [#1685](https://github.com/rust-lang/rfcs/pull/1685)に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。
+RFC [#1685](https://github.com/rust-lang/rfcs/pull/1685) に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。
 
 <!--
 For example, in the 2015 edition, this was allowed:
@@ -59,7 +59,7 @@ In the 2018 edition, all parameters must be given an argument name  (even if it'
 `_`):
 -->
 
-2018 エディションでは、すべての引数名に（ただの `_` であってもいいので、何らかの）名前がついていなければなりません:
+2018 エディションでは、すべての引数に（ただの `_` であってもいいので、何らかの）名前がついていなければなりません:
 
 ```rust
 trait Foo {

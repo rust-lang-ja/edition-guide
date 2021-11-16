@@ -36,7 +36,7 @@ See Rust issue [#46906] for details.
 詳細は Rust のイシュー [#46906] を参照してください。
 
 > *訳注*:
-> 詳しく解説します。以下のプログラムをご覧ください。
+> 詳しく解説します。以下のプログラムをご覧ください[^citation-46906]。
 >
 > ```rust,ignore
 > let s = libc::getenv(k.as_ptr()) as *const _;
@@ -55,7 +55,7 @@ See Rust issue [#46906] for details.
 > この新機能は "arbitrary self types" （self の型の任意化）と呼ばれます。
 > しかし、これが導入されると困ったことが起きます。
 > 
-> 次のような構造体があったとしましょう:
+> 次のような構造体があったとしましょう[^citation-46906]:
 > ```rust,ignore
 > #![feature(arbitrary_self_types)]
 > 
@@ -77,7 +77,7 @@ See Rust issue [#46906] for details.
 > もう一つは今 `*const MyType` に対して実装された `is_null` です。
 > つまり、メソッドの呼び出しに曖昧性が生じています。
 >
-> この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです:
+> この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです[^citation-46906]:
 >
 > ```rust,ignore
 > let s = libc::getenv(k.as_ptr()) as *const libc::c_char;
@@ -90,6 +90,8 @@ See Rust issue [#46906] for details.
 >
 > こうした理由から、 `*const _` や `*mut _` など、「未知の型への生ポインタ」に対してメソッドを呼び出すと、コンパイラがそれを検知するようになりました。
 > 最初は警告リントとして導入されましたが、Rust 2018 エディションでハードエラーに格上げされました。これが、本ページで説明されている変更点です。
+
+[^citation-46906]: これらのソースコードは [mikeyhew](https://github.com/mikeyhew) 氏による [rust-lang/rust#46906 へのコメント](https://github.com/rust-lang/rust/issues/46906#issue-283871408)より引用されたものです。ただし、コメントが著者によって追加されています。
 
 [^2]: 関連関数のうち、第一引数が `self` であるものは、メソッド呼び出し演算子（`.`）を用いて呼び出すことができます。
 このような関連関数をメソッドと呼びます。
