@@ -30,12 +30,14 @@
 | binary                         | バイナリ
 | binding                        | 束縛
 | block                          | ブロック
+| body (関数の)                  | 本体
 | borrowing                      | 借用
 | bounds                         | 境界
 | boxed                          | ボックス化された
 | bug                            | バグ
 | build-dependencies             | ビルド時の依存 (Cargo.toml のセクション名としては build-dependencies をそのまま採用)
 | byte string                    | バイト列
+| call                           | 呼び出し
 | capture                        | キャプチャ
 | cargo                          | Cargo
 | case analysis                  | 場合分け
@@ -52,6 +54,7 @@
 | composable                     | 合成可能
 | computer science               | コンピュータサイエンス
 | concurrency                    | 並行性
+| conditional compilation        | 条件付きコンパイル
 | constant                       | 定数
 | constructor                    | コンストラクタ
 | continuous integration         | 継続的インテグレーション
@@ -75,6 +78,8 @@
 | diverging                      | 発散する〜（上の diverge を修飾語として使った場合）
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
+| drop                           | ドロップ
+| dynamic dispatch               | 動的ディスパッチ
 | early return                   | 早期リターン
 | edition                        | エディション
 | empty tuple                    | 空タプル
@@ -92,8 +97,10 @@
 | exterior                       | 外側の
 | feature                        | フィーチャ
 | foreign                        | 他言語
+| (マクロの) fragment specifier  | フラグメント指定子
 | free                           | 解放する
 | free-standing function         | フリースタンディングな関数
+| fully qualified syntax         | 完全修飾構文
 | garbage collector              | ガベージコレクタ
 | generic parameter              | ジェネリックパラメータ
 | generics                       | ジェネリクス
@@ -101,11 +108,13 @@
 | growable                       | 伸張可能
 | guard                          | ガード
 | handle                         | ハンドル
+| hard error                     | ハードエラー
 | hash                           | ハッシュ
 | identifier                     | 識別子
 | immutable                      | イミュータブル
 | immutability                   | イミュータビリティ
 | implement                      | 実装する
+| inherent method                | 固有メソッド
 | initialize                     | 初期化する
 | input lifetime                 | 入力ライフタイム
 | interior                       | 内側の
@@ -115,6 +124,7 @@
 | (string) interpolation         | （文字列）補間
 | Intrinsics                     | Intrinsic
 | irrefutable                    | 論駁不可能
+| item                           | アイテム
 | iterate                        | 列挙する
 | key                            | キー
 | keyword                        | キーワード
@@ -137,10 +147,12 @@
 | memory                         | メモリ
 | method                         | メソッド
 | monomorphization               | 単相化
-| move                           | ムーブ
+| move                           | ムーブ(する)
+| move out                       | ムーブする、ムーブアウトする
 | mutability                     | ミュータビリティ
 | mutable                        | ミュータブル
 | mutable binding                | ミュータブルな束縛
+| mutate                         | 変更する、書き換える
 | mutual-exclusion               | 相互排他
 | null                           | ヌル
 | object-safe                    | オブジェクト安全
@@ -159,11 +171,13 @@
 | parametric polymorphism        | パラメトリック多相
 | parse                          | パース、パースする
 | patch                          | パッチ
+| path                           | パス
 | pattern                        | パターン
 | performance                    | パフォーマンス
 | platform                       | プラットフォーム
 | primitive                      | プリミティブ
 | pointer                        | ポインタ
+| prelude                        | プレリュード (or prelude)
 | proc macro                     | 手続き的マクロ
 | process                        | プロセス
 | range                          | 範囲
@@ -172,7 +186,8 @@
 | raw string literal             | 生文字列リテラル
 | re-assignment                  | 再代入
 | rebind                         | 再束縛
-| reference                      | 参照
+| reference (名詞)               | 参照
+| reference (動詞)               | 参照付け (to dereference の対義語として)
 | reference count                | 参照カウント
 | refutable                      | 論駁可能
 | regression                     | リグレッション
@@ -196,8 +211,11 @@
 | slice                          | スライス
 | slicing                        | スライシング
 | specialized                    | 特殊化された
+| stablize                       | 安定化する
 | standard library               | 標準ライブラリ
 | statement                      | 文
+| static dispatch                | 静的ディスパッチ
+| strict keyword                 | 正格キーワード
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
@@ -216,6 +234,7 @@
 | threadsafe                     | スレッドセーフ
 | tick                           | クオート
 | trait                          | トレイト
+| tracking issue                 | 追跡用の Issue
 | tuple                          | タプル
 | token trees                    | トークン木
 | type alias                     | 型エイリアス
