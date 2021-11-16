@@ -27,7 +27,9 @@
 - `pub(in path)` のような可視性修飾子[^1]において、パスは `crate`, `self`, `super` のいずれかで始まらなくてはならなくなりました。
 
 [^1]
-`pub(in crate::outer_mod)` のように書くと `crate::outer_mod` モジュール内だけからアクセスできるようになります。（"public in `crate::outer_mod`" という意味です。）詳細は [The Rust Reference (英語)](https://doc.rust-lang.org/reference/visibility-and-privacy.html#pubin-path-pubcrate-pubsuper-and-pubself) の説明もご参照ください。
+`pub(in path)` 構文は、アイテムを `path` に指定したモジュール内だけに公開にするための可視性修飾子です。
+例えば、`pub(in crate::outer_mod)` のように書くと `crate::outer_mod` モジュール内だけからアクセスできるようになります。（"public in `crate::outer_mod`" という意味です。）
+詳細は [The Rust Reference (英語)](https://doc.rust-lang.org/reference/visibility-and-privacy.html#pubin-path-pubcrate-pubsuper-and-pubself) の説明もご参照ください。
 
 <!--
 ## Motivation
