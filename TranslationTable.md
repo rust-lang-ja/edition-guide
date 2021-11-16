@@ -30,6 +30,7 @@
 | binary                         | バイナリ
 | binding                        | 束縛
 | block                          | ブロック
+| body (関数の)                  | 本体
 | borrowing                      | 借用
 | bounds                         | 境界
 | boxed                          | ボックス化された
@@ -53,6 +54,7 @@
 | composable                     | 合成可能
 | computer science               | コンピュータサイエンス
 | concurrency                    | 並行性
+| conditional compilation        | 条件付きコンパイル
 | constant                       | 定数
 | constructor                    | コンストラクタ
 | continuous integration         | 継続的インテグレーション
@@ -76,6 +78,7 @@
 | diverging                      | 発散する〜（上の diverge を修飾語として使った場合）
 | documentation comment          | ドキュメンテーションコメント
 | documentation test             | ドキュメンテーションテスト
+| drop                           | ドロップ
 | dynamic dispatch               | 動的ディスパッチ
 | early return                   | 早期リターン
 | edition                        | エディション
@@ -94,6 +97,7 @@
 | exterior                       | 外側の
 | feature                        | フィーチャ
 | foreign                        | 他言語
+| (マクロの) fragment specifier  | フラグメント指定子
 | free                           | 解放する
 | free-standing function         | フリースタンディングな関数
 | fully qualified syntax         | 完全修飾構文
@@ -143,10 +147,12 @@
 | memory                         | メモリ
 | method                         | メソッド
 | monomorphization               | 単相化
-| move                           | ムーブ
+| move                           | ムーブ(する)
+| move out                       | ムーブする、ムーブアウトする
 | mutability                     | ミュータビリティ
 | mutable                        | ミュータブル
 | mutable binding                | ミュータブルな束縛
+| mutate                         | 変更する、書き換える
 | mutual-exclusion               | 相互排他
 | null                           | ヌル
 | object-safe                    | オブジェクト安全
@@ -205,9 +211,11 @@
 | slice                          | スライス
 | slicing                        | スライシング
 | specialized                    | 特殊化された
+| stablize                       | 安定化する
 | standard library               | 標準ライブラリ
 | statement                      | 文
 | static dispatch                | 静的ディスパッチ
+| strict keyword                 | 正格キーワード
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
