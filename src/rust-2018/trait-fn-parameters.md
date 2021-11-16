@@ -59,7 +59,7 @@ In the 2018 edition, all parameters must be given an argument name  (even if it'
 `_`):
 -->
 
-2018 エディションでは、すべての引数名に（ただの `_` であってもいいので、何らかの）名前がついていなければなりません:
+2018 エディションでは、すべての引数に（ただの `_` であってもいいので、何らかの）名前がついていなければなりません:
 
 ```rust
 trait Foo {
