@@ -23,7 +23,7 @@
 - [エディションとは？](editions/index.md)
   - [新しいプロジェクトを作成する](editions/creating-a-new-project.md)
   - [既存のプロジェクトのエディションを移行する](editions/transitioning-an-existing-project-to-a-new-edition.md)
-  - [Advanced migrations](editions/advanced-migrations.md)
+  - [発展的な移行戦略](editions/advanced-migrations.md)
 
 ## Rust 2015
 
@@ -32,10 +32,10 @@
 ## Rust 2018
 
 - [Rust 2018](rust-2018/index.md)
-  - [Path and module system changes](rust-2018/path-changes.md)
-  - [Anonymous trait function parameters deprecated](rust-2018/trait-fn-parameters.md)
-  - [New keywords](rust-2018/new-keywords.md)
-  - [Method dispatch for raw pointers to inference variables](rust-2018/tyvar-behind-raw-pointer.md)
+  - [パスとモジュールシステムへの変更](rust-2018/path-changes.md)
+  - [トレイト関数の匿名パラメータの非推奨化](rust-2018/trait-fn-parameters.md)
+  - [新しいキーワード](rust-2018/new-keywords.md)
+  - [推論変数への生ポインタに対するメソッドのディスパッチ](rust-2018/tyvar-behind-raw-pointer.md)
   - [Cargo への変更](rust-2018/cargo.md)
 
 ## Rust 2021

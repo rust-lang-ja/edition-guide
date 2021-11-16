@@ -30,6 +30,7 @@
 | binary                         | バイナリ
 | binding                        | 束縛
 | block                          | ブロック
+| body (関数の)                  | 本体
 | borrowing                      | 借用
 | bounds                         | 境界
 | boxed                          | ボックス化された
@@ -53,6 +54,7 @@
 | composable                     | 合成可能
 | computer science               | コンピュータサイエンス
 | concurrency                    | 並行性
+| conditional compilation        | 条件付きコンパイル
 | constant                       | 定数
 | constructor                    | コンストラクタ
 | continuous integration         | 継続的インテグレーション
@@ -106,6 +108,7 @@
 | growable                       | 伸張可能
 | guard                          | ガード
 | handle                         | ハンドル
+| hard error                     | ハードエラー
 | hash                           | ハッシュ
 | identifier                     | 識別子
 | immutable                      | イミュータブル
@@ -212,6 +215,7 @@
 | standard library               | 標準ライブラリ
 | statement                      | 文
 | static dispatch                | 静的ディスパッチ
+| strict keyword                 | 正格キーワード
 | string                         | 文字列
 | string interpolation           | 文字列インターポーレーション
 | string slice                   | 文字列スライス
