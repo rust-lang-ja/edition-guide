@@ -56,7 +56,7 @@ See Rust issue [#46906] for details.
 > しかし、これが導入されると困ったことが起きます。
 > 
 > 次のような構造体があったとしましょう:
-> ```rust
+> ```rust,ignore
 > #![feature(arbitrary_self_types)]
 > 
 > struct MyType;
