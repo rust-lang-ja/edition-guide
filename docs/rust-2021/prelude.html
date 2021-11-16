@@ -293,6 +293,7 @@ Some users invoke methods on a `dyn Trait` value where the method name overlaps 
 </span>mod submodule {
   pub trait MyTrait {
     // This has the same name as `TryInto::try_into`
+    // これは `TryInto::try_into` と同名
     fn try_into(&amp;self) -&gt; Result&lt;u32, ()&gt;;
   }
 }

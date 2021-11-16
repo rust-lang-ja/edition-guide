@@ -285,7 +285,7 @@ by calling `iter()` which also iterates over owned arrays by reference:
 <pre><pre class="playground"><code class="language-rust">fn main() {
   let array = [1u8, 2, 3];
   for x in array.iter() { // &lt;- This line changed
-                          // &lt;- この行を書き換えた
+                          //    この行を書き換えた
     // x is a `&amp;u8` in all editions
     // x はすべてのエディションで `&amp;u8`
   }

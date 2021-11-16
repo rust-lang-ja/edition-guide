@@ -175,7 +175,7 @@
 In accordance with RFC [#1685](https://github.com/rust-lang/rfcs/pull/1685),
 parameters in trait method declarations are no longer allowed to be anonymous.
 -->
-<p>RFC <a href="https://github.com/rust-lang/rfcs/pull/1685">#1685</a>に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。</p>
+<p>RFC <a href="https://github.com/rust-lang/rfcs/pull/1685">#1685</a> に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。</p>
 <!--
 For example, in the 2015 edition, this was allowed:
 -->
@@ -192,7 +192,7 @@ For example, in the 2015 edition, this was allowed:
 In the 2018 edition, all parameters must be given an argument name  (even if it's just
 `_`):
 -->
-<p>2018 エディションでは、すべての引数名に（ただの <code>_</code> であってもいいので、何らかの）名前がついていなければなりません:</p>
+<p>2018 エディションでは、すべての引数に（ただの <code>_</code> であってもいいので、何らかの）名前がついていなければなりません:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

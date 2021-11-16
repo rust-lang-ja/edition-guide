@@ -176,7 +176,7 @@ See Rust issue [#46906] for details.
 <p>詳細は Rust のイシュー <a href="https://github.com/rust-lang/rust/issues/46906">#46906</a> を参照してください。</p>
 <blockquote>
 <p><em>訳注</em>:
-詳しく解説します。以下のプログラムをご覧ください。</p>
+詳しく解説します。以下のプログラムをご覧ください<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>。</p>
 <pre><code class="language-rust ignore">let s = libc::getenv(k.as_ptr()) as *const _;
 s.is_null()
 </code></pre>
@@ -185,11 +185,11 @@ s.is_null()
 <p>2行目では、<code>*const _</code> である <code>s</code> に対して <code>.is_null()</code> を呼び出しています。
 任意の型 <code>T</code> について、プリミティブ型 <code>*const T</code> は <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.is_null-1"><code>is_null</code></a> という固有メソッドを持つので、ここで呼び出されるのはこの固有メソッドです。</p>
 <p>問題はこの後です。
-現在はメソッド<sup class="footnote-reference"><a href="#2">2</a></sup>を呼べる型は<a href="https://doc.rust-lang.org/reference/items/associated-items.html#methods">一部の型に限られて</a>いますが、
+現在はメソッド<sup class="footnote-reference"><a href="#2">3</a></sup>を呼べる型は<a href="https://doc.rust-lang.org/reference/items/associated-items.html#methods">一部の型に限られて</a>いますが、
 将来それを任意の型に拡張しようという<a href="https://github.com/rust-lang/rust/issues/44874">提案</a>が出ています。
 この新機能は &quot;arbitrary self types&quot; （self の型の任意化）と呼ばれます。
 しかし、これが導入されると困ったことが起きます。</p>
-<p>次のような構造体があったとしましょう:</p>
+<p>次のような構造体があったとしましょう<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>:</p>
 <pre><code class="language-rust ignore">#![feature(arbitrary_self_types)]
 
 struct MyType;
@@ -208,7 +208,7 @@ impl MyType {
 1つは先程の <code>*const T</code> に対して実装された <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.is_null-1"><code>is_null</code></a>、
 もう一つは今 <code>*const MyType</code> に対して実装された <code>is_null</code> です。
 つまり、メソッドの呼び出しに曖昧性が生じています。</p>
-<p>この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです:</p>
+<p>この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>:</p>
 <pre><code class="language-rust ignore">let s = libc::getenv(k.as_ptr()) as *const libc::c_char;
 s.is_null()
 </code></pre>
@@ -218,7 +218,10 @@ s.is_null()
 <p>こうした理由から、 <code>*const _</code> や <code>*mut _</code> など、「未知の型への生ポインタ」に対してメソッドを呼び出すと、コンパイラがそれを検知するようになりました。
 最初は警告リントとして導入されましたが、Rust 2018 エディションでハードエラーに格上げされました。これが、本ページで説明されている変更点です。</p>
 </blockquote>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<div class="footnote-definition" id="citation-46906"><sup class="footnote-definition-label">2</sup>
+<p>これらのソースコードは <a href="https://github.com/mikeyhew">mikeyhew</a> 氏による <a href="https://github.com/rust-lang/rust/issues/46906#issue-283871408">rust-lang/rust#46906 へのコメント</a>より引用されたものです。ただし、コメントが著者によって追加されています。</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">3</sup>
 <p>関連関数のうち、第一引数が <code>self</code> であるものは、メソッド呼び出し演算子（<code>.</code>）を用いて呼び出すことができます。
 このような関連関数をメソッドと呼びます。
 <code>s.is_null()</code> と書くと、これは <code>s</code> に対してメソッド <code>is_null(...)</code> を呼び出していることになります。

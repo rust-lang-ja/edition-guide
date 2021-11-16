@@ -1438,7 +1438,7 @@ To explicitly disambiguate a path, use `::name` for an external crate name, or
 In accordance with RFC [#1685](https://github.com/rust-lang/rfcs/pull/1685),
 parameters in trait method declarations are no longer allowed to be anonymous.
 -->
-<p>RFC <a href="https://github.com/rust-lang/rfcs/pull/1685">#1685</a>に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。</p>
+<p>RFC <a href="https://github.com/rust-lang/rfcs/pull/1685">#1685</a> に基づいて、トレイト関数のパラメータを匿名にすることはできなくなりました。</p>
 <!--
 For example, in the 2015 edition, this was allowed:
 -->
@@ -1455,7 +1455,7 @@ For example, in the 2015 edition, this was allowed:
 In the 2018 edition, all parameters must be given an argument name  (even if it's just
 `_`):
 -->
-<p>2018 エディションでは、すべての引数名に（ただの <code>_</code> であってもいいので、何らかの）名前がついていなければなりません:</p>
+<p>2018 エディションでは、すべての引数に（ただの <code>_</code> であってもいいので、何らかの）名前がついていなければなりません:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1625,7 +1625,7 @@ See Rust issue [#46906] for details.
 <p>詳細は Rust のイシュー <a href="https://github.com/rust-lang/rust/issues/46906">#46906</a> を参照してください。</p>
 <blockquote>
 <p><em>訳注</em>:
-詳しく解説します。以下のプログラムをご覧ください。</p>
+詳しく解説します。以下のプログラムをご覧ください<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>。</p>
 <pre><code class="language-rust ignore">let s = libc::getenv(k.as_ptr()) as *const _;
 s.is_null()
 </code></pre>
@@ -1634,11 +1634,11 @@ s.is_null()
 <p>2行目では、<code>*const _</code> である <code>s</code> に対して <code>.is_null()</code> を呼び出しています。
 任意の型 <code>T</code> について、プリミティブ型 <code>*const T</code> は <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.is_null-1"><code>is_null</code></a> という固有メソッドを持つので、ここで呼び出されるのはこの固有メソッドです。</p>
 <p>問題はこの後です。
-現在はメソッド<sup class="footnote-reference"><a href="#2">2</a></sup>を呼べる型は<a href="https://doc.rust-lang.org/reference/items/associated-items.html#methods">一部の型に限られて</a>いますが、
+現在はメソッド<sup class="footnote-reference"><a href="#2">3</a></sup>を呼べる型は<a href="https://doc.rust-lang.org/reference/items/associated-items.html#methods">一部の型に限られて</a>いますが、
 将来それを任意の型に拡張しようという<a href="https://github.com/rust-lang/rust/issues/44874">提案</a>が出ています。
 この新機能は &quot;arbitrary self types&quot; （self の型の任意化）と呼ばれます。
 しかし、これが導入されると困ったことが起きます。</p>
-<p>次のような構造体があったとしましょう:</p>
+<p>次のような構造体があったとしましょう<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>:</p>
 <pre><code class="language-rust ignore">#![feature(arbitrary_self_types)]
 
 struct MyType;
@@ -1657,7 +1657,7 @@ impl MyType {
 1つは先程の <code>*const T</code> に対して実装された <a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.is_null-1"><code>is_null</code></a>、
 もう一つは今 <code>*const MyType</code> に対して実装された <code>is_null</code> です。
 つまり、メソッドの呼び出しに曖昧性が生じています。</p>
-<p>この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです:</p>
+<p>この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです<sup class="footnote-reference"><a href="#citation-46906">2</a></sup>:</p>
 <pre><code class="language-rust ignore">let s = libc::getenv(k.as_ptr()) as *const libc::c_char;
 s.is_null()
 </code></pre>
@@ -1667,7 +1667,10 @@ s.is_null()
 <p>こうした理由から、 <code>*const _</code> や <code>*mut _</code> など、「未知の型への生ポインタ」に対してメソッドを呼び出すと、コンパイラがそれを検知するようになりました。
 最初は警告リントとして導入されましたが、Rust 2018 エディションでハードエラーに格上げされました。これが、本ページで説明されている変更点です。</p>
 </blockquote>
-<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<div class="footnote-definition" id="citation-46906"><sup class="footnote-definition-label">2</sup>
+<p>これらのソースコードは <a href="https://github.com/mikeyhew">mikeyhew</a> 氏による <a href="https://github.com/rust-lang/rust/issues/46906#issue-283871408">rust-lang/rust#46906 へのコメント</a>より引用されたものです。ただし、コメントが著者によって追加されています。</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">3</sup>
 <p>関連関数のうち、第一引数が <code>self</code> であるものは、メソッド呼び出し演算子（<code>.</code>）を用いて呼び出すことができます。
 このような関連関数をメソッドと呼びます。
 <code>s.is_null()</code> と書くと、これは <code>s</code> に対してメソッド <code>is_null(...)</code> を呼び出していることになります。
@@ -1860,6 +1863,7 @@ Some users invoke methods on a `dyn Trait` value where the method name overlaps 
 </span>mod submodule {
   pub trait MyTrait {
     // This has the same name as `TryInto::try_into`
+    // これは `TryInto::try_into` と同名
     fn try_into(&amp;self) -&gt; Result&lt;u32, ()&gt;;
   }
 }
@@ -2167,7 +2171,7 @@ Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled,
 -->
 <p>これにより、 Cargo はホスト依存関係（proc-macro と build-dependencies）のフィーチャとして &quot;postgres&quot; を追加します。</p>
 <blockquote>
-<p>訳注：ホスト依存関係とは、コンパイラホスト（コンパイラを実行しているプラットフォーム）向けにビルド・実行される依存を指し、proc-macroクレートやbuild-dependencies配下の依存クレートが該当します。
+<p>訳注：ホスト依存関係とは、コンパイラホスト（コンパイラを実行しているプラットフォーム）向けにビルド・実行される依存を指し、proc-macro クレートや build-dependencies 配下の依存クレートが該当します。
 一方、通常の依存関係はコンパイルターゲットのプラットフォーム向けにビルドされます。</p>
 </blockquote>
 <p>これで、 <code>diesel_migrations</code> の手続き的マクロは &quot;postgres&quot; フィーチャが有効化された状態で走り、正しくビルドされます。</p>
@@ -2392,7 +2396,7 @@ by calling `iter()` which also iterates over owned arrays by reference:
 <pre><pre class="playground"><code class="language-rust">fn main() {
   let array = [1u8, 2, 3];
   for x in array.iter() { // &lt;- This line changed
-                          // &lt;- この行を書き換えた
+                          //    この行を書き換えた
     // x is a `&amp;u8` in all editions
     // x はすべてのエディションで `&amp;u8`
   }
