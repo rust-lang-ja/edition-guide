@@ -38,7 +38,7 @@ See Rust issue [#46906] for details.
 > *訳注*:
 > 詳しく解説します。以下のプログラムをご覧ください。
 >
-> ```rust
+> ```rust,ignore
 > let s = libc::getenv(k.as_ptr()) as *const _;
 > s.is_null()
 > ```
