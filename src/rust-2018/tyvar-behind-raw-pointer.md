@@ -79,7 +79,7 @@ See Rust issue [#46906] for details.
 >
 > この問題の解決策は簡単です。キャスト後の型がどの定数ポインタになるのか明示すればよいです:
 >
-> ```rust
+> ```rust,ignore
 > let s = libc::getenv(k.as_ptr()) as *const libc::c_char;
 > s.is_null()
 > ```
