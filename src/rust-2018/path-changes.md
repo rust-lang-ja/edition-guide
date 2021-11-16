@@ -24,7 +24,10 @@
 
 - `use` 宣言中のパスが、他のパスと同じように扱われるようになりました。
 - `::` から始まるパスの直後には、常に外部クレートが続くようになりました。
-- `pub(in path)` という可視性修飾子中の<!-- TODO: in がわかりません -->パスは、`crate`, `self`, `super` のいずれかで始まらなくてはならなくなりました。
+- `pub(in path)` のような可視性修飾子[^1]において、パスは `crate`, `self`, `super` のいずれかで始まらなくてはならなくなりました。
+
+[^1]
+`pub(in crate::outer_mod)` のように書くと `crate::outer_mod` モジュール内だけからアクセスできるようになります。（"public in `crate::outer_mod`" という意味です。）詳細は [The Rust Reference (英語)](https://doc.rust-lang.org/reference/visibility-and-privacy.html#pubin-path-pubcrate-pubsuper-and-pubself) の説明もご参照ください。
 
 <!--
 ## Motivation
