@@ -26,7 +26,7 @@
 [^1] *訳注*:
   Cargo は、`Cargo.toml` 内に明示的に指定されていなくても、[フォルダ構成の慣習][package-layout]に従っているファイルに関しては、自動でターゲットに追加します。
   例えば、`src/bin/my_application.rs` というファイルがプロジェクト内に存在したら、`Cargo.toml` に `[[bin]]` セクションで `my_application` の存在が宣言されていなくても、自動的にこのファイルがバイナリターゲット（つまり、`cargo run --bin my_application` として実行できるもの）としてビルドされるようになっています。
-  これは、[*ターゲットの自動探索*][target-auto-discovery]と呼ばれています。<br>
+  これは、[ターゲットの自動探索][target-auto-discovery]と呼ばれています。<br>
   Rust 2015 と Rust 2018 の違いは、`Cargo.toml` に明示的にターゲットが1つ以上宣言されている場合（つまり、`[lib]`, `[[bin]]`, `[[test]]`, `[[bench]]`, `[[example]]` のどれかが1つ以上ある場合）に生じます。
   Rust 2015 では、これらのうちどれか1つが指定されていた場合、ターゲットの自動探索は無効化されました。
   Rust 2018 では、その場合であっても、ターゲットの自動探索は無効化されません。<br>
@@ -52,5 +52,5 @@
   Rust 2018 ではこの挙動は廃止され、`cargo install --path .` と明示的にカレントディレクトリのクレートをインストールの対象にすると宣言しなければならなくなりました。
 
 [package-layout]: https://doc.rust-lang.org/cargo/guide/project-layout.html
-[target-auto-discovery]: https://doc.rust-lang.org/cargo/reference/cargo-targets.html#the-path-field
+[target-auto-discovery]: https://doc.rust-lang.org/cargo/reference/cargo-targets.html#target-auto-discovery
 [cargo-install]: https://doc.rust-lang.org/cargo/commands/cargo-install.html
