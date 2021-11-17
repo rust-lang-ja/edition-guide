@@ -36,7 +36,7 @@
   - [トレイト関数の匿名パラメータの非推奨化](rust-2018/trait-fn-parameters.md)
   - [新しいキーワード](rust-2018/new-keywords.md)
   - [推論変数への生ポインタに対するメソッドのディスパッチ](rust-2018/tyvar-behind-raw-pointer.md)
-  - [Cargo changes](rust-2018/cargo.md)
+  - [Cargo への変更](rust-2018/cargo.md)
 
 ## Rust 2021
 
