@@ -131,7 +131,7 @@ macro_rules! my_macro {
 	($x:pat | $y:pat) => {
 		// TODO: implementation
 		// TODO: 実装
-	}
+	} 
 }
 
 // This macro works in Rust 2018 since `$x:pat` does not match against `|`:
