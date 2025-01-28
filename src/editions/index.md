@@ -9,7 +9,7 @@ In May 2015, the [release of Rust 1.0](https://blog.rust-lang.org/2015/05/15/Rus
 
 2015年5月に Rust が[バージョン 1.0](https://blog.rust-lang.org/2015/05/15/Rust-1.0.html)を迎えるにあたり、
 [「よどみない安定性」](https://blog.rust-lang.org/2014/10/30/Stability.html)という根本理念が掲げられました。
-これにより、安定版にリリースされた機能は、将来の全リリースに渡って開発者がサポートし続けるというルールを厳守しながら、
+これにより、「安定版にリリースされた機能は、将来の全リリースに渡って開発者がサポートし続ける」というルールを厳守しながら、
 Rust は 1.0 から今まで開発され続けてきました。
 
 <!--
@@ -59,15 +59,15 @@ In other words, each crate can decide when to migrate to a new edition independe
 -->
 
 すなわち、新しいエディションへ移行するかどうかは、クレートごとに決められます。
-移行の決断が、他のクレートに影響を与えない「自分だけの問題」だと言えるのです。
+移行の決断が、他のクレートに影響を与えない「自分だけの問題」となるのです。
 
 <!--
 For Rust, this required compatibility implies some limits on the kinds of changes that can be featured in an edition. As a result, changes found in new Rust editions tend to be 'skin deep'. All Rust code - regardless of edition - will ultimately compile down to the same internal representation within the compiler.
 -->
 
 Rust では、クレートの相互運用性を守るために、エディションへの機能追加はある程度制限されます。
-一般に、エディションに加えられる変更は「表面上の」ものになりがちです。
-エディションに関わらず、すべての Rust のコードは最終的にはコンパイラの中で同じ内部表現に変換されるのです。
+一般に、エディションが上がることによる変更は「表面上の」ものになりがちです。
+エディションにかかわらず、すべての Rust のコードは最終的にはコンパイラの中で同じ内部表現に変換されるのです。
 
 <!--
 ## Edition migration is easy and largely automated
@@ -102,7 +102,7 @@ Cargo の自動移行は完璧でないので、手作業での変更が必要�
 <!--
 In addition to tooling, this Rust Edition Guide also covers the changes that are part of each edition. It describes each change and links to additional details, if available. It also covers corner cases or tricky details crate authors should be aware of.
 -->
-自動移行ツールに加えて、本資料「Rust エディションガイド」はで各エディションにおける変更内容を説明しています。
+自動移行ツールに加えて、本資料「Rust エディションガイド」では各エディションにおける変更内容を説明しています。
 各変更内容に加え、もっと詳しく知りたい人向けのリンクもあれば紹介していますし、
 さらには把握しておくべき詳細や重箱の隅まで網羅しています。
 
@@ -117,6 +117,6 @@ Crate authors should find:
 
 - エディションの概要
 - 特定のエディションへの移行ガイド
-- 自動移行ツールに何らかの問題が生じたときのトラブルシューティング用の文献
+- 自動移行ツールに何らかの問題が生じたときのトラブルシューティング
 
-としてご利用ください。
+の資料としてご利用ください。
