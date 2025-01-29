@@ -83,10 +83,10 @@ As a part of the 2021 edition a migration lint, `rust_2021_incompatible_closure_
 Rust 2018 のコードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_incompatible_closure_captures` が追加されています。
 
 <!--
-In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
+In order to migrate your code to be Rust 2021 Edition compatible, run:
 -->
 
-`rustfix` でコードを Rust 2021 エディションに適合させるためには、次のように実行します。
+コードを Rust 2021 エディションに適合させるためには、次のように実行します。
 
 ```sh
 cargo fix --edition
@@ -270,11 +270,11 @@ Closures automatically implement the following traits based on what values they 
 何がキャプチャされているかによって、クロージャには自動的に以下のトレイトが実装されます:
 
 <!--
-- [`Clone`]: if all captured values are [`Clone`].
+- [`Clone`]: if all captured values are `Clone`.
 - [Auto traits] like [`Send`], [`Sync`], and [`UnwindSafe`]: if all captured values implement the given trait.
 -->
 
-- [`Clone`]: キャプチャされた値がすべて [`Clone`] を実装していた場合。
+- [`Clone`]: キャプチャされた値がすべて `Clone` を実装していた場合。
 - [`Send`], [`Sync`], [`UnwindSafe`] などの[自動トレイト]: キャプチャされた値がすべてそのトレイトを実装していた場合。
 
 <!--
@@ -282,7 +282,7 @@ Closures automatically implement the following traits based on what values they 
 [`clone`]: https://doc.rust-lang.org/std/clone/trait.Clone.html
 [`send`]: https://doc.rust-lang.org/std/marker/trait.Send.html
 [`sync`]: https://doc.rust-lang.org/std/marker/trait.Sync.html
-[`unwindsafe`]: https://doc.rust-lang.org/std/marker/trait.UnwindSafe.html
+[`unwindsafe`]: https://doc.rust-lang.org/std/panic/trait.UnwindSafe.html
 -->
 
 [自動トレイト]: https://doc.rust-lang.org/nightly/reference/special-types-and-traits.html#auto-traits

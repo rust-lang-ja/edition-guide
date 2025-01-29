@@ -94,10 +94,10 @@ As a part of the 2021 edition a migration lint, `rust_2021_prelude_collisions`, 
 Rust 2018 コードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prelude_collisions` が追加されています。
 
 <!--
-In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
+In order to migrate your code to be Rust 2021 Edition compatible, run:
 -->
 
-`rustfix` でコードを Rust 2021 エディションに適合させるためには、次のように実行します。
+コードを Rust 2021 エディションに適合させるためには、次のように実行します。
 
 ```sh
 cargo fix --edition
@@ -111,10 +111,10 @@ The lint detects cases where functions or methods are called that have the same 
 場合によっては、今までと同じ関数が呼び出されるように、あなたのコードを様々な方法で書き換えることもあります。
 
 <!--
-If you'd like to migrate your code manually or better understand what `rustfix` is doing, below we've outlined the situations where a migration is needed along with a counter example of when it's not needed.
+If you'd like to migrate your code manually or better understand what `cargo fix` is doing, below we've outlined the situations where a migration is needed along with a counter example of when it's not needed.
 -->
 
-コードの移行を手作業で行いたい方や `rustfix` が何を行うかをより詳しく理解したい方のために、どのような状況で移行が必要なのか、逆にどうであれば不要なのを以下に例示していきます。
+コードの移行を手作業で行いたい方や `cargo fix` が何を行うかをより詳しく理解したい方のために、どのような状況で移行が必要なのか、逆にどうであれば不要なのを以下に例示していきます。
 
 <!--
 ### Migration needed
