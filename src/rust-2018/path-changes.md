@@ -150,14 +150,6 @@ keep doing what you were doing there as well.
 Cargo を使用していない場合は、`rustc` に外部クレートの場所を `--extern` フラグを渡しているでしょうが、これを変える必要はありません。
 
 <!--
-> One small note here: `cargo fix` will not currently automate this change. We may
-> have it do this for you in the future.
--->
-
-> 一つ注意ですが、`cargo fix` は今の所この変更を自動では行いません。
-> 将来、自動で変更がなされるようになるかもしれません。
-
-<!--
 #### An exception
 -->
 
@@ -192,7 +184,7 @@ Some examples of needing to explicitly import sysroot crates are:
 例えば、以下のような場合には明示的に sysroot のクレートをインポートする必要があります:
 
 <!--
-* [`std`]: Usually this is not neccesary, because `std` is automatically
+* [`std`]: Usually this is not necessary, because `std` is automatically
   imported unless the crate is marked with [`#![no_std]`][no_std].
 * [`core`]: Usually this is not necessary, because `core` is automatically
   imported, unless the crate is marked with [`#![no_core]`][no_core]. For
@@ -396,6 +388,16 @@ mod submodule {
 ```
 
 <!--
+If you have a local module or item with the same name as an external crate, a
+path beginning with that name will be taken to refer to the local module or
+item. To explicitly refer to the external crate, use the `::name` form.
+-->
+
+プロジェクト内に外部クレートと同名のローカルなモジュールやアイテムがある場合、
+その名前から始まるパスは後者として解釈されます。
+明示的に外部クレートを参照したい場合、パスの先頭を `::name` とすればよいです。
+
+<!--
 ### No more `mod.rs`
 -->
 
@@ -498,11 +500,11 @@ Rust 2015 では、`use` 宣言におけるパスは他の場所と異なった�
 In Rust 2018, paths in `use` declarations and in other code work the same way,
 both in the top-level module and in any submodule. You can use a relative path
 from the current scope, a path starting from an external crate name, or a path
-starting with `crate`, `super`, or `self`.
+starting with `::`, `crate`, `super`, or `self`.
 -->
 
 Rust 2018 では、トップレベルモジュールかサブモジュールかに関わらず、`use` 宣言でのパスと他のプログラム中のパスは同じように使用できます。
-現在のスコープからの相対パスも、外部クレート名から始まるパスも、`crate`, `super`, `self` から始まるパスも使用できます。
+現在のスコープからの相対パスも、外部クレート名から始まるパスも、`::`, `crate`, `super`, `self` から始まるパスも使用できます。
 
 <!--
 Code that looked like this:
@@ -617,15 +619,3 @@ additional complexity to multi-module projects.
 -->
 
 これにより、コードを他の場所に移動することが簡単になり、マルチモジュールなプロジェクトがより複雑になるのを防止できます。
-
-<!--
-If a path is ambiguous, such as if you have an external crate and a local
-module or item with the same name, you'll get an error, and you'll need to
-either rename one of the conflicting names or explicitly disambiguate the path.
-To explicitly disambiguate a path, use `::name` for an external crate name, or
-`self::name` for a local module or item.
--->
-
-もし、例えば外部モジュールとローカルのモジュールが同名であるなど、パスが曖昧な場合は、エラーになります。
-その場合、他と衝突している名前のうち一方を変更するか、明示的にパスの曖昧性をなくす必要があります。
-パスの曖昧性をなくすには、`::name` と書いて外部クレート名であることを明示するか、`self::name` と書いてローカルのモジュールやアイテムであることを明示すればよいです。
