@@ -12,7 +12,7 @@ Briefly, the steps to update to the next edition are:
 
 Rust には、プロジェクトのエディションを更新するための自動移行ツールが付属しています。
 このツールは、ソースコードを書き換えて次のエディションに適合させます。
-簡単にいうと、新しいエディションに進むためには次のようにすればよいです。
+新エディションを採用するために必要な手順は、概ね以下の通りです：
 
 <!--
 1. Run `cargo update` to update your dependencies to the latest versions.
@@ -47,7 +47,7 @@ The following sections dig into the details of these steps, and some of the issu
 > よろしくお願いします！
 >
 > 訳注：Rustの日本語コミュニティもあります。
-> Slackを使用しており[こちら](https://rust-jp.herokuapp.com/)から登録できます。
+> Zulip を使用しており、[こちら](https://rust-lang-jp.zulipchat.com/)から登録できます。
 
 <!--
 ## Starting the migration
@@ -164,7 +164,8 @@ If you have problems, please seek help at the [user's forums](https://users.rust
 `cargo fix`は常に自動的にコードを修正してくれるわけではありません。
 `cargo fix` がコードを修正できない場合、コンソールに修正できなかったという警告を表示します。
 そのときは手動でコードを修正してください。
-「[発展的な移行戦略]」の節では、移行に関するより多くの情報があります。また、このガイドの他の節では、どのような変更が必要かについても説明しますので、併せてご参照ください。
+「[発展的な移行戦略]」の節には、移行に関する詳細情報があります。
+また他の節では、どのような変更が必要かについても説明していますので、併せてご参照ください。
 問題が発生したときは、[ユーザーフォーラム](https://users.rust-lang.org/) で助けを求めてください。
 
 <!--
@@ -282,8 +283,8 @@ If you want to help test those new features before they are stabilized, you can 
 -->
 
 エディションのリリース後、次のエディションが出るまでざっと3年かかります。
-それまでの間、新機能が次期エディションに追加されることがあります。このエディションは [nightly チャンネル]限定です。
-新機能の安定化前の試用に協力したい場合、nightly チャンネルを使うと使ってみることができます。
+それまでに、新機能が次期エディションに追加されることがあります。このエディションは [nightly チャンネル]限定です。
+新機能の安定化前の試用に協力したい場合、nightly チャンネルを使うとよいです。
 
 <!--
 The steps are roughly similar to the stable channel:
@@ -310,8 +311,8 @@ The steps are roughly similar to the stable channel:
 > A few months before the edition is stabilized, all of the new features should be fully implemented, and the [Rust Blog] will announce a call for testing.
 -->
 
-> **⚠ 注意**: 次期エディションに実装された機能は、`cargo fix` による自動移行が使えなかったり、途中で放棄されたりする場合があります。
-> 本ガイドでは、nightly に実装されている機能の十分な説明や開発状況を可能な限り説明します。
+> **⚠ 注意**: 次期エディションに実装された機能は、ものによっては `cargo fix` による自動移行が使えなかったり、機能自体が未完成だったりします。
+> 本ガイドでは、nightly に実装されている機能の十分な情報や開発状況を可能な限り説明します。
 > エディションが安定化される数ヶ月前までには、全ての新機能が完全に実装され、[Rust Blog] で試用が呼びかけられます。
 
 <!--
