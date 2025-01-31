@@ -113,7 +113,7 @@
 -->
 
 - [Rust 2024](rust-2024/index.md)
-  - [Language](rust-2024/language.md)
+  - [言語](rust-2024/language.md)
     - [RPIT lifetime capture rules](rust-2024/rpit-lifetime-capture.md)
     - [`if let` temporary scope](rust-2024/temporary-if-let-scope.md)
     - [Tail expression temporary scope](rust-2024/temporary-tail-expr-scope.md)
@@ -127,7 +127,7 @@
     - [Missing macro fragment specifiers](rust-2024/missing-macro-fragment-specifiers.md)
     - [`gen` keyword](rust-2024/gen-keyword.md)
     - [Reserved syntax](rust-2024/reserved-syntax.md)
-  - [Standard library](rust-2024/standard-library.md)
+  - [標準ライブラリ](rust-2024/standard-library.md)
     - [Changes to the prelude](rust-2024/prelude.md)
     - [Add `IntoIterator` for `Box<[T]>`](rust-2024/intoiterator-box-slice.md)
     - [Newly unsafe functions](rust-2024/newly-unsafe-functions.md)
