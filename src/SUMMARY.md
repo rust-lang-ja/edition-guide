@@ -73,7 +73,7 @@
   - [Raw lifetimes](rust-2021/raw-lifetimes.md)
   - [警告からエラーへの格上げ](rust-2021/warnings-promoted-to-error.md)
   - [マクロ規則における OR パターン](rust-2021/or-patterns-macro-rules.md)
-  - [C-string literals](rust-2021/c-string-literals.md)
+  - [C 文字列リテラル](rust-2021/c-string-literals.md)
 
 ## Rust 2024
 
