@@ -326,37 +326,81 @@ Note that the former is not *exactly* equivalent to the latter because, by namin
 ただし、これは「完全に」等価ではありません。後者のようにジェネリックパラメータを名前付きにした場合、turbofish `::<>` 構文で引数を明示することができてしまうからです。
 実際には `use<..>` 境界で匿名ジェネリックパラメータを明示したい場合、名前付きジェネリックパラメータとして定義し直すしかありません。
 
+<!--
 ## Migration
+-->
 
+## 移行
+
+<!--
 ### Migrating while avoiding overcapturing
+-->
 
+### 移行時にキャプチャしすぎを回避する
+
+<!--
 The `impl_trait_overcaptures` lint flags RPIT opaque types that will capture additional lifetimes in Rust 2024.  This lint is part of the `rust-2024-compatibility` lint group which is automatically applied when running `cargo fix --edition`.  In most cases, the lint can automatically insert `use<..>` bounds where needed such that no additional lifetimes are captured in Rust 2024.
+-->
 
+Rust 2024 で新たにキャプチャされるライフタイムは、`impl_trait_overcaptures` リントで検出可能です。
+このリントは `cargo fix --edition` で自動適用される `rust-2024-compatibility` リントの一部です。
+ほとんどの場合、リントが必要に応じて `use<..>` を自動的に挿入し、Rust 2024 への移行時にもキャプチャされるライフタイムが増えないようにします。
+
+<!--
 To migrate your code to be compatible with Rust 2024, run:
+-->
+
+コードを Rust 2024 互換に移行するには、以下を実行します。
 
 ```sh
 cargo fix --edition
 ```
 
+<!--
 For example, this will change:
+-->
+
+例えば、
 
 ```rust
 fn f<'a>(x: &'a ()) -> impl Sized { *x }
 ```
 
+<!--
 ...into:
+-->
+
+は
 
 ```rust
 # #![feature(precise_capturing)]
 fn f<'a>(x: &'a ()) -> impl Sized + use<> { *x }
 ```
 
+に変わります。
+
+<!--
 Without this `use<>` bound, in Rust 2024, the opaque type would capture the `'a` lifetime parameter.  By adding this bound, the migration lint preserves the existing semantics.
+-->
 
+`use<>` 境界がないと、返り値の不透明型が `'a` をキャプチャしてしまいます。
+しかし移行リントが `use<>` を追加したので、意味合いが変わらないようになっています。
+
+<!--
 ### Migrating cases involving APIT
+-->
 
+## APIT が絡む移行
+
+<!--
 In some cases, the lint cannot make the change automatically because a generic parameter needs to be given a name so that it can appear within a `use<..>` bound.  In these cases, the lint will alert you that a change may need to be made manually.  E.g., given:
+-->
 
+ジェネリックパラメータが名無しであるために `use<..>` で参照できず、リントが自動移行に失敗する場合があります。
+この場合、手動操作が必要であるとリントが報告します。
+たとえば、以下のコードを考えます。
+
+<!--
 ```rust,edition2021
 fn f<'a>(x: &'a (), y: impl Sized) -> impl Sized { (*x, y) }
 //   ^^                ~~~~~~~~~~
@@ -369,9 +413,31 @@ fn f<'a>(x: &'a (), y: impl Sized) -> impl Sized { (*x, y) }
 #     f(x, y)
 # }
 ```
+-->
 
+```rust,edition2021
+fn f<'a>(x: &'a (), y: impl Sized) -> impl Sized { (*x, y) }
+//   ^^                ~~~~~~~~~~
+//               ここで APIT が使われています。
+//
+//~^ WARN `impl Sized` will capture more lifetimes than possibly intended in edition 2024
+//~| NOTE specifically, this lifetime is in scope but not mentioned in the type's bounds
+// (訳)
+//~^ 警告: 2024 エディションにすると、`impl Sized` が想定より多くのライフタイムをキャプチャする可能性があります。
+//~| 情報: 特に、このライフタイムはスコープ内にありますが、型境界に明示れていません
+#
+# fn test<'a>(x: &'a (), y: ()) -> impl Sized + 'static {
+#     f(x, y)
+# }
+```
+
+<!--
 The code cannot be converted automatically because of the use of APIT and the fact that the generic type parameter must be named in the `use<..>` bound.  To convert this code to Rust 2024 without capturing the lifetime, you must name that type parameter.  E.g.:
+-->
+これの変換が失敗するのは、ジェネリックパラメータを全部 `use<..>` 境界で列挙したいにもかかわらず、無名型を用いた APIT が含まれるからです。
+コードを Rust 2024 に変換しつつ、ライフタイムはキャプチャしないようにするには、例えば以下のように、型変数を名前付きに変更する必要があります。
 
+<!--
 ```rust
 # #![feature(precise_capturing)]
 # #![deny(impl_trait_overcaptures)]
@@ -383,8 +449,27 @@ fn f<'a, T: Sized>(x: &'a (), y: T) -> impl Sized + use<T> { (*x, y) }
 #     f(x, y)
 # }
 ```
+-->
 
+```rust
+# #![feature(precise_capturing)]
+# #![deny(impl_trait_overcaptures)]
+fn f<'a, T: Sized>(x: &'a (), y: T) -> impl Sized + use<T> { (*x, y) }
+//       ~~~~~~~~
+// 型引数に名前がつきました。
+#
+# fn test<'a>(x: &'a (), y: ()) -> impl Sized + use<> {
+#     f(x, y)
+# }
+```
+
+<!--
 Note that this changes the API of the function slightly as a type argument can now be explicitly provided for this parameter using turbofish syntax.  If this is undesired, you might consider instead whether you can simply continue to omit the `use<..>` bound and allow the lifetime to be captured.  This might be particularly desirable if you might in the future want to use that lifetime in the hidden type and would like to save space for that.
+-->
+
+なお、これは API の若干の変更にあたります。turbofish `::<>` 構文で型引数が明示的に指定できるようになったからです。
+これを避けたい場合は、引き続き `use<..>` を明示しないことでライフタイムがキャプチャされるようになっても良いか判断する必要があります。
+特に、隠蔽された型が将来的にライフタイムをキャプチャしうる余地を残したい場合は、そうした方がよいでしょう。
 
 ### Migrating away from the `Captures` trick
 
