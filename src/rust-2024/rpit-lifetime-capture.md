@@ -188,10 +188,20 @@ This makes the behavior consistent with RPIT opaque types in the signature of as
 実際、トレイト impl における関連関数・メソッド、トレイト定義内の RPIT（Return-Position Impl Trait In Trait; RPITIT）、`asnyc fn` によって生成される不透明な `Future` 型は、
 スコープ内のジェネリックなライフタイムパラメータをエディションにかかわらず全て暗黙にキャプチャするようになっていました。
 
+<!--
 ### Outer generic parameters
+-->
 
+### 外側のジェネリックパラメータ
+
+<!--
 Generic parameters from an outer impl are considered to be in scope when deciding what is implicitly captured.  E.g.:
+-->
 
+暗黙にキャプチャされるジェネリックパラメータを決定するとき、外側の impl で定義されたパラメータはスコープ内のパラメータと見なされます。
+例えば以下の通りです。
+
+<!--
 ```rust
 # #![feature(precise_capturing)]
 struct S<T, const C: usize>((T, [(); C]));
@@ -209,11 +219,40 @@ impl<T, const C: usize> S<T, C> {
     fn f_explicit<U>() -> impl Sized + use<T, U, C> {}
 }
 ```
+-->
 
+```rust
+# #![feature(precise_capturing)]
+struct S<T, const C: usize>((T, [(); C]));
+impl<T, const C: usize> S<T, C> {
+//   ~~~~~~~~~~~~~~~~~
+// これらのジェネリックパラメータはスコープ内にあります。
+    fn f_implicit<U>() -> impl Sized {}
+    //            ~       ~~~~~~~~~~
+    //            ^ これもスコープ内です。
+    //                    ^
+    //                    |
+    //     `use<..>` 境界が明示されていません。
+    //
+    // どのエディションでも、これは以下と等価です。
+    fn f_explicit<U>() -> impl Sized + use<T, U, C> {}
+}
+```
+
+<!--
 ### Lifetimes from higher-ranked binders
+-->
 
+### 高階束縛のライフタイム
+
+<!--
 Similarly, generic lifetime parameters introduced into scope by a higher-ranked `for<..>` binder are considered to be in scope.  E.g.:
+-->
 
+同様に、高階の `for<..>` 束縛で定義されたライフタイムパラメータも、スコープ内のパラメータと見なされます。
+例えば以下の通りです。
+
+<!--
 ```rust
 # #![feature(precise_capturing)]
 trait Tr<'a> { type Ty; }
@@ -228,11 +267,37 @@ fn f_2021() -> impl for<'a> Tr<'a, Ty = impl Copy + use<>> {}
 // However, note that the capturing of higher-ranked lifetimes in
 // nested opaque types is not yet supported.
 ```
+-->
 
+```rust
+# #![feature(precise_capturing)]
+trait Tr<'a> { type Ty; }
+impl Tr<'_> for () { type Ty = (); }
+
+fn f_implicit() -> impl for<'a> Tr<'a, Ty = impl Copy> {}
+// Rust 2021 以前では、上記は以下と等価です。
+fn f_2021() -> impl for<'a> Tr<'a, Ty = impl Copy + use<>> {}
+// Rust 2024 以降では、上記は以下と等価です。
+//fn f_2024() -> impl for<'a> Tr<'a, Ty = impl Copy + use<'a>> {}
+//                                        ~~~~~~~~~~~~~~~~~~~~
+// ただし、ネストされた不透明型における高階ライフタイムのキャプチャは
+// まだサポート外であることにご注意ください。
+```
+
+<!--
 ### Argument position impl Trait (APIT)
+-->
 
+### 引数としての impl Trait (APIT)
+
+<!--
 Anonymous (i.e. unnamed) generic parameters created by the use of APIT (argument position impl Trait) are considered to be in scope.  E.g.:
+-->
 
+引数としての impl Trait (argument position impl Trait, 以下 APIT) で作られる匿名（無名）ジェネリックパラメータは、スコープ内のパラメータと見なされます。
+例えば以下の通りです。
+
+<!--
 ```rust
 # #![feature(precise_capturing)]
 fn f_implicit(_: impl Sized) -> impl Sized {}
@@ -242,8 +307,24 @@ fn f_implicit(_: impl Sized) -> impl Sized {}
 // The above is *roughly* equivalent to:
 fn f_explicit<_0: Sized>(_: _0) -> impl Sized + use<_0> {}
 ```
+-->
 
+```rust
+# #![feature(precise_capturing)]
+fn f_implicit(_: impl Sized) -> impl Sized {}
+//               ~~~~~~~~~~
+//           これが APIT です。
+//
+// 上記は「概ね」以下と等価です。
+fn f_explicit<_0: Sized>(_: _0) -> impl Sized + use<_0> {}
+```
+
+<!--
 Note that the former is not *exactly* equivalent to the latter because, by naming the generic parameter, turbofish syntax can now be used to provide an argument for it.  There is no way to explicitly include an anonymous generic parameter in a `use<..>` bound other than by converting it to a named generic parameter.
+-->
+
+ただし、これは「完全に」等価ではありません。後者のようにジェネリックパラメータを名前付きにした場合、turbofish `::<>` 構文で引数を明示することができてしまうからです。
+実際には `use<..>` 境界で匿名ジェネリックパラメータを明示したい場合、名前付きジェネリックパラメータとして定義し直すしかありません。
 
 ## Migration
 
