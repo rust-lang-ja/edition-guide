@@ -8,8 +8,7 @@
 This chapter describes changes related to the **Lifetime Capture Rules 2024** introduced in [RFC 3498], including how to use opaque type *precise capturing* (introduced in [RFC 3617]) to migrate your code.
 -->
 
-本節では、[RFC 3498] で導入された**ライフタイムキャプチャ規則 2024** に関する変更事項を説明します。
-また、（[RFC 3617] で導入された）不透明型への**精密なキャプチャ**を使ったコードへの移行方法も説明します。
+本節では、[RFC 3498] で導入された**ライフタイムキャプチャ規則 2024** に関する変更事項と、（[RFC 3617] で導入された）不透明型への**精密なキャプチャ**を使ったコードへの移行方法を説明します。
 
 [RFC 3498]: https://github.com/rust-lang/rfcs/pull/3498
 [RFC 3617]: https://github.com/rust-lang/rfcs/pull/3617
@@ -124,13 +123,14 @@ fn test<'a>(x: &'a ()) -> impl Sized + 'static {
 If the `use<..>` bound is not present, then the compiler uses edition-specific rules to decide which in-scope generic parameters to capture implicitly.
 -->
 
-`use<..>` が明示されていない場合、スコープ内のジェネリックパラメータのうちどれがキャプチャされるかは、エディションによって挙動が異なります。
+`use<..>` が明示されていない場合、スコープ内のジェネリックパラメータのうちどれが暗黙にキャプチャされるかは、エディションによって挙動が異なります。
 
 <!--
 In all editions, all in-scope type and const generic parameters are captured implicitly when the `use<..>` bound is not present.  E.g.:
 -->
 
 スコープ内のジェネリックな型パラメータと const パラメータは、`use<..>` が明示されていないときはエディションにかかわらず全て暗黙にキャプチャされます。
+例えば以下の通りです。
 
 <!--
 ```rust
@@ -158,7 +158,7 @@ fn f_explicit<T, const C: usize>() -> impl Sized + use<T, C> {}
 In Rust 2021 and earlier editions, when the `use<..>` bound is not present, generic lifetime parameters are only captured when they appear syntactically within a bound in RPIT opaque types in the signature of bare functions and associated functions and methods within inherent impls.  However, starting in Rust 2024, these in-scope generic lifetime parameters are unconditionally captured.  E.g.:
 -->
 
-ジェネリックなライフタイムパラメータに関しては、Rust 2021 以前のエディションでは、`use<..>` が明示されていない場合、トップレベルの関数か固有 impl [^1] 内の関連関数・メソッドにおける RPIT 不透明型の境界に現れるものだけがキャプチャされます。一方、Rust 2024 以降では、スコープ内のジェネリックなライフタイムパラメータは全てキャプチャされます。例えば以下の通りです。
+ジェネリックなライフタイムパラメータに関しては、Rust 2021 以前のエディションでは、`use<..>` が明示されていない場合、トップレベルの関数か固有 impl [^1] 内の関連関数・メソッドにおける RPIT 不透明型の境界に明示的に記述されているものだけがキャプチャされます。一方、Rust 2024 以降では、スコープ内のジェネリックなライフタイムパラメータは全てキャプチャされます。例えば以下の通りです。
 
 <!--
 ```rust
@@ -185,7 +185,7 @@ This makes the behavior consistent with RPIT opaque types in the signature of as
 -->
 
 これは、他のシグネチャにおける RPIT 不透明型の挙動に合わせたものです。
-実際、トレイト impl [^2] 内の関連関数・メソッド、トレイト定義内の RPIT（Return-Position Impl Trait In Trait; RPITIT）、`asnyc fn` によって生成される不透明な `Future` 型は、エディションにかかわらず、スコープ内のジェネリックなライフタイムパラメータを全て暗黙にキャプチャするようになっています。
+実際、トレイト impl [^2] 内の関連関数・メソッド、トレイト定義内の RPIT（Return-Position Impl Trait In Trait; RPITIT）、`asnyc fn` によって生成される不透明な `Future` 型は、`use<..>` が明示されていない場合、エディションにかかわらず、スコープ内のジェネリックなライフタイムパラメータを全て暗黙にキャプチャするようになっています。
 
 [^1]: 訳注: 固有 impl とは、`struct MyStruct;` に対する `impl MyStruct { }` ブロックのように、型に対して直接定義される `impl` ブロックのことです。
 [^2]: 訳注: トレイト impl とは、`trait MyTrait` に対する `impl MyTrait for MyStruct { }` ブロックのように、トレイトの実装を与えるための `impl` ブロックのことです。
@@ -385,7 +385,7 @@ fn f<'a>(x: &'a ()) -> impl Sized + use<> { *x }
 Without this `use<>` bound, in Rust 2024, the opaque type would capture the `'a` lifetime parameter.  By adding this bound, the migration lint preserves the existing semantics.
 -->
 
-`use<>` 境界がないと、返り値の不透明型が `'a` をキャプチャしてしまいますが、移行リントが `use<>` を追加したことにより、意味合いが変わらないようになっています。
+`use<>` 境界がないと、Rust 2024 で返り値の不透明型が `'a` を新たにキャプチャしてしまいますが、移行リントが `use<>` を追加したことにより、意味合いが変わらないようになっています。
 
 <!--
 ### Migrating cases involving APIT
@@ -398,7 +398,7 @@ In some cases, the lint cannot make the change automatically because a generic p
 -->
 
 ジェネリックパラメータが名無しであるために `use<..>` で参照できず、リントが自動移行に失敗する場合があります。
-この場合、手動操作が必要であるとリントが報告します。
+この場合、手動の変更が必要であるとリントが報告します。
 たとえば、以下のコードを考えます。
 
 <!--
@@ -435,8 +435,8 @@ fn f<'a>(x: &'a (), y: impl Sized) -> impl Sized { (*x, y) }
 <!--
 The code cannot be converted automatically because of the use of APIT and the fact that the generic type parameter must be named in the `use<..>` bound.  To convert this code to Rust 2024 without capturing the lifetime, you must name that type parameter.  E.g.:
 -->
-ここで、変換が失敗するのは、ジェネリックパラメータを全て `use<..>` 境界で列挙したいにもかかわらず、無名型を用いた APIT が使われているからです。
-コードを Rust 2024 に変換しつつ、ライフタイムがキャプチャされないようにするには、例えば以下のように、型引数を名前付きに変更する必要があります。
+ここで、変換が失敗するのは、ジェネリックパラメータを全て `use<..>` 境界で「名指し」したいにもかかわらず、無名型を用いた APIT が使われているからです。
+Rust 2024 になってもライフタイムがキャプチャされないようにするには、例えば以下のように、型引数を名前付きに変更する必要があります。
 
 <!--
 ```rust
@@ -523,7 +523,7 @@ fn f<'a, T>(x: &'a (), y: T) -> impl Sized + Captures<(&'a (), T)> {
 With the `use<..>` bound syntax, the `Captures` trick is no longer needed and can be replaced with the following in all editions:
 -->
 
-`use<..>` 境界構文が導入された今、`Captures` パターンを使う必要はなくなり、どのエディションでも以下のように書き換えることができるようになりました。
+`use<..>` 境界構文が導入された今、`Captures` パターンは不要となり、どのエディションでも以下のように書き換えることができるようになりました。
 
 ```rust
 # #![feature(precise_capturing)]
