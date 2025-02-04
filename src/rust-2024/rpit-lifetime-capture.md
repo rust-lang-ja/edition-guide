@@ -44,8 +44,8 @@ This chapter describes changes related to the **Lifetime Capture Rules 2024** in
 *Capturing* a generic parameter in an RPIT (return-position impl Trait) opaque type allows for that parameter to be used in the corresponding hidden type.  In Rust 1.82, we added `use<..>` bounds that allow specifying explicitly which generic parameters to capture.  Those will be helpful for migrating your code to Rust 2024, and will be helpful in this chapter for explaining how the edition-specific implicit capturing rules work.  These `use<..>` bounds look like this:
 -->
 
-戻り値としての `impl Trait` (return-position impl Trait, 以下 RPIT) 不透明型が「ジェネリックパラメータをキャプチャする」とは、対応する隠された型がそのパラメータを使用できる、ということです。
-Rust 1.82 で導入された `use<..>` 境界を用いると、どのジェネリックパラメータがキャプチャされているのかを明示することができるようになりました。
+戻り値としての `impl Trait` (return-position impl Trait, 以下 RPIT) 不透明型が「ジェネリックパラメータをキャプチャする」とは、不透明型に隠蔽された型がそのパラメータを使用できる、ということです。
+Rust 1.82 では `use<..>` 境界が導入され、どのジェネリックパラメータがキャプチャされているのかを明示することができるようになりました。
 この構文は Rust 2024 への移行にも活用できますし、本節では各エディションにおける暗黙のキャプチャ規則を説明するためにも用います。
 `use<..>` 境界は次のように使用します。
 
@@ -70,7 +70,7 @@ fn capture<'a, T>(x: &'a (), y: T) -> impl Sized + use<'a, T> {
 # #![feature(precise_capturing)]
 fn capture<'a, T>(x: &'a (), y: T) -> impl Sized + use<'a, T> {
     //                                ~~~~~~~~~~~~~~~~~~~~~~~
-    //                               これが RPIT 不透明型です。
+    //                                これが RPIT 不透明型です。
     //
     //                        `'a` と `T` をキャプチャしています。
     (x, y)
@@ -85,7 +85,7 @@ fn capture<'a, T>(x: &'a (), y: T) -> impl Sized + use<'a, T> {
 The generic parameters that are captured affect how the opaque type can be used.  E.g., this is an error because the lifetime is captured despite the fact that the hidden type does not use the lifetime:
 -->
 
-キャプチャされるジェネリックパラメータによって、不透明型が使える範囲も決まります。
+どのジェネリックパラメータがキャプチャされるか次第で、不透明型が使える場面も決まります。
 例えば、以下のコードではライフタイム `'a` が使用されていないにもかかわらず、`'a` がキャプチャされているためエラーになります。
 
 ```rust,compile_fail
@@ -124,7 +124,7 @@ fn test<'a>(x: &'a ()) -> impl Sized + 'static {
 If the `use<..>` bound is not present, then the compiler uses edition-specific rules to decide which in-scope generic parameters to capture implicitly.
 -->
 
-`use<..>` が明示されていない場合、スコープ内のジェネリックパラメータのうちどれをキャプチャするかは、エディションによって挙動が異なります。
+`use<..>` が明示されていない場合、スコープ内のジェネリックパラメータのうちどれがキャプチャされるかは、エディションによって挙動が異なります。
 
 <!--
 In all editions, all in-scope type and const generic parameters are captured implicitly when the `use<..>` bound is not present.  E.g.:
@@ -158,7 +158,7 @@ fn f_explicit<T, const C: usize>() -> impl Sized + use<T, C> {}
 In Rust 2021 and earlier editions, when the `use<..>` bound is not present, generic lifetime parameters are only captured when they appear syntactically within a bound in RPIT opaque types in the signature of bare functions and associated functions and methods within inherent impls.  However, starting in Rust 2024, these in-scope generic lifetime parameters are unconditionally captured.  E.g.:
 -->
 
-ジェネリックなライフタイムパラメータに関しては、Rust 2021 以前のエディションでは、`use<..>` が明示されていない場合、トップレベルの関数か固有 impl 内の関連関数・メソッドにおける RPIT 不透明型の境界に現れるものだけがキャプチャされます。一方、Rust 2024 以降では、スコープ内のジェネリックなライフタイムパラメータは全てキャプチャされます。例えば以下の通りです。
+ジェネリックなライフタイムパラメータに関しては、Rust 2021 以前のエディションでは、`use<..>` が明示されていない場合、トップレベルの関数か固有 impl [^1] 内の関連関数・メソッドにおける RPIT 不透明型の境界に現れるものだけがキャプチャされます。一方、Rust 2024 以降では、スコープ内のジェネリックなライフタイムパラメータは全てキャプチャされます。例えば以下の通りです。
 
 <!--
 ```rust
@@ -185,8 +185,10 @@ This makes the behavior consistent with RPIT opaque types in the signature of as
 -->
 
 これは、他のシグネチャにおける RPIT 不透明型の挙動に合わせたものです。
-実際、トレイト impl における関連関数・メソッド、トレイト定義内の RPIT（Return-Position Impl Trait In Trait; RPITIT）、`asnyc fn` によって生成される不透明な `Future` 型は、
-スコープ内のジェネリックなライフタイムパラメータをエディションにかかわらず全て暗黙にキャプチャするようになっていました。
+実際、トレイト impl [^2] 内の関連関数・メソッド、トレイト定義内の RPIT（Return-Position Impl Trait In Trait; RPITIT）、`asnyc fn` によって生成される不透明な `Future` 型は、エディションにかかわらず、スコープ内のジェネリックなライフタイムパラメータを全て暗黙にキャプチャするようになっています。
+
+[^1]: 訳注: 固有 impl とは、`struct MyStruct;` に対する `impl MyStruct { }` ブロックのように、型に対して直接定義される `impl` ブロックのことです。
+[^2]: 訳注: トレイト impl とは、`trait MyTrait` に対する `impl MyTrait for MyStruct { }` ブロックのように、トレイトの実装を与えるための `impl` ブロックのことです。
 
 <!--
 ### Outer generic parameters
@@ -294,7 +296,7 @@ fn f_2021() -> impl for<'a> Tr<'a, Ty = impl Copy + use<>> {}
 Anonymous (i.e. unnamed) generic parameters created by the use of APIT (argument position impl Trait) are considered to be in scope.  E.g.:
 -->
 
-引数としての impl Trait (argument position impl Trait, 以下 APIT) で作られる匿名（無名）ジェネリックパラメータは、スコープ内のパラメータと見なされます。
+引数としての impl Trait (argument position impl Trait, 以下 APIT) で作られる匿名（無名）ジェネリックパラメータも、スコープ内のパラメータと見なされます。
 例えば以下の通りです。
 
 <!--
@@ -377,14 +379,13 @@ fn f<'a>(x: &'a ()) -> impl Sized { *x }
 fn f<'a>(x: &'a ()) -> impl Sized + use<> { *x }
 ```
 
-に変わります。
+に書き換えられます。
 
 <!--
 Without this `use<>` bound, in Rust 2024, the opaque type would capture the `'a` lifetime parameter.  By adding this bound, the migration lint preserves the existing semantics.
 -->
 
-`use<>` 境界がないと、返り値の不透明型が `'a` をキャプチャしてしまいます。
-しかし移行リントが `use<>` を追加したので、意味合いが変わらないようになっています。
+`use<>` 境界がないと、返り値の不透明型が `'a` をキャプチャしてしまいますが、移行リントが `use<>` を追加したことにより、意味合いが変わらないようになっています。
 
 <!--
 ### Migrating cases involving APIT
@@ -434,8 +435,8 @@ fn f<'a>(x: &'a (), y: impl Sized) -> impl Sized { (*x, y) }
 <!--
 The code cannot be converted automatically because of the use of APIT and the fact that the generic type parameter must be named in the `use<..>` bound.  To convert this code to Rust 2024 without capturing the lifetime, you must name that type parameter.  E.g.:
 -->
-これの変換が失敗するのは、ジェネリックパラメータを全部 `use<..>` 境界で列挙したいにもかかわらず、無名型を用いた APIT が含まれるからです。
-コードを Rust 2024 に変換しつつ、ライフタイムはキャプチャしないようにするには、例えば以下のように、型変数を名前付きに変更する必要があります。
+ここで、変換が失敗するのは、ジェネリックパラメータを全て `use<..>` 境界で列挙したいにもかかわらず、無名型を用いた APIT が使われているからです。
+コードを Rust 2024 に変換しつつ、ライフタイムがキャプチャされないようにするには、例えば以下のように、型引数を名前付きに変更する必要があります。
 
 <!--
 ```rust
@@ -556,7 +557,7 @@ fn f<'a, T>(x: &'a (), y: T) -> impl Sized {
 There is no automatic migration for this, and the `Captures` trick still works in Rust 2024, but you might want to consider migrating code manually away from using this old trick.
 -->
 
-これは自動移行されず、Rust 2024 でも `Captures` パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
+このような移行は自動ではなされず、また Rust 2024 でも `Captures` パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
 
 <!--
 ### Migrating away from the outlives trick
@@ -602,7 +603,7 @@ This trick was less baroque than the `Captures` trick, but also less correct.  A
 -->
 
 このパターンは `Captures` パターンほど古の産物ではないですが、`Captures` パターンほど正しくもありませんでした。
-上の例のように、`T` を構成するライフタイムはライフタイム `'a` と無関係であるのに、パターンを適用するために `T: 'a` を指定せざるを得ないからです。
+上の例のように、`T` を構成するライフタイムは `'a` と無関係であるのに、パターンを適用するために `T: 'a` を指定せざるを得ないからです。
 関数を使う側としては、思いがけない不当な制約となってしまいます。
 
 <!--
@@ -644,4 +645,4 @@ fn f<T>(x: &(), y: T) -> impl Sized {
 There is no automatic migration for this, and the outlives trick still works in Rust 2024, but you might want to consider migrating code manually away from using this old trick.
 -->
 
-これは自動移行されず、Rust 2024 でも outlive パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
+このような移行は自動ではなされず、また Rust 2024 でも outlive パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
