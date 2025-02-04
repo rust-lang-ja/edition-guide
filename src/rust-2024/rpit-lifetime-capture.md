@@ -26,7 +26,7 @@ This chapter describes changes related to the **Lifetime Capture Rules 2024** in
 -->
 
 - Rust 2024 では、`use<..>` を書かない限り、スコープ内の **すべての** ジェネリックパラメータ（ライフタイムパラメータを含む）が暗黙にキャプチャされます。
-- `Captures` パターン（`Captures<..>` 境界）や「長生き」パターン（`'_` 境界）は、（どのエディションでも）`use<..>` 境界に書き換えたり、（Rust 2024 では）削除したりできます。
+- `Captures` パターン（`Captures<..>` 境界）や outlive パターン（`'_` 境界）は、（どのエディションでも）`use<..>` 境界に書き換えたり、（Rust 2024 では）削除したりできます。
 
 <!--
 ## Details
@@ -471,10 +471,20 @@ Note that this changes the API of the function slightly as a type argument can n
 これを避けたい場合は、引き続き `use<..>` を明示しないことでライフタイムがキャプチャされるようになっても良いか判断する必要があります。
 特に、隠蔽された型が将来的にライフタイムをキャプチャしうる余地を残したい場合は、そうした方がよいでしょう。
 
+<!--
 ### Migrating away from the `Captures` trick
+-->
 
+### `Captures` パターンをやめる
+
+<!--
 Prior to the introduction of precise capturing `use<..>` bounds in Rust 1.82, correctly capturing a lifetime in an RPIT opaque type often required using the `Captures` trick.  E.g.:
+-->
 
+Rust 1.82 で `use<..>` 境界を用いた精密なキャプチャが使えるようになるまで、RPIT 不透明型がライフタイムを正しくキャプチャするためによく使われていたのが `Captures` パターンです。
+例えば以下の通りです。
+
+<!--
 ```rust
 #[doc(hidden)]
 pub trait Captures<T: ?Sized> {}
@@ -490,8 +500,29 @@ fn f<'a, T>(x: &'a (), y: T) -> impl Sized + Captures<(&'a (), T)> {
 #     f(t, x);
 # }
 ```
+-->
 
+```rust
+#[doc(hidden)]
+pub trait Captures<T: ?Sized> {}
+impl<T: ?Sized, U: ?Sized> Captures<T> for U {}
+
+fn f<'a, T>(x: &'a (), y: T) -> impl Sized + Captures<(&'a (), T)> {
+//                                           ~~~~~~~~~~~~~~~~~~~~~
+//                               これがいわゆる Captures パターンです。
+    (x, y)
+}
+#
+# fn test<'t, 'x>(t: &'t (), x: &'x ()) {
+#     f(t, x);
+# }
+```
+
+<!--
 With the `use<..>` bound syntax, the `Captures` trick is no longer needed and can be replaced with the following in all editions:
+-->
+
+`use<..>` 境界構文が導入された今、`Captures` パターンを使う必要はなくなり、どのエディションでも以下のように書き換えることができるようになりました。
 
 ```rust
 # #![feature(precise_capturing)]
@@ -504,7 +535,11 @@ fn f<'a, T>(x: &'a (), y: T) -> impl Sized + use<'a, T> {
 # }
 ```
 
+<!--
 In Rust 2024, the `use<..>` bound can often be omitted entirely, and the above can be written simply as:
+-->
+
+Rust 2024 では `use<..>` はそもそも省略可能な場合が多いです。上記は以下のように書き換えられます。
 
 ```rust,edition2024
 # #![feature(lifetime_capture_rules_2024)]
@@ -517,12 +552,26 @@ fn f<'a, T>(x: &'a (), y: T) -> impl Sized {
 # }
 ```
 
+<!--
 There is no automatic migration for this, and the `Captures` trick still works in Rust 2024, but you might want to consider migrating code manually away from using this old trick.
+-->
 
+これは自動移行されず、Rust 2024 でも `Captures` パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
+
+<!--
 ### Migrating away from the outlives trick
+-->
 
+### outlive パターンをやめる
+
+<!--
 Prior to the introduction of precise capturing `use<..>` bounds in Rust 1.82, it was common to use the "outlives trick" when a lifetime needed to be used in the hidden type of some opaque.  E.g.:
+-->
 
+Rust 1.82 で `use<..>` 境界を用いた精密なキャプチャが使えるようになるまで、不透明型に隠蔽された型がライフタイムを要求する場合に outlive パターンが広く使われていました。
+例えば以下の通りです。
+
+<!--
 ```rust
 fn f<'a, T: 'a>(x: &'a (), y: T) -> impl Sized + 'a {
     //    ~~~~                                 ~~~~
@@ -534,10 +583,33 @@ fn f<'a, T: 'a>(x: &'a (), y: T) -> impl Sized + 'a {
 // The hidden type is `(&'a (), T)`.
 }
 ```
+-->
 
+```rust
+fn f<'a, T: 'a>(x: &'a (), y: T) -> impl Sized + 'a {
+    //    ~~~~                                 ~~~~
+    //    ^          ここで outlive パターンを使っています。
+    //    |
+    // このパターンのためだけに、追加の境界が必要になっています。
+    (x, y)
+//  ~~~~~~
+// 型 `(&'a (), T)` が隠蔽されています。
+}
+```
+
+<!--
 This trick was less baroque than the `Captures` trick, but also less correct.  As we can see in the example above, even though any lifetime components within `T` are independent from the lifetime `'a`, we're required to add a `T: 'a` bound in order to make the trick work.  This created undue and surprising restrictions on callers.
+-->
 
+このパターンは `Captures` パターンほど古の産物ではないですが、`Captures` パターンほど正しくもありませんでした。
+上の例のように、`T` を構成するライフタイムはライフタイム `'a` と無関係であるのに、パターンを適用するために `T: 'a` を指定せざるを得ないからです。
+関数を使う側としては、思いがけない不当な制約となってしまいます。
+
+<!--
 Using precise capturing, you can write the above instead, in all editions, as:
+-->
+
+精密なキャプチャを使えば、上記のコードはどのエディションでも以下のように書き換えられます。
 
 ```rust
 # #![feature(precise_capturing)]
@@ -550,7 +622,11 @@ fn f<T>(x: &(), y: T) -> impl Sized + use<'_, T> {
 # }
 ```
 
+<!--
 In Rust 2024, the `use<..>` bound can often be omitted entirely, and the above can be written simply as:
+-->
+
+Rust 2024 では、 `use<..>` 境界は多くの場合で明示が不要なので、次のように書くこともできます。
 
 ```rust,edition2024
 # #![feature(precise_capturing)]
@@ -564,4 +640,8 @@ fn f<T>(x: &(), y: T) -> impl Sized {
 # }
 ```
 
+<!--
 There is no automatic migration for this, and the outlives trick still works in Rust 2024, but you might want to consider migrating code manually away from using this old trick.
+-->
+
+これは自動移行されず、Rust 2024 でも outlive パターンは使用可能ですが、古い書き方からは脱却したほうがよいでしょう。
