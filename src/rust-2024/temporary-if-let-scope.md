@@ -136,9 +136,9 @@ See the [temporary scope rules] for more information about how temporary scopes 
 [^scrutinee]: [被検査体 (scurtinee)] とは、`if let` 式でマッチするかを検査される式（`=` 以降の式）のことです。
 
 <!--
-[scrutinee]: https://doc.rust-lang.org/reference/glossary.html#scrutinee
-[temporary values]: https://doc.rust-lang.org/reference/expressions.html#temporaries
-[temporary scope rules]: https://doc.rust-lang.org/reference/destructors.html#temporary-scopes
+[scrutinee]: ../../reference/glossary.html#scrutinee
+[temporary values]: ../../reference/expressions.html#temporaries
+[temporary scope rules]: ../../reference/destructors.html#temporary-scopes
 [tail expression temporary scope]: temporary-tail-expr-scope.md
 -->
 
@@ -244,5 +244,9 @@ If you want to manually inspect these warnings without performing the edition mi
 // クレートのトップレベルに以下を追加すると手動移行できる
 #![warn(if_let_rescope)]
 ```
+
+<!--
+[`if_let_rescope`]: ../../rustc/lints/listing/allowed-by-default.html#if-let-rescope
+-->
 
 [`if_let_rescope`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#if-let-rescope
