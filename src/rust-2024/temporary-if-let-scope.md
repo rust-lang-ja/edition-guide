@@ -147,12 +147,25 @@ See the [temporary scope rules] for more information about how temporary scopes 
 [一時値のスコープ規則]: https://doc.rust-lang.org/reference/destructors.html#temporary-scopes
 [末尾式の一時スコープ]: temporary-tail-expr-scope.md
 
+<!--
 ## Migration
+-->
 
+## 移行
+
+<!--
 It is always safe to rewrite `if let` with a `match`. The temporaries of the `match` scrutinee are extended past the end of the `match` expression (typically to the end of the statement), which is the same as the 2021 behavior of `if let`.
+-->
+`if let` はいつでも `match` に安全に書き換えられます。
+`match` の被検査体で生成される一時値は、2021 における `if let` の挙動と同様、少なくとも `match` 式の末尾まで（多くの場合、文の末尾まで）生存します。
 
+<!--
 The [`if_let_rescope`] lint suggests a fix when a lifetime issue arises due to this change or the lint detects that a temporary value with a custom, non-trivial `Drop` destructor is generated from the scrutinee of the `if let`. For instance, the earlier example may be rewritten into the following when the suggestion from `cargo fix` is accepted:
+-->
+[`if_let_rescope`] リントは、本変更によってライフタイムの問題が発生する場合や、`if let` の被検査体で生成される一時値が独自の非自明な `Drop` デストラクタをもつ場合に、修正案を提示します。
+例えば、前述の例に対して `cargo fix` の提案を適用した場合、以下のように書き換えられます。
 
+<!--
 ```rust
 # use std::sync::RwLock;
 fn f(value: &RwLock<Option<bool>>) {
@@ -170,21 +183,65 @@ fn f(value: &RwLock<Option<bool>>) {
     // <--- Read lock is dropped here in both 2021 and 2024
 }
 ```
+-->
 
+```rust
+# use std::sync::RwLock;
+fn f(value: &RwLock<Option<bool>>) {
+    match *value.read().unwrap() {
+        Some(x) => {
+            println!("value is {x}");
+        }
+        _ => {
+            let mut s = value.write().unwrap();
+            if s.is_none() {
+                *s = Some(true);
+            }
+        }
+    }
+    // <--- Rust 2021 でも 2024 でも、読み取りロックはここでドロップされる
+}
+```
+
+<!--
 In this particular example, that's probably not what you want due to the aforementioned deadlock! However, some scenarios may be assuming that the temporaries are held past the `else` clause, in which case you may want to retain the old behavior.
+-->
 
+特に上記のコードでは、前述の通りデッドロックが起こるため望む挙動ではないでしょうが、場合によっては従来の挙動そのままに、一時値が `else` 節以降も生き延びることを意図することもあるでしょう。
+
+<!--
 The [`if_let_rescope`] lint is part of the `rust-2024-compatibility` lint group which is included in the automatic edition migration. In order to migrate your code to be Rust 2024 Edition compatible, run:
+-->
+
+[`if_let_rescope`] リントは、自動エディション移行に含まれる `rust-2024-compatibility` リントグループの一部です。
+コードを Rust 2024 に移行するには、以下を実行します。
 
 ```sh
 cargo fix --edition
 ```
 
+<!--
 After the migration, it is recommended that you review all of the changes of `if let` to `match` and decide what is the behavior that you need with respect to when temporaries are dropped. If you determine that the change is unnecessary, then you can revert the change back to `if let`.
+-->
 
+移行後、`if let` から `match` へ変更された箇所をチェックし、一時値がドロップされるタイミングを再確認することを推奨します。
+変更が不要と判断した場合は、`if let` へ戻すとよいでしょう。
+
+<!--
 If you want to manually inspect these warnings without performing the edition migration, you can enable the lint with:
+-->
 
+エディション移行ツールを使わずに手動で確認したい場合は、以下のリントをオンにしてください。
+
+<!--
 ```rust
 // Add this to the root of your crate to do a manual migration.
+#![warn(if_let_rescope)]
+```
+-->
+
+```rust
+// クレートのトップレベルに以下を追加すると手動移行できる
 #![warn(if_let_rescope)]
 ```
 
