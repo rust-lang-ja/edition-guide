@@ -14,7 +14,7 @@
 - Temporary values generated in evaluation of the tail expression of a [function] or closure body, or a [block] may now be dropped before local variables, and are sometimes not extended to the next larger temporary scope.
 -->
 
-- [関数]・クロージャ本体・[ブロック]の末尾式の評価で生成される一時値は、ローカル変数より先にドロップされるようになり、外側の一時スコープまで生き延びない場合があります。
+- [関数]・クロージャ本体・[ブロック]の末尾式の評価中に生成される一時値は、ローカル変数より先にドロップされるようになり、外側の一時スコープまで生き延びない場合があります。
 
 <!--
 [function]: ../../reference/items/functions.html
@@ -35,7 +35,7 @@ The 2024 Edition changes the drop order of [temporary values] in tail expression
 -->
 
 2024 エディションから、[末尾式] [^1]のドロップ順序が変わります。
-2024 エディションより前の直感的でない挙動として、以下のように、末尾式内の一時値がブロックそのものより長生きして、ローカル変数束縛よりも長生きするというものがありました。
+それ以前の非直感的な挙動として、以下のように、末尾式内の一時値がブロックそのものより長生きして、ローカル変数束縛より後にドロップされるというものがありました。
 
 <!--
 [temporary values]: ../../reference/expressions.html#temporaries
@@ -60,54 +60,52 @@ fn f() -> usize {
 fn f() -> usize {
     let c = RefCell::new("..");
     c.borrow().len() // error[E0597]: `c` does not live long enough
-                     // 訳: [E0597]: `c` は十分に長生きしません
+                     // (訳)エラー[E0597]: `c` は十分に長生きしません
 }
 ```
-
-[^1] 訳注: 関数・クロージャ・ブロックの `{ }` の末尾にある、セミコロン `;` を伴わない式のこと。
 
 <!--
 This yields the following error with the 2021 Edition:
 -->
 
-2021 エディションでは以下のようなエラーになりました。
+このコードは、2021 エディションでは以下のようなエラーになりました。
 
 ```text
 error[E0597]: `c` does not live long enough
-(訳: エラー[E0597]: `c` は十分に長生きしません)
+((訳)エラー[E0597]: `c` は十分に長生きしません)
  --> src/lib.rs:4:5
   |
 3 |     let c = RefCell::new("..");
   |         - binding `c` declared here
-              (訳: 束縛 `c` はここで定義されています)
+              ((訳)束縛 `c` はここで定義されています)
 4 |     c.borrow().len() // error[E0597]: `c` does not live long enough
   |     ^---------
   |     |
   |     borrowed value does not live long enough
-        (訳: ここで借用される値が十分に長生きしません)
+        ((訳)ここで借用される値が十分に長生きしません)
   |     a temporary with access to the borrow is created here ...
-        (訳: 値を借用する一時値がここで生成されていますが、…)
+        ((訳)値を借用する一時値がここで生成されていますが、...)
 5 | }
   | -
   | |
   | `c` dropped here while still borrowed
-    (訳: `c` が借用中にここでドロップされています)
+    ((訳) `c` が借用中にここでドロップされています)
   | ... and the borrow might be used here, when that temporary is dropped and runs the destructor for type `Ref<'_, &str>`
   |
-    (訳: …ここでその一時値がドロップされて `Ref<'_, &str>` 型のデストラクタが実行されるとき、借用が使用中である可能性があります)
+    ((訳)...ここでその一時値がドロップされて `Ref<'_, &str>` 型のデストラクタが実行されるとき、借用が使用中である可能性があります)
   = note: the temporary is part of an expression at the end of a block;
-  (訳: 注: この一時値は、ブロック末尾の式の一部です。)
+    ((訳)注: この一時値は、ブロック末尾の式の一部です。)
           consider forcing this temporary to be dropped sooner, before the block's local variables are dropped
-          (訳: 当該の一時値がドロップされるタイミングが、ブロック内のローカル変数がドロップされる前になるようにするとよいかもしれません)
+          ((訳)当該の一時値が、ブロック内のローカル変数より前にドロップされるようにするとよいかもしれません)
 help: for example, you could save the expression's value in a new local variable `x` and then make `x` be the expression at the end of the block
-(訳: ヘルプ: 例えば、式の値を一旦新しいローカル変数 `x` に格納し、それをブロック末尾の式とするとよいです)
+((訳)ヘルプ: 例えば、式の値を一旦新しいローカル変数 `x` に格納し、それをブロック末尾の式とするとよいです)
           
   |
 4 |     let x = c.borrow().len(); x // error[E0597]: `c` does not live long enough
   |     +++++++                 +++
 
 For more information about this error, try `rustc --explain E0597`.
-(訳: 詳細に関しては `rustc --explain E0597` をご参照ください。)
+((訳)詳細に関しては `rustc --explain E0597` をご参照ください。)
 ```
 
 <!--
@@ -116,6 +114,8 @@ In 2021 the local variable `c` is dropped before the temporary created by `c.bor
 
 2021 では、ローカル変数 `c` よりも `c.borrow()` で作られた一時値の方が先にドロップされます。
 2024 エディションでこの挙動は変わり、一時値 `c.borrow()` が先にドロップされてからローカル変数 `c` がドロップされるようになり、コードが期待通りコンパイルされるよになりました。
+
+[^1]: 訳注: 関数・クロージャ・ブロックの `{ }` の末尾にある、セミコロン `;` を伴わない式のこと。
 
 <!--
 ### Temporary scope may be narrowed
@@ -129,14 +129,14 @@ When a temporary is created in order to evaluate an expression, the temporary is
 
 式の評価のために一時値が作られるとき、一時値は[一時スコープのルール]に則ってドロップされます。
 このルールは一時値の生存期間を規定するものです。
-2024 より前では、ブロックの末尾式における一時値は次のスコープ境界まで、もっぱら文・関数の末尾まで生存していました。
+2024 より前では、ブロックの末尾式における一時値はそのブロックに収まらず次のスコープ境界まで、もっぱら文・関数の末尾まで生存していました。
 2024 以降では、末尾式内の一時値はブロック終了時に即座に（ブロック内のローカル変数より前に）ドロップされます。
 
 <!--
 This narrowing of the temporary scope may cause programs to fail to compile in 2024. For example:
 -->
 
-このように一時スコープが縮小することにより、以下のように 2024 でコンパイルが通らなくなる場合があります。
+このような一時スコープの縮小により、以下のように 2024 でコンパイルが通らなくなる場合があります。
 
 <!--
 ```rust,edition2024,E0716,compile_fail
@@ -177,8 +177,7 @@ fn main() {
 This particular example takes advantage of [temporary lifetime extension]. Temporary lifetime extension is a set of specific rules which allow temporaries to live longer than they normally would. Because the `String` temporary is behind a reference, the `String` temporary is extended long enough for the next statement to call `len()` on it.
 -->
 
-
-このコードでは特に、特定の状況下で一時値を本来よりも延命させる、[一時値の延命]ルールを活用しています。
+特にこの例では、特定の状況下で一時値を本来よりも延命させる、[一時値の延命]ルールを活用しています。
 一時値の `String` が、参照 `&` 下にあるために延命され、次の文で `len()` が呼び出せるようになっています。
 
 <!--
@@ -193,9 +192,9 @@ See the [`if let` temporary scope] chapter for a similar change made to temporar
 [temporary lifetime extension]: ../../reference/destructors.html#temporary-lifetime-extension
 -->
 
-[`if let` temporary scope]: temporary-if-let-scope.md
-[temporary scope rules]: https://doc.rust-lang.org/reference/destructors.html#temporary-scopes
-[temporary lifetime extension]: https://doc.rust-lang.org/reference/destructors.html#temporary-lifetime-extension
+[`if let` の一時スコープ]: temporary-if-let-scope.md
+[一時スコープのルール]: https://doc.rust-lang.org/reference/destructors.html#temporary-scopes
+[一時値の延命]: https://doc.rust-lang.org/reference/destructors.html#temporary-lifetime-extension
 
 <!--
 ## Migration
@@ -209,7 +208,7 @@ Unfortunately, there are no semantics-preserving rewrites to shorten the lifetim
 
 残念ながら、コードの意味合いを変えずに末尾式中の一時値の生存期間を短くする書き換え方はありません[^RFC3606]。
 [`tail_expr_drop_order`]リントは、末尾式中の一時値が独自の非自明な `Drop` デストラクタをもつことを検出します。
-`cargo fix --edition` を実行すると警告がでますが、特段の書き換えはなされません。
+`cargo fix --edition` を実行すると警告が出ますが、特段の書き換えはなされません。
 プログラマ自身が警告内容を確認し、変更が必要かどうか判断する必要があります。
 
 <!--

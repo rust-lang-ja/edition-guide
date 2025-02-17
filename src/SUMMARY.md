@@ -116,7 +116,7 @@
   - [Language](rust-2024/language.md)
     - [RPIT lifetime capture rules](rust-2024/rpit-lifetime-capture.md)
     - [`if let` temporary scope](rust-2024/temporary-if-let-scope.md)
-    - [Tail expression temporary scope](rust-2024/temporary-tail-expr-scope.md)
+    - [末尾式の一時スコープ](rust-2024/temporary-tail-expr-scope.md)
     - [Match ergonomics reservations](rust-2024/match-ergonomics.md)
     - [Unsafe `extern` blocks](rust-2024/unsafe-extern.md)
     - [Unsafe attributes](rust-2024/unsafe-attributes.md)
