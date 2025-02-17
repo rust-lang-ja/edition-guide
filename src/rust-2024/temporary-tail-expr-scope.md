@@ -197,17 +197,47 @@ See the [`if let` temporary scope] chapter for a similar change made to temporar
 [temporary scope rules]: https://doc.rust-lang.org/reference/destructors.html#temporary-scopes
 [temporary lifetime extension]: https://doc.rust-lang.org/reference/destructors.html#temporary-lifetime-extension
 
+<!--
 ## Migration
+-->
 
+## 移行
+
+<!--
 Unfortunately, there are no semantics-preserving rewrites to shorten the lifetime for temporary values in tail expressions[^RFC3606]. The [`tail_expr_drop_order`] lint detects if a temporary value with a custom, non-trivial `Drop` destructor is generated in a tail expression. Warnings from this lint will appear when running `cargo fix --edition`, but will otherwise not automatically make any changes. It is recommended to manually inspect the warnings and determine whether or not you need to make any adjustments.
+-->
 
+残念ながら、コードの意味合いを変えずに末尾式中の一時値の生存期間を短くする書き換え方はありません[^RFC3606]。
+[`tail_expr_drop_order`]リントは、末尾式中の一時値が独自の非自明な `Drop` デストラクタをもつことを検出します。
+`cargo fix --edition` を実行すると警告がでますが、特段の書き換えはなされません。
+プログラマ自身が警告内容を確認し、変更が必要かどうか判断する必要があります。
+
+<!--
 If you want to manually inspect these warnings without performing the edition migration, you can enable the lint with:
+-->
 
+エディション移行を行わずに警告箇所を確認したい場合は、以下のように記述するとリントを有効化できます。
+
+<!--
 ```rust
 // Add this to the root of your crate to do a manual migration.
 #![warn(tail_expr_drop_order)]
 ```
+-->
 
+```rust
+// クレートのトップレベルに以下を追加すると手動移行できる
+#![warn(tail_expr_drop_order)]
+```
+
+<!--
 [^RFC3606]: Details are documented at [RFC 3606](https://github.com/rust-lang/rfcs/pull/3606)
+-->
 
+[^RFC3606]: 詳細は [RFC 3606](https://github.com/rust-lang/rfcs/pull/3606) に説明されています。
+
+<!--
 [`tail_expr_drop_order`]: ../../rustc/lints/listing/allowed-by-default.html#tail-expr-drop-order
+-->
+
+[`tail_expr_drop_order`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#tail-expr-drop-order
