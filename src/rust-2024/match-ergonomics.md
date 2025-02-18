@@ -22,15 +22,23 @@
 - 参照パターン (`&` や `&mut`) は、その束縛に至るまでのパターンが完全であるときだけ使用できます。
   - つまり、参照パターンが被検査子中の参照にマッチできるのは、現在の束縛モードが `move` であるときのみです。
 
+<!--
 ## Details
+-->
 
+## 詳細
+
+<!--
 ### Background
+-->
+
+### 背景
 
 <!--
 Within `match`, `let`, and other constructs, we match a *pattern* against a *scrutinee*.  E.g.:
 -->
 
-`match` や `let` などの束縛構文は、以下のように、評価対象の式である **被検査子** が、**パターン** にマッチさせる（合致するかどうか照合する）という構造になっています。
+`match` や `let` などの束縛構文は、以下のように、評価対象の式である **被検査子** を **パターン** にマッチさせる（合致するかどうか照合する）という構造になっています。
 
 <!--
 ```rust
@@ -43,14 +51,14 @@ let &[&mut [ref x]] = &[&mut [()]]; // x: &()
 ```rust
 let &[&mut [ref x]] = &[&mut [()]]; // x: &()
 //  ~~~~~~~~~~~~~~~   ~~~~~~~~~~~~
-//     パターン         被検査子
+//     パターン          被検査子
 ```
 
 <!--
 Such a pattern is called fully explicit because it does not elide (i.e. "skip" or "pass") any references within the scrutinee.  By contrast, this otherwise-equivalent pattern is not fully explicit:
 -->
 
-上記のようなパターンは、被検査子中の全参照を明示的に記述していることから、「完全な」パターンと呼びます。
+上記のようなパターンは、被検査子中の全ての参照を明示的に記述していることから、「完全な」パターンと呼びます。
 一方で、以下のパターンは上記と等価ながら完全ではありません。
 
 ```rust
@@ -61,7 +69,7 @@ let [[x]] = &[&mut [()]]; // x: &()
 Patterns such as this are said to be using match ergonomics, originally introduced in [RFC 2005][].
 -->
 
-このようなパターンは、元は [RFC 2005][] で導入された「マッチの利便性機能」を利用しています。
+このようなパターンは、[RFC 2005][] で最初に導入された「マッチの利便性機能」を利用しています。
 
 <!--
 Under match ergonomics, as we incrementally match a pattern against a scrutinee, we keep track of the default binding mode.  This mode can be one of `move`, `ref mut`, or `ref`, and it starts as `move`.  When we reach a binding, unless an explicit binding mode is provided, the default binding mode is used to decide the binding's type.
@@ -97,7 +105,7 @@ Here, in the pattern, we pass the outer shared reference in the scrutinee.  This
 
 こちらでは、被検査子中の外部の共有参照をパターン中で引き渡しています。
 これにより現在の束縛モードが `move` から `ref` に切り替わります。
-束縛モードが明示されていないので、`ref` モードが `x` の束縛に使われます。
+束縛モードが明示されていないので、`x` の束縛には `ref` モードが使われます。
 
 [RFC 2005]: https://github.com/rust-lang/rfcs/pull/2005
 
@@ -121,13 +129,13 @@ let [x, mut y] = &[(), ()]; // x: &(), mut y: ()
 Here, because we pass the shared reference in the pattern, the default binding mode switches to `ref`.  But then, in these editions, writing `mut` on the binding resets the default binding mode to `move`.
 -->
 
-パターンに共有参照を渡した時点では、現在の束縛モードが `ref` に切り替わっていますが、Rust 2021 以前では、束縛に `mut` を書くことで現在の束縛モードが `move` に戻ってしまいます。
+パターンに共有参照を渡した時点で、現在の束縛モードが `ref` に切り替わっていますが、Rust 2021 以前では、束縛に `mut` を書くことで現在の束縛モードが `move` に戻ります。
 
 <!--
 This can be surprising as it's not intuitive that mutability should affect the type.
 -->
 
-変数を可変にするかどうかで型が変わってしまいました。非直感的な挙動ですね。
+これにより、変数を可変にするかどうかで型が変わってしまいます。非直感的な挙動ですね。
 
 <!--
 To leave space to fix this, in Rust 2024 it's an error to write `mut` on a binding when the default binding mode is not `move`.  That is, `mut` can only be written on a binding when the pattern (leading up to that binding) is fully explicit.
@@ -146,7 +154,11 @@ Rust 2024 では、上記のコードは以下のように書けます。
 let &[ref x, mut y] = &[(), ()]; // x: &(), mut y: ()
 ```
 
+<!--
 ### `ref` / `ref mut` restriction
+-->
+
+### `ref` と `ref mut` への制限
 
 <!--
 In Rust 2021 and earlier editions, we allow:
@@ -168,14 +180,18 @@ Here, the `ref` explicit binding mode is redundant, as by passing the shared ref
 To leave space for other language possibilities, we are disallowing explicit binding modes where they are redundant in Rust 2024.  We can rewrite the above example as simply:
 -->
 
-今後の言語仕様の行く末を見越して、Rust 2024 では冗長な束縛モードの指定がエラーになります。
+今後の仕様変更の余地を残すため、Rust 2024 では冗長な束縛モードの指定がエラーになります。
 実際、上記のコードは以下で十分です。
 
 ```rust
 let [x] = &[()]; // x: &()
 ```
 
+<!--
 ### Reference patterns restriction
+-->
+
+### 参照パターンへの制限
 
 <!--
 In Rust 2021 and earlier editions, we allow this oddity:
@@ -191,7 +207,7 @@ let [&x, y] = &[&(), &()]; // x: (), y: &&()
 Here, the `&` in the pattern both matches against the reference on `&()` and resets the default binding mode to `move`.  This can be surprising because the single `&` in the pattern causes a larger than expected change in the type by removing both layers of references.
 -->
 
-ここで、パターン中の `&` には、`&()` にマッチした上で、現在の束縛モードを `move` に切り替える効果がありました。
+ここで、パターン中の `&` には、`&()` にマッチした上で、現在の束縛モードを `move` に切り替える効果があります。
 一つ `&` を書いただけで、参照が二重に剥かれて、思いもよらぬ型になってしまいました。非直感的な挙動ですね。
 
 <!--
