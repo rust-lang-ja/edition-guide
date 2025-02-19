@@ -119,7 +119,7 @@
     - [Tail expression temporary scope](rust-2024/temporary-tail-expr-scope.md)
     - [Match ergonomics reservations](rust-2024/match-ergonomics.md)
     - [アンセーフな `extern` ブロック](rust-2024/unsafe-extern.md)
-    - [Unsafe attributes](rust-2024/unsafe-attributes.md)
+    - [アンセーフなアトリビュート](rust-2024/unsafe-attributes.md)
     - [`unsafe_op_in_unsafe_fn` warning](rust-2024/unsafe-op-in-unsafe-fn.md)
     - [Disallow references to `static mut`](rust-2024/static-mut-references.md)
     - [Never type fallback change](rust-2024/never-type-fallback.md)
