@@ -22,10 +22,10 @@
 - [`std::env::remove_var`]
 - [`std::os::unix::process::CommandExt::before_exec`]
 
-
 [`unsafe`]: ../../reference/unsafe-keyword.html#unsafe-functions-unsafe-fn
 [`std::env::set_var`]: ../../std/env/fn.set_var.html
 [`std::env::remove_var`]: ../../std/env/fn.remove_var.html
+
 [`std::os::unix::process::CommandExt::before_exec`]: ../../std/os/unix/process/trait.CommandExt.html#method.before_exec 
 
 
@@ -85,6 +85,7 @@ There are very strict safety requirements for the `before_exec` closure to satis
 
 なお、`before_exec` のクロージャには 非常に厳格な安全性の要件があります。詳細は [Safety セクション][pre-exec-safety] を参照してください。
 
+
 [`pre_exec`]: ../../std/os/unix/process/trait.CommandExt.html#tymethod.pre_exec
 [pre-exec-safety]: ../../std/os/unix/process/trait.CommandExt.html#notes-and-safety
 
@@ -112,6 +113,7 @@ The [`deprecated_safe_2024`] lint will automatically modify any use of these fun
 
 [`deprecated_safe_2024`] リントは、これらの関数の呼び出しを自動的に `unsafe` ブロックで囲むよう修正します。これは `rust-2024-compatibility` リントグループに含まれており、次のコマンドを実行することで適用できます：
 
+
 ```sh
 cargo fix --edition
 ```
@@ -133,6 +135,7 @@ to be:
 -->
 
 は、自動修正により次のように変更されます：
+
 
 ```rust
 fn main() {
