@@ -1,7 +1,7 @@
 <!--
-# The Edition Guide
+# The Rust Edition Guide
 -->
-# エディションガイド
+# Rust エディションガイド
 
 <!--
 [Introduction](introduction.md)
@@ -56,9 +56,11 @@
   - [IntoIterator for arrays](rust-2021/IntoIterator-for-arrays.md)
   - [Disjoint capture in closures](rust-2021/disjoint-capture-in-closures.md)
   - [Panic macro consistency](rust-2021/panic-macro-consistency.md)
-  - [Reserving syntax](rust-2021/reserving-syntax.md)
+  - [Reserved syntax](rust-2021/reserved-syntax.md)
+  - [Raw lifetimes](rust-2021/raw-lifetimes.md)
   - [Warnings promoted to errors](rust-2021/warnings-promoted-to-error.md)
   - [Or patterns in macro-rules](rust-2021/or-patterns-macro-rules.md)
+  - [C-string literals](rust-2021/c-string-literals.md)
 -->
 
 - [Rust 2021](rust-2021/index.md)
@@ -68,8 +70,10 @@
   - [クロージャはフィールドごとにキャプチャする](rust-2021/disjoint-capture-in-closures.md)
   - [panic マクロの一貫性](rust-2021/panic-macro-consistency.md)
   - [構文の予約](rust-2021/reserving-syntax.md)
+  - [Raw lifetimes](rust-2021/raw-lifetimes.md)
   - [警告からエラーへの格上げ](rust-2021/warnings-promoted-to-error.md)
   - [マクロ規則における OR パターン](rust-2021/or-patterns-macro-rules.md)
+  - [C-string literals](rust-2021/c-string-literals.md)
 
 ## Rust 2024
 
@@ -109,7 +113,7 @@
 -->
 
 - [Rust 2024](rust-2024/index.md)
-  - [Language](rust-2024/language.md)
+  - [言語](rust-2024/language.md)
     - [RPIT lifetime capture rules](rust-2024/rpit-lifetime-capture.md)
     - [`if let` temporary scope](rust-2024/temporary-if-let-scope.md)
     - [Tail expression temporary scope](rust-2024/temporary-tail-expr-scope.md)
@@ -123,7 +127,7 @@
     - [Missing macro fragment specifiers](rust-2024/missing-macro-fragment-specifiers.md)
     - [`gen` keyword](rust-2024/gen-keyword.md)
     - [Reserved syntax](rust-2024/reserved-syntax.md)
-  - [Standard library](rust-2024/standard-library.md)
+  - [標準ライブラリ](rust-2024/standard-library.md)
     - [Prelude への変更点](rust-2024/prelude.md)
     - [Add `IntoIterator` for `Box<[T]>`](rust-2024/intoiterator-box-slice.md)
     - [Newly unsafe functions](rust-2024/newly-unsafe-functions.md)

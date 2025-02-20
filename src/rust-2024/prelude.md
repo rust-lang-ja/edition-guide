@@ -115,6 +115,7 @@ fn main() {
 }
 ```
 
+
 <!-- 
 The [`rust_2024_prelude_collisions`] lint will automatically modify any ambiguous method calls to use fully qualified syntax. This lint is part of the `rust-2024-compatibility` lint group, which will automatically be applied when running `cargo fix --edition`. To migrate your code to be Rust 2024 Edition compatible, run: 
 -->
@@ -137,3 +138,28 @@ Alternatively, you can manually enable the lint to find places where these quali
 ```
 
 [`rust_2024_prelude_collisions`]: ../../rustc/lints/listing/allowed-by-default.html#rust-2024-prelude-collisions
+
+<!-- 
+### `RustcEncodable` and `RustcDecodable` 
+-->
+
+### `RustcEncodable` と `RustcDecodable`
+
+<!-- 
+It is strongly recommended that you migrate to a different serialization library if you are still using these.
+However, these derive macros are still available in the standard library, they are just required to be imported from the older prelude now: 
+-->
+
+これらのシリアライズライブラリをまだ使用している場合は、別のライブラリへの移行を強く推奨します。
+しかし、これらの derive マクロは依然として標準ライブラリに含まれており、古い Prelude からインポートする必要があります：
+
+```rust,edition2021
+#[allow(soft_unstable)]
+use core::prelude::v1::{RustcDecodable, RustcEncodable};
+```
+
+<!-- 
+There is no automatic migration for this change; you will need to make the update manually. 
+-->
+
+この変更に対する 自動移行手段はありません。そのため、手動で更新を行う必要があります。
