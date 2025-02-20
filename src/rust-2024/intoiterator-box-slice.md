@@ -20,8 +20,8 @@
 - 2024年以前のエディションでは、メソッド呼び出し構文（例： `boxed_slice.into_iter()` ）で [`IntoIterator::into_iter`] への呼び出しが *隠蔽* されるため、これまでどおり `boxed_slice.into_iter()` は `(&(*boxed_slice)).into_iter()` として解釈されます。
 - Rust 2024 では、`boxed_slice.into_iter()` の意味が `IntoIterator::into_iter` を呼び出すものに変わります。
 
-[`IntoIterator`]: ../../std/iter/trait.IntoIterator.html
-[`IntoIterator::into_iter`]: ../../std/iter/trait.IntoIterator.html#tymethod.into_iter
+[`IntoIterator`]: https://doc.rust-lang.org/std/iter/trait.IntoIterator.html
+[`IntoIterator::into_iter`]: https://doc.rust-lang.org/std/iter/trait.IntoIterator.html#tymethod.into_iter
 
 <!-- 
 ## Details 
@@ -144,4 +144,4 @@ The [`boxed_slice_into_iter`] lint is defaulted to warn on all editions, so unle
 [`boxed_slice_into_iter`] リントはすべてのエディションでデフォルトで警告を出す設定になっているため、手動でリントを無効化していなければ、移行前にすでに警告が表示されるはずです。
 
 
-[`boxed_slice_into_iter`]: ../../rustc/lints/listing/warn-by-default.html#boxed-slice-into-iter
+[`boxed_slice_into_iter`]: https://doc.rust-lang.org/rustc/lints/listing/warn-by-default.html#boxed-slice-into-iter
