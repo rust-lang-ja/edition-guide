@@ -126,6 +126,7 @@ to be:
 
 次のように修正されます：
 
+
 ```rust
 fn main() {
     let my_boxed_slice: Box<[u32]> = vec![1, 2, 3].into_boxed_slice();
@@ -141,5 +142,6 @@ The [`boxed_slice_into_iter`] lint is defaulted to warn on all editions, so unle
 -->
 
 [`boxed_slice_into_iter`] リントはすべてのエディションでデフォルトで警告を出す設定になっているため、手動でリントを無効化していなければ、移行前にすでに警告が表示されるはずです。
+
 
 [`boxed_slice_into_iter`]: ../../rustc/lints/listing/warn-by-default.html#boxed-slice-into-iter
