@@ -4,7 +4,7 @@
 # Cargo: Rust-version aware resolver 
 -->
 
-# Cargo: Rustバージョンを認識したリゾルバ
+# Cargo: Rustバージョンに基づいたリゾルバ
 
 <!-- 
 ## Summary 
@@ -14,7 +14,7 @@
 
 <!-- - `edition = "2024"` implies `resolver = "3"` in `Cargo.toml` which enables a Rust-version aware dependency resolver. -->
 
-- `Cargo.toml` で `edition = "2024"` を指定すると、`resolver = "3"` が自動的に適用され、Rustバージョンを認識した依存関係リゾルバが有効になります。
+- `Cargo.toml` で `edition = "2024"` を指定すると、`resolver = "3"` が自動的に適用され、Rustバージョンに基づいた依存関係リゾルバが有効になります。
 
 <!-- 
 ## Details 
