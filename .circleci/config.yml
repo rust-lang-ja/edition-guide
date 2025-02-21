@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: quay.io/rust-lang-ja/circleci:edition-guide-mdbook-0.4.13
+      - image: quay.io/rust-lang-ja/circleci:edition-guide-mdbook-0.4.43
     steps:
       - checkout
       - run: rustc --version --verbose
