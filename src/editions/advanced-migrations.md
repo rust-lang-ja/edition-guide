@@ -137,7 +137,7 @@ Sometimes the fixes suggested by the compiler may fail to work.
 When this happens, Cargo will report a warning indicating what happened and what the error was.
 However, by default it will automatically back out the changes it made.
 It can be helpful to keep the code in the broken state and manually resolve the issue.
-Some of the fixes may have been correct, and the broken fix maybe be *mostly* correct, but just need minor tweaking.
+Some of the fixes may have been correct, and the broken fix may be *mostly* correct, but just need minor tweaking.
 -->
 
 ときどき、コンパイラに提案された修正ではうまくいかないことがあります。
@@ -455,7 +455,7 @@ We're now more idiomatic, and we didn't have to fix our code manually!
 [`cargo fix`]: ../../cargo/commands/cargo-fix.html
 [`explicit-outlives-requirements`]:  ../../rustc/lints/listing/allowed-by-default.html#explicit-outlives-requirements
 [`keyword-idents`]: ../../rustc/lints/listing/allowed-by-default.html#keyword-idents
-[`rustfix`]: https://github.com/rust-lang/rustfix
+[`rustfix`]: https://crates.io/crates/rustfix
 [`unused-extern-crates`]: ../../rustc/lints/listing/allowed-by-default.html#unused-extern-crates
 [Cargo features]: ../../cargo/reference/features.html
 [Cargo package]: ../../cargo/reference/manifest.html#the-package-section
@@ -471,14 +471,14 @@ We're now more idiomatic, and we didn't have to fix our code manually!
 [proc macros]: ../../reference/procedural-macros.html
 [Rust Analyzer extension]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
 [rustdoc-annotation]: ../../rustdoc/documentation-tests.html#attributes
-[rustfix-examples]: https://github.com/rust-lang/rustfix/tree/master/examples
+[rustfix-examples]: https://github.com/rust-lang/cargo/tree/master/crates/rustfix/examples
 [Visual Studio Code]: https://code.visualstudio.com/
 -->
 [`cargo check`]: https://doc.rust-lang.org/cargo/commands/cargo-check.html
 [`cargo fix`]: https://doc.rust-lang.org/cargo/commands/cargo-fix.html
 [`explicit-outlives-requirements`]:  https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#explicit-outlives-requirements
 [`keyword-idents`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#keyword-idents
-[`rustfix`]: https://github.com/rust-lang/rustfix
+[`rustfix`]: https://crates.io/crates/rustfix
 [`unused-extern-crates`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unused-extern-crates
 [Cargo のフィーチャ]: https://doc.rust-lang.org/cargo/reference/features.html
 [Cargo のパッケージ]: https://doc.rust-lang.org/cargo/reference/manifest.html#the-package-section
@@ -494,5 +494,5 @@ We're now more idiomatic, and we didn't have to fix our code manually!
 [手続き型マクロ]: https://doc.rust-lang.org/reference/procedural-macros.html
 [Rust Analyzer 拡張]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
 [rustdoc-annotation]: https://doc.rust-lang.org/rustdoc/documentation-tests.html#attributes
-[rustfix-examples]: https://github.com/rust-lang/rustfix/tree/master/examples
+[rustfix-examples]: https://github.com/rust-lang/cargo/tree/master/crates/rustfix/examples
 [Visual Studio Code]: https://code.visualstudio.com/
