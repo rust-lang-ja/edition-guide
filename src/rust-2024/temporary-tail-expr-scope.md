@@ -99,7 +99,6 @@ error[E0597]: `c` does not live long enough
           ((訳)当該の一時値が、ブロック内のローカル変数より前にドロップされるようにするとよいかもしれません)
 help: for example, you could save the expression's value in a new local variable `x` and then make `x` be the expression at the end of the block
 ((訳)ヘルプ: 例えば、式の値を一旦新しいローカル変数 `x` に格納し、それをブロック末尾の式とするとよいです)
-          
   |
 4 |     let x = c.borrow().len(); x // error[E0597]: `c` does not live long enough
   |     +++++++                 +++
