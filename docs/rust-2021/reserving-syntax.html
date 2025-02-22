@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="sidebar-visible no-js light">
+<html lang="ja" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,10 +8,9 @@
 
         <!-- Custom HTML head -->
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -32,16 +31,19 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../theme/em-to-bold.css">
 
-    </head>
-    <body>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +59,58 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">序文</a></li><li class="chapter-item expanded "><a href="../editions/index.html"><strong aria-hidden="true">1.</strong> エディションとは？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../editions/creating-a-new-project.html"><strong aria-hidden="true">1.1.</strong> 新しいプロジェクトを作成する</a></li><li class="chapter-item expanded "><a href="../editions/transitioning-an-existing-project-to-a-new-edition.html"><strong aria-hidden="true">1.2.</strong> 既存のプロジェクトのエディションを移行する</a></li><li class="chapter-item expanded "><a href="../editions/advanced-migrations.html"><strong aria-hidden="true">1.3.</strong> 発展的な移行戦略</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="../rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2018/path-changes.html"><strong aria-hidden="true">3.1.</strong> パスとモジュールシステムへの変更</a></li><li class="chapter-item expanded "><a href="../rust-2018/trait-fn-parameters.html"><strong aria-hidden="true">3.2.</strong> トレイト関数の匿名パラメータの非推奨化</a></li><li class="chapter-item expanded "><a href="../rust-2018/new-keywords.html"><strong aria-hidden="true">3.3.</strong> 新しいキーワード</a></li><li class="chapter-item expanded "><a href="../rust-2018/tyvar-behind-raw-pointer.html"><strong aria-hidden="true">3.4.</strong> 推論変数への生ポインタに対するメソッドのディスパッチ</a></li><li class="chapter-item expanded "><a href="../rust-2018/cargo.html"><strong aria-hidden="true">3.5.</strong> Cargo への変更</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2021/index.html"><strong aria-hidden="true">4.</strong> Rust 2021</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2021/prelude.html"><strong aria-hidden="true">4.1.</strong> Prelude への追加</a></li><li class="chapter-item expanded "><a href="../rust-2021/default-cargo-resolver.html"><strong aria-hidden="true">4.2.</strong> デフォルトの Cargo のフィーチャリゾルバ</a></li><li class="chapter-item expanded "><a href="../rust-2021/IntoIterator-for-arrays.html"><strong aria-hidden="true">4.3.</strong> 配列に対する IntoIterator</a></li><li class="chapter-item expanded "><a href="../rust-2021/disjoint-capture-in-closures.html"><strong aria-hidden="true">4.4.</strong> クロージャはフィールドごとにキャプチャする</a></li><li class="chapter-item expanded "><a href="../rust-2021/panic-macro-consistency.html"><strong aria-hidden="true">4.5.</strong> panic マクロの一貫性</a></li><li class="chapter-item expanded "><a href="../rust-2021/reserving-syntax.html" class="active"><strong aria-hidden="true">4.6.</strong> 構文の予約</a></li><li class="chapter-item expanded "><a href="../rust-2021/warnings-promoted-to-error.html"><strong aria-hidden="true">4.7.</strong> 警告からエラーへの格上げ</a></li><li class="chapter-item expanded "><a href="../rust-2021/or-patterns-macro-rules.html"><strong aria-hidden="true">4.8.</strong> マクロ規則における OR パターン</a></li></ol></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -136,7 +146,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -164,10 +174,10 @@
 - Edition migrations will help you insert whitespace in such cases.
 -->
 <ul>
-<li><code>shikibetsushi#</code>, <code>shikibetsushi&quot;...&quot;</code>, <code>shikibetsushi'...'</code> の3つの構文が新たに予約され、トークン分割されなくなりました。</li>
+<li><code>shikibetsushi#</code>, <code>shikibetsushi"..."</code>, <code>shikibetsushi'...'</code> の3つの構文が新たに予約され、トークン分割されなくなりました。</li>
 <li>主に影響を受けるのはマクロです。例えば、<code>quote!{ #a#b }</code> と書くことはできなくなりました。</li>
-<li>キーワードが特別扱いされることもないので、例えば <code>match&quot;...&quot; {}</code> と書くこともできなくなりました。</li>
-<li>識別子と後続の <code>#</code>, <code>&quot;</code>, <code>'</code> の間に空白文字を挿入することで、エラーを回避できます。</li>
+<li>キーワードが特別扱いされることもないので、例えば <code>match"..." {}</code> と書くこともできなくなりました。</li>
+<li>識別子と後続の <code>#</code>, <code>"</code>, <code>'</code> の間に空白文字を挿入することで、エラーを回避できます。</li>
 <li>エディション移行ツールは、必要な場所に空白を挿入してくれます。</li>
 </ul>
 <!--
@@ -183,8 +193,8 @@ where `prefix` can be any identifier.
 strings) and `r"..."` (raw strings).)
 -->
 <p>私達は、将来新しい構文を導入する余地を残すため、接頭辞付きの識別子とリテラルの構文を予約することにしました。
-予約されたのは、任意の識別子 <code>prefix</code> を用いて <code>prefix#identifier</code>, <code>prefix&quot;string&quot;</code>, <code>prefix'c'</code>, <code>prefix#123</code> のいずれかの形で書かれるものです。
-(ただし、<code>b'...'</code>（バイト文字列）や<code>r&quot;...&quot;</code>（生文字列）のように、すでに意味が割り当てられているものを除きます。）</p>
+予約されたのは、任意の識別子 <code>prefix</code> を用いて <code>prefix#identifier</code>, <code>prefix"string"</code>, <code>prefix'c'</code>, <code>prefix#123</code> のいずれかの形で書かれるものです。
+(ただし、<code>b'...'</code>（バイト文字列）や<code>r"..."</code>（生文字列）のように、すでに意味が割り当てられているものを除きます。）</p>
 <!--
 This provides syntax we can expand into in the future without requiring an
 edition boundary. We may use this for temporary syntax until the next edition,
@@ -200,8 +210,8 @@ insert a space: `hello "world"`. Likewise, `prefix#ident` should become
 `prefix #ident`. Edition migrations will help with this fix.
 -->
 <p>エディションの区切りがないと、これは破壊的変更に当たります。
-なぜなら、現在のマクロは、例えば <code>hello&quot;world&quot;</code> という構文を、 <code>hello</code> と <code>&quot;world&quot;</code> の2つのトークンとして受け入れるからです。
-もっとも、（自動）修正はシンプルで、<code>hello &quot;world&quot;</code> のように空白を入れるだけです。
+なぜなら、現在のマクロは、例えば <code>hello"world"</code> という構文を、 <code>hello</code> と <code>"world"</code> の2つのトークンとして受け入れるからです。
+もっとも、（自動）修正はシンプルで、<code>hello "world"</code> のように空白を入れるだけです。
 同様に、<code>prefix#ident</code> は <code>prefix #ident</code> とする必要があります。
 エディション移行ツールは、そのように修正してくれます。</p>
 <!--
@@ -235,20 +245,20 @@ committed to any of them yet):
   For example, `f"hello {name}"` as a short-hand for the equivalent `format!()` invocation.
 -->
 <ul>
-<li><code>f&quot;&quot;</code> で、フォーマット文字列の略記とする。
-例えば、<code>f&quot;hello {name}&quot;</code> と書いたら、それと等価な <code>format!()</code> の呼び出しと見なす。</li>
+<li><code>f""</code> で、フォーマット文字列の略記とする。
+例えば、<code>f"hello {name}"</code> と書いたら、それと等価な <code>format!()</code> の呼び出しと見なす。</li>
 </ul>
 <!--
 - `s""` for `String` literals.
 -->
 <ul>
-<li><code>s&quot;&quot;</code> で <code>String</code> リテラルを表す。</li>
+<li><code>s""</code> で <code>String</code> リテラルを表す。</li>
 </ul>
 <!--
 - `c""` or `z""` for null-terminated C strings.
 -->
 <ul>
-<li><code>c&quot;&quot;</code> か <code>z&quot;&quot;</code> で、ヌル終端のC言語の文字列を表す。</li>
+<li><code>c""</code> か <code>z""</code> で、ヌル終端のC言語の文字列を表す。</li>
 </ul>
 <!--
 ## Migration 
@@ -272,26 +282,22 @@ Should you want or need to manually migrate your code, migration is fairly strai
 Let's say you have a macro that is defined like so:
 -->
 <p>例えば、次のように定義されたマクロがあったとしましょう：</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>macro_rules! my_macro {
     ($a:tt $b:tt) =&gt; {};
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <!--
 In Rust 2015 and 2018 it's legal for this macro to be called like so with no space between the first token tree and the second:
 -->
 <p>Rust 2015 と 2018 では、以下のように、1つ目と2つ目のトークンの間に空白を入れることなくマクロを呼び出しても問題ありませんでした:</p>
-<pre><code class="language-rust ignore">my_macro!(z&quot;hey&quot;);
-</code></pre>
+<pre><code class="language-rust ignore">my_macro!(z"hey");</code></pre>
 <!--
 This `z` prefix is no longer allowed in Rust 2021, so in order to call this macro, you must add a space after the prefix like so:
 -->
 <p>Rust 2021 では <code>z</code> という接頭辞は許されないので、このマクロを呼び出すためには、以下のように接頭辞の後にスペースを入れる必要があります:</p>
-<pre><code class="language-rust ignore">my_macro!(z &quot;hey&quot;);
-</code></pre>
+<pre><code class="language-rust ignore">my_macro!(z "hey");</code></pre>
 
                     </main>
 
@@ -301,7 +307,7 @@ This `z` prefix is no longer allowed in Rust 2021, so in order to call this macr
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../rust-2021/warnings-promoted-to-error.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../rust-2021/raw-lifetimes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -315,7 +321,7 @@ This `z` prefix is no longer allowed in Rust 2021, so in order to call this macr
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../rust-2021/warnings-promoted-to-error.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../rust-2021/raw-lifetimes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -325,21 +331,22 @@ This `z` prefix is no longer allowed in Rust 2021, so in order to call this macr
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
