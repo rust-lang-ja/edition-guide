@@ -85,24 +85,54 @@ unsafe {
 Wherever possible, it is **strongly recommended** to use instead an *immutable* `static` of a type that provides *interior mutability* behind some *locally-reasoned abstraction* (which greatly reduces the complexity of ensuring that Rust's mutability XOR aliasing requirement is upheld).
 -->
 
-可能な限り、（可変性エイリアシングルールの検証がはるかに楽であるように）**局所的に正当化された抽象化** にもとづく **内部可変性** を提供する型の `static` で **不変な** 変数を使うことが **強く推奨** されます。
+可能な限り、（可変性エイリアシングルールの検証がはるかに楽となるように）**局所的に正当化された抽象化**にもとづく**内部可変性**を提供する型の、`static` で**不変な**変数を使うことが**強く推奨**されます。
 
+<!--
 In situations where no locally-reasoned abstraction is possible and you are therefore compelled still to reason globally about accesses to your `static` variable, you must now use raw pointers such as can be obtained via the [`&raw const` or `&raw mut` operators][raw].  By first obtaining a raw pointer rather than directly taking a reference, (the safety requirements of) accesses through that pointer will be more familiar to `unsafe` developers and can be deferred until/limited to smaller regions of code.
+-->
 
-局所的正当化による抽象化が不可能で、どうしても `static` 変数へのグローバルアクセス
+局所的正当化による抽象化が不可能で、どうしても `static` 変数へのグローバルアクセスが必要なときは、[`&raw const` か `&raw mut` 演算子][raw]を用いるなどして生ポインタを使う必要があります。
+直接参照を取るのでなく先に生ポインタを作っておけば、そのポインタへのアクセス（に必要な安全性要件）は `unsafe` コードを書く人にとっても慣れたものですし、より局所的なコードに限定（先送り）できます。
 
+<!--
 [Undefined Behavior]: ../../reference/behavior-considered-undefined.html
 [`static mut`]: ../../reference/items/static-items.html#mutable-statics
 [`addr_of_mut!`]: https://docs.rust-lang.org/core/ptr/macro.addr_of_mut.html
 [raw]: ../../reference/expressions/operator-expr.html#raw-borrow-operators
+-->
 
+[Undefined Behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+[`static mut`]: https://doc.rust-lang.org/reference/items/static-items.html#mutable-statics
+[`addr_of_mut!`]: https://docs.rust-lang.org/core/ptr/macro.addr_of_mut.html
+[raw]: https://doc.rust-lang.org/reference/expressions/operator-expr.html#raw-borrow-operators
+
+<!--
 Note that the following examples are just illustrations and are not intended as full-fledged implementations. Do not copy these as-is. There are details for your specific situation that may require alterations to fit your needs. These are intended to help you see different ways to approach your problem.
+-->
 
+なお、以下に示すのはあくまで例示で、厳密な実装というわけではありません。
+そのまま丸写ししないでください。
+一見使えそうな例があっても、用途に合わせて書き換えるべき点もあるでしょう。
+ここでは、様々な問題に対処するための選択肢を示すためにいくつかの例を列挙しています。
+
+<!--
 It is recommended to read the documentation for the specific types in the standard library, the reference on [undefined behavior], the [Rustonomicon], and if you are having questions to reach out on one of the Rust forums such as the [Users Forum].
+-->
 
+[未定義動作]のリファレンスや [Rust 裏本]、標準ライブラリで提供される型を使用する場合はそのドキュメントなどをよくお読みください。
+疑問点は[ユーザーズフォーラム]などの Rust フォーラムで質問するとよいでしょう。
+
+<!--
 [undefined behavior]: ../../reference/behavior-considered-undefined.html
 [Rustonomicon]: ../../nomicon/index.html
 [Users Forum]: https://users.rust-lang.org/
+-->
+
+[undefined behavior]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
+[Rustonomicon]: https://doc.rust-jp.rs/rust-nomicon-ja/index.html
+[Users Forum]: https://users.rust-lang.org/
+
+> **訳注**: 日本語話者向けの Rust コミュニティとして [Zulip](https://rust-lang-jp.zulipchat.com/) がありますので、併せてご活用ください。
 
 ### Don't use globals
 
