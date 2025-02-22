@@ -94,11 +94,19 @@ Rust 2015 と 2018 では、空白を入れずにトークンをつなげてマ�
 my_macro!('r#foo);
 ```
 
+<!--
+In the 2021 edition, this is now parsed as a single token. In order to call this macro, you must add a space before the identifier like so:
+-->
+
 2021 エディションでは、これは一つのトークンとして解釈されます。
 このマクロを呼び出すためには、以下のように識別子の前に空白を入れてください。
 
 ```rust,ignore
 my_macro!('r# foo);
 ```
+
+<!--
+[`rust_2021_prefixes_incompatible_syntax`]: ../../rustc/lints/listing/allowed-by-default.html#rust-2021-prefixes-incompatible-syntax
+-->
 
 [`rust_2021_prefixes_incompatible_syntax`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#rust-2021-prefixes-incompatible-syntax
