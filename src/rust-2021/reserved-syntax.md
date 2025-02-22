@@ -1,5 +1,5 @@
 <!--
-# Reserving syntax
+# Reserved syntax
 -->
 
 # 構文の予約
@@ -11,8 +11,7 @@
 ## 概要
 
 <!--
-- `any_identifier#`, `any_identifier"..."`, and `any_identifier'...'` are now reserved
-  syntax, and no longer tokenize.
+- `any_identifier#`, `any_identifier"..."`, `any_identifier'...'`, and `'any_identifier#` are now reserved syntax, and no longer tokenize.
 - This is mostly relevant to macros. E.g. `quote!{ #a#b }` is no longer accepted.
 - It doesn't treat keywords specially, so e.g. `match"..." {}` is no longer accepted.
 - Insert whitespace between the identifier and the subsequent `#`, `"`, or `'`
@@ -20,7 +19,7 @@
 - Edition migrations will help you insert whitespace in such cases.
 -->
 
-- `shikibetsushi#`, `shikibetsushi"..."`, `shikibetsushi'...'` の3つの構文が新たに予約され、トークン分割されなくなりました。
+- `shikibetsushi#`, `shikibetsushi"..."`, `shikibetsushi'...'`, `'any_identifier#` の4つの構文が新たに予約され、トークン分割されなくなりました。
 - 主に影響を受けるのはマクロです。例えば、`quote!{ #a#b }` と書くことはできなくなりました。
 - キーワードが特別扱いされることもないので、例えば `match"..." {}` と書くこともできなくなりました。
 - 識別子と後続の `#`, `"`, `'` の間に空白文字を挿入することで、エラーを回避できます。
@@ -34,16 +33,16 @@
 
 <!--
 To make space for new syntax in the future,
-we've decided to reserve syntax for prefixed identifiers and literals:
-`prefix#identifier`, `prefix"string"`, `prefix'c'`, and `prefix#123`,
+we've decided to reserve syntax for prefixed identifiers, literals, and lifetimes:
+`prefix#identifier`, `prefix"string"`, `prefix'c'`, `prefix#123`, and `'prefix#`,
 where `prefix` can be any identifier.
 (Except those prefixes that already have a meaning, such as `b'...'` (byte
-strings) and `r"..."` (raw strings).)
+chars) and `r"..."` (raw strings).)
 -->
 
-私達は、将来新しい構文を導入する余地を残すため、接頭辞付きの識別子とリテラルの構文を予約することにしました。
-予約されたのは、任意の識別子 `prefix` を用いて `prefix#identifier`, `prefix"string"`, `prefix'c'`, `prefix#123` のいずれかの形で書かれるものです。
-(ただし、`b'...'`（バイト文字列）や`r"..."`（生文字列）のように、すでに意味が割り当てられているものを除きます。）
+私達は、将来新しい構文を導入する余地を残すため、接頭辞付きの識別子・リテラル・ライフタイムの構文を予約することにしました。
+予約されたのは、任意の識別子 `prefix` を用いて `prefix#identifier`, `prefix"string"`, `prefix'c'`, `prefix#123`, `'prefix#` のいずれかの形で書かれるものです。
+(ただし、`b'...'`（バイト文字）や`r"..."`（生文字列）のように、すでに意味が割り当てられているものを除きます。）
 
 <!--
 This provides syntax we can expand into in the future without requiring an
@@ -112,12 +111,6 @@ committed to any of them yet):
 
 - `s""` で `String` リテラルを表す。
 
-<!--
-- `c""` or `z""` for null-terminated C strings.
--->
-
-- `c""` か `z""` で、ヌル終端のC言語の文字列を表す。
-
 [10]: https://github.com/rust-lang/rfcs/pull/3101
 
 
@@ -128,16 +121,16 @@ committed to any of them yet):
 ## 移行
 
 <!--
-As a part of the 2021 edition a migration lint, `rust_2021_prefixes_incompatible_syntax`, has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
+As a part of the 2021 edition a migration lint, [`rust_2021_prefixes_incompatible_syntax`], has been added in order to aid in automatic migration of Rust 2018 codebases to Rust 2021.
 -->
 
-Rust 2018 のコードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント`rust_2021_prefixes_incompatible_syntax` が追加されています。
+Rust 2018 のコードベースから Rust 2021 への自動移行の支援のため、2021 エディションには、移行用のリント[`rust_2021_prefixes_incompatible_syntax`] が追加されています。
 
 <!--
-In order to have `rustfix` migrate your code to be Rust 2021 Edition compatible, run:
+In order to migrate your code to be Rust 2021 Edition compatible, run:
 -->
 
-`rustfix` でコードを Rust 2021 エディションに適合させるためには、次のように実行します。
+コードを Rust 2021 エディションに適合させるためには、次のように実行します。
 
 ```sh
 cargo fix --edition
@@ -180,3 +173,9 @@ Rust 2021 では `z` という接頭辞は許されないので、このマク�
 ```rust,ignore
 my_macro!(z "hey");
 ```
+
+<!--
+[`rust_2021_prefixes_incompatible_syntax`]: ../../rustc/lints/listing/allowed-by-default.html#rust-2021-prefixes-incompatible-syntax
+-->
+
+[`rust_2021_prefixes_incompatible_syntax`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#rust-2021-prefixes-incompatible-syntax
