@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="sidebar-visible no-js light">
+<html lang="ja" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,10 +8,9 @@
 
         <!-- Custom HTML head -->
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -32,16 +31,19 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../theme/em-to-bold.css">
 
-    </head>
-    <body>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +59,58 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">序文</a></li><li class="chapter-item expanded "><a href="../editions/index.html"><strong aria-hidden="true">1.</strong> エディションとは？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../editions/creating-a-new-project.html"><strong aria-hidden="true">1.1.</strong> 新しいプロジェクトを作成する</a></li><li class="chapter-item expanded "><a href="../editions/transitioning-an-existing-project-to-a-new-edition.html"><strong aria-hidden="true">1.2.</strong> 既存のプロジェクトのエディションを移行する</a></li><li class="chapter-item expanded "><a href="../editions/advanced-migrations.html"><strong aria-hidden="true">1.3.</strong> 発展的な移行戦略</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="../rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2018/path-changes.html" class="active"><strong aria-hidden="true">3.1.</strong> パスとモジュールシステムへの変更</a></li><li class="chapter-item expanded "><a href="../rust-2018/trait-fn-parameters.html"><strong aria-hidden="true">3.2.</strong> トレイト関数の匿名パラメータの非推奨化</a></li><li class="chapter-item expanded "><a href="../rust-2018/new-keywords.html"><strong aria-hidden="true">3.3.</strong> 新しいキーワード</a></li><li class="chapter-item expanded "><a href="../rust-2018/tyvar-behind-raw-pointer.html"><strong aria-hidden="true">3.4.</strong> 推論変数への生ポインタに対するメソッドのディスパッチ</a></li><li class="chapter-item expanded "><a href="../rust-2018/cargo.html"><strong aria-hidden="true">3.5.</strong> Cargo への変更</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2021/index.html"><strong aria-hidden="true">4.</strong> Rust 2021</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2021/prelude.html"><strong aria-hidden="true">4.1.</strong> Prelude への追加</a></li><li class="chapter-item expanded "><a href="../rust-2021/default-cargo-resolver.html"><strong aria-hidden="true">4.2.</strong> デフォルトの Cargo のフィーチャリゾルバ</a></li><li class="chapter-item expanded "><a href="../rust-2021/IntoIterator-for-arrays.html"><strong aria-hidden="true">4.3.</strong> 配列に対する IntoIterator</a></li><li class="chapter-item expanded "><a href="../rust-2021/disjoint-capture-in-closures.html"><strong aria-hidden="true">4.4.</strong> クロージャはフィールドごとにキャプチャする</a></li><li class="chapter-item expanded "><a href="../rust-2021/panic-macro-consistency.html"><strong aria-hidden="true">4.5.</strong> panic マクロの一貫性</a></li><li class="chapter-item expanded "><a href="../rust-2021/reserving-syntax.html"><strong aria-hidden="true">4.6.</strong> 構文の予約</a></li><li class="chapter-item expanded "><a href="../rust-2021/warnings-promoted-to-error.html"><strong aria-hidden="true">4.7.</strong> 警告からエラーへの格上げ</a></li><li class="chapter-item expanded "><a href="../rust-2021/or-patterns-macro-rules.html"><strong aria-hidden="true">4.8.</strong> マクロ規則における OR パターン</a></li></ol></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -136,7 +146,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -166,11 +176,11 @@
 <ul>
 <li><code>use</code> 宣言中のパスが、他のパスと同じように扱われるようになりました。</li>
 <li><code>::</code> から始まるパスの直後には、常に外部クレートが続くようになりました。</li>
-<li><code>pub(in path)</code> のような可視性修飾子<sup class="footnote-reference"><a href="#1">1</a></sup>において、パスは <code>crate</code>, <code>self</code>, <code>super</code> のいずれかで始まらなくてはならなくなりました。</li>
+<li><code>pub(in path)</code> のような可視性修飾子[^1]において、パスは <code>crate</code>, <code>self</code>, <code>super</code> のいずれかで始まらなくてはならなくなりました。</li>
 </ul>
-<p><sup class="footnote-reference"><a href="#1">1</a></sup>
+<p>[^1]
 <code>pub(in path)</code> 構文は、アイテムを <code>path</code> に指定したモジュール内だけに公開にするための可視性修飾子です。
-例えば、<code>pub(in crate::outer_mod)</code> のように書くと <code>crate::outer_mod</code> モジュール内だけからアクセスできるようになります。（&quot;public in <code>crate::outer_mod</code>&quot; という意味です。）
+例えば、<code>pub(in crate::outer_mod)</code> のように書くと <code>crate::outer_mod</code> モジュール内だけからアクセスできるようになります。（"public in <code>crate::outer_mod</code>" という意味です。）
 詳細は <a href="https://doc.rust-lang.org/reference/visibility-and-privacy.html#pubin-path-pubcrate-pubsuper-and-pubself">The Rust Reference (英語)</a> の説明もご参照ください。</p>
 <!--
 ## Motivation
@@ -244,8 +254,7 @@ extern crate futures;
 
 mod submodule {
     use futures::Future;
-}
-</code></pre>
+}</code></pre>
 <!--
 After:
 -->
@@ -254,8 +263,7 @@ After:
 
 mod submodule {
     use futures::Future;
-}
-</code></pre>
+}</code></pre>
 <!--
 Now, to add a new crate to your project, you can add it to your `Cargo.toml`,
 and then there is no step two. If you're not using Cargo, you already had to pass
@@ -280,7 +288,7 @@ Cargo を使用していない場合は、<code>rustc</code> に外部クレー�
 There's one exception to this rule, and that's the "sysroot" crates. These are the
 crates distributed with Rust itself.
 -->
-<p>このルールには一つだけ例外があります。それは、&quot;sysroot&quot; のクレートです。
+<p>このルールには一つだけ例外があります。それは、"sysroot" のクレートです。
 これらのクレートは、Rust に同梱されています。</p>
 <!--
 Usually these are only needed in very specialized situations. Starting in
@@ -352,8 +360,7 @@ extern crate bar;
 
 fn main() {
     baz!();
-}
-</code></pre>
+}</code></pre>
 <!--
 Can be changed to something like the following:
 -->
@@ -362,8 +369,7 @@ Can be changed to something like the following:
 
 fn main() {
     baz!();
-}
-</code></pre>
+}</code></pre>
 <!--
 #### Renaming crates
 -->
@@ -374,16 +380,14 @@ If you've been using `as` to rename your crate like this:
 <p>今までは <code>as</code> を使ってクレートを違う名前でインポートしていたとします:</p>
 <pre><code class="language-rust ignore">extern crate futures as f;
 
-use f::Future;
-</code></pre>
+use f::Future;</code></pre>
 <!--
 then removing the `extern crate` line on its own won't work. You'll need to do this:
 -->
 <p>その場合、 <code>extern crate</code> の行を消すだけではうまくいきません。こう書く必要があります:</p>
 <pre><code class="language-rust ignore">use futures as f;
 
-use self::f::Future;
-</code></pre>
+use self::f::Future;</code></pre>
 <!--
 This change will need to happen in any module that uses `f`.
 -->
@@ -432,8 +436,7 @@ mod submodule {
         // 一方、サブモジュールでは `use` でインポートしない限り :: から始めないといけない
         let x = ::chrono::Utc::now();
     }
-}
-</code></pre>
+}</code></pre>
 <!--
 Now, extern crate names are in scope in the entire crate, including
 submodules.
@@ -453,8 +456,7 @@ mod submodule {
         // サブモジュール内でも、クレートを直接参照できる
         let x = chrono::Utc::now();
     }
-}
-</code></pre>
+}</code></pre>
 <!--
 ### No more `mod.rs`
 -->
@@ -466,8 +468,7 @@ In Rust 2015, if you have a submodule:
 <pre><code class="language-rust ignore">// This `mod` declaration looks for the `foo` module in
 // `foo.rs` or `foo/mod.rs`.
 // この `mod` 宣言は、`foo` モジュールを `foo.rs` または `foo/mod.rs` のいずれかに探す
-mod foo;
-</code></pre>
+mod foo;</code></pre>
 <!--
 It can live in `foo.rs` or `foo/mod.rs`. If it has submodules of its own, it
 *must* be `foo/mod.rs`. So a `bar` submodule of `foo` would live at
@@ -575,8 +576,7 @@ fn func() {
         V1(i) =&gt; { ... }
         V2(s) =&gt; { ... }
     }
-}
-</code></pre>
+}</code></pre>
 <!--
 will look exactly the same in Rust 2018, except that you can delete the `extern
 crate` line:
@@ -606,8 +606,7 @@ fn func() {
         V1(i) =&gt; { ... }
         V2(s) =&gt; { ... }
     }
-}
-</code></pre>
+}</code></pre>
 <!--
 The same code will also work completely unmodified in a submodule:
 -->
@@ -638,8 +637,7 @@ mod submodule {
             V2(s) =&gt; { ... }
         }
     }
-}
-</code></pre>
+}</code></pre>
 <!--
 This makes it easy to move code around in a project, and avoids introducing
 additional complexity to multi-module projects.
@@ -664,7 +662,7 @@ To explicitly disambiguate a path, use `::name` for an external crate name, or
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../rust-2018/trait-fn-parameters.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../rust-2018/trait-fn-parameters.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -678,7 +676,7 @@ To explicitly disambiguate a path, use `::name` for an external crate name, or
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../rust-2018/trait-fn-parameters.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../rust-2018/trait-fn-parameters.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -688,21 +686,22 @@ To explicitly disambiguate a path, use `::name` for an external crate name, or
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
