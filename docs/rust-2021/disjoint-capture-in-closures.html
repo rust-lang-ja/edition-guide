@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="sidebar-visible no-js light">
+<html lang="ja" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,10 +8,9 @@
 
         <!-- Custom HTML head -->
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -32,16 +31,19 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../theme/em-to-bold.css">
 
-    </head>
-    <body>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +59,58 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">序文</a></li><li class="chapter-item expanded "><a href="../editions/index.html"><strong aria-hidden="true">1.</strong> エディションとは？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../editions/creating-a-new-project.html"><strong aria-hidden="true">1.1.</strong> 新しいプロジェクトを作成する</a></li><li class="chapter-item expanded "><a href="../editions/transitioning-an-existing-project-to-a-new-edition.html"><strong aria-hidden="true">1.2.</strong> 既存のプロジェクトのエディションを移行する</a></li><li class="chapter-item expanded "><a href="../editions/advanced-migrations.html"><strong aria-hidden="true">1.3.</strong> 発展的な移行戦略</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="../rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2018/path-changes.html"><strong aria-hidden="true">3.1.</strong> パスとモジュールシステムへの変更</a></li><li class="chapter-item expanded "><a href="../rust-2018/trait-fn-parameters.html"><strong aria-hidden="true">3.2.</strong> トレイト関数の匿名パラメータの非推奨化</a></li><li class="chapter-item expanded "><a href="../rust-2018/new-keywords.html"><strong aria-hidden="true">3.3.</strong> 新しいキーワード</a></li><li class="chapter-item expanded "><a href="../rust-2018/tyvar-behind-raw-pointer.html"><strong aria-hidden="true">3.4.</strong> 推論変数への生ポインタに対するメソッドのディスパッチ</a></li><li class="chapter-item expanded "><a href="../rust-2018/cargo.html"><strong aria-hidden="true">3.5.</strong> Cargo への変更</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2021/index.html"><strong aria-hidden="true">4.</strong> Rust 2021</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2021/prelude.html"><strong aria-hidden="true">4.1.</strong> Prelude への追加</a></li><li class="chapter-item expanded "><a href="../rust-2021/default-cargo-resolver.html"><strong aria-hidden="true">4.2.</strong> デフォルトの Cargo のフィーチャリゾルバ</a></li><li class="chapter-item expanded "><a href="../rust-2021/IntoIterator-for-arrays.html"><strong aria-hidden="true">4.3.</strong> 配列に対する IntoIterator</a></li><li class="chapter-item expanded "><a href="../rust-2021/disjoint-capture-in-closures.html" class="active"><strong aria-hidden="true">4.4.</strong> クロージャはフィールドごとにキャプチャする</a></li><li class="chapter-item expanded "><a href="../rust-2021/panic-macro-consistency.html"><strong aria-hidden="true">4.5.</strong> panic マクロの一貫性</a></li><li class="chapter-item expanded "><a href="../rust-2021/reserving-syntax.html"><strong aria-hidden="true">4.6.</strong> 構文の予約</a></li><li class="chapter-item expanded "><a href="../rust-2021/warnings-promoted-to-error.html"><strong aria-hidden="true">4.7.</strong> 警告からエラーへの格上げ</a></li><li class="chapter-item expanded "><a href="../rust-2021/or-patterns-macro-rules.html"><strong aria-hidden="true">4.8.</strong> マクロ規則における OR パターン</a></li></ol></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -136,7 +146,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -189,12 +199,11 @@ Capturing `a` in its entirety prevents mutation or moves from other fields of `a
 <pre><code class="language-rust ignore">let a = SomeStruct::new();
 drop(a.x); // Move out of one field of the struct
            // 構造体のフィールドの1つをムーブする
-println!(&quot;{}&quot;, a.y); // Ok: Still use another field of the struct
+println!("{}", a.y); // Ok: Still use another field of the struct
                      // OK: 構造体の他のフィールドは、まだ使える
-let c = || println!(&quot;{}&quot;, a.y); // Error: Tries to capture all of `a`
+let c = || println!("{}", a.y); // Error: Tries to capture all of `a`
                                 // エラー: `a` 全体をキャプチャしようとする
-c();
-</code></pre>
+c();</code></pre>
 <!--
 Starting in Rust 2021, closures captures are more precise. Typically they will only capture the fields they use (in some cases, they might capture more than just what they use, see the Rust reference for full details). Therefore, the above example will compile fine in Rust 2021.
 -->
@@ -241,21 +250,19 @@ Changing the variables captured by a closure can cause programs to change behavi
 Whenever any of the scenarios below are detected, `cargo fix` will insert a "dummy let" into your closure to force it to capture the entire variable:
 -->
 <p>以下のような状況を検知すると、<code>cargo fix</code> は「ダミーの let」をクロージャの中に挿入して、強制的に全ての変数がキャプチャされるようにします:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = (vec![22], vec![23]);
 let c = move || {
-    // &quot;Dummy let&quot; that forces `x` to be captured in its entirety
+    // "Dummy let" that forces `x` to be captured in its entirety
     // `x` 全体が強制的にキャプチャされるための「ダミーの let」
     let _ = &amp;x;
 
     // Otherwise, only `x.0` would be captured here
     // それがないと、`x.0` だけがここでキャプチャされる
-    println!(&quot;{:?}&quot;, x.0);
+    println!("{:?}", x.0);
 };
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <!--
 This is a conservative analysis: in many cases, these dummy lets can be safely removed and your program will work fine.
 -->
@@ -268,8 +275,7 @@ This is a conservative analysis: in many cases, these dummy lets can be safely r
 Closures now only capture data that needs to be read, which means the following closures will not capture `x`:
 -->
 <p>クロージャは本当に読む必要のあるデータだけをキャプチャするようになったので、次のコードは <code>x</code> をキャプチャしません:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 10;
 let c = || {
@@ -278,10 +284,9 @@ let c = || {
 };
 
 let c = || match x {
-    _ =&gt; println!(&quot;Hello World!&quot;)
+    _ =&gt; println!("Hello World!")
 };
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <!--
 The `let _ = x` statement here is a no-op, since the `_` pattern completely ignores the right-hand side, and `x` is a reference to a place in memory (in this case, a variable).
 -->
@@ -294,7 +299,7 @@ This change by itself (capturing fewer values) doesn't trigger any suggestions, 
 <!--
 **Subtle:** There are other similar expressions, such as the "dummy lets" `let _ = &x` that we insert, which are not no-ops. This is because the right-hand side (`&x`) is not a reference to a place in memory, but rather an expression that must first be evaluated (and whose result is then discarded).
 -->
-<p><strong>ちなみに:</strong> 似たような式の中には、同じく自動挿入される &quot;ダミーの let&quot; であっても、<code>let _ = &amp;x</code> のように「何もしない」わけではない文もあります。なぜかというと、右辺（<code>&amp;x</code>）はメモリ上のある場所を指し示すのではなく、値が評価されるべき式となるからです（その評価結果は捨てられますが）。</p>
+<p><strong>ちなみに:</strong> 似たような式の中には、同じく自動挿入される "ダミーの let" であっても、<code>let _ = &amp;x</code> のように「何もしない」わけではない文もあります。なぜかというと、右辺（<code>&amp;x</code>）はメモリ上のある場所を指し示すのではなく、値が評価されるべき式となるからです（その評価結果は捨てられますが）。</p>
 <!--
 ### Drop Order
 -->
@@ -303,8 +308,7 @@ This change by itself (capturing fewer values) doesn't trigger any suggestions, 
 When a closure takes ownership of a value from a variable `t`, that value is then dropped when the closure is dropped, and not when the variable `t` goes out of scope:
 -->
 <p>クロージャが変数 <code>t</code> の値の所有権を取るとき、その値がドロップされるのは <code>t</code> がスコープ外に出たときではなく、そのクロージャがドロップされたときになります:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn move_value&lt;T&gt;(_: T){}
 </span>{
@@ -316,14 +320,12 @@ When a closure takes ownership of a value from a variable `t`, that value is the
       // c がドロップされ、そのときにタプル `t` もまたドロップされる
 } // t goes out of scope here
   // t はここでスコープを抜ける
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <!--
 The above code will run the same in both Rust 2018 and Rust 2021. However, in cases where the closure only takes ownership of _part_ of a variable, there can be differences:
 -->
 <p>上記のコードの挙動は Rust 2018 と Rust 2021 で同じです。ところが、クロージャが変数の<!-- --><em>一部</em><!-- -->の所有権を取るとき、違いが発生します:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn move_value&lt;T&gt;(_: T){}
 </span>{
@@ -358,8 +360,7 @@ The above code will run the same in both Rust 2018 and Rust 2021. However, in ca
 // Rust 2021 では、`t.0` はムーブされているが、
 // `t.1` は残っており、ここでドロップされる
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <!--
 In most cases, dropping values at different times just affects when memory is freed and is not important. However, some `Drop` impls (aka, destructors) have side-effects, and changing the drop order in those cases can alter the semantics of your program. In such cases, the compiler will suggest inserting a dummy `let` to force the entire variable to be captured.
 -->
@@ -405,8 +406,7 @@ For instance, a common way to allow passing around raw pointers between threads 
 With disjoint captures, only the specific field mentioned in the closure gets captured, which wasn't originally `Send`/`Sync` defeating the purpose of the wrapper.
 -->
 <p>フィールドごとのキャプチャが導入されると、キャプチャ内で使用されているフィールドだけがキャプチャされますが、フィールドの中身はもともと <code>Send</code>/<code>Sync</code> でなかったのですから、せっかくラッパーを作っても元の木阿弥です。</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::thread;
 
@@ -423,8 +423,7 @@ let c = thread::spawn(move || {
     }
 }); // Closure captured px.0 which is not Send
     // クロージャは px.0 をキャプチャしたが、これは Send ではない
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 
                     </main>
 
@@ -434,7 +433,7 @@ let c = thread::spawn(move || {
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../rust-2021/panic-macro-consistency.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../rust-2021/panic-macro-consistency.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -448,7 +447,7 @@ let c = thread::spawn(move || {
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../rust-2021/panic-macro-consistency.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../rust-2021/panic-macro-consistency.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -458,21 +457,22 @@ let c = thread::spawn(move || {
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
