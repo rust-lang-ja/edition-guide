@@ -1,0 +1,38 @@
+> **Rust Edition Guide は現在 Rust 2024 のアップデート作業に向けて翻訳作業中です。本ページはある時点での英語版をコピーしていますが、一部のリンクが動作しない場合や、最新情報が更新されていない場合があります。問題が発生した場合は、[原文（英語版）](https://doc.rust-lang.org/nightly/edition-guide/introduction.html)をご参照ください。**
+
+# Cargo: Rust-version aware resolver
+
+## Summary
+
+- `edition = "2024"` implies `resolver = "3"` in `Cargo.toml` which enables a Rust-version aware dependency resolver.
+
+## Details
+
+Since Rust 1.84.0, Cargo has opt-in support for compatibility with
+[`package.rust-version`] to be considered when selecting dependency versions
+by setting [`resolver.incompatible-rust-version = "fallback"`] in `.cargo/config.toml`.
+
+Starting in Rust 2024, this will be the default.
+That is, writing `edition = "2024"` in `Cargo.toml` will imply `resolver = "3"`
+which will imply [`resolver.incompatible-rust-version = "fallback"`].
+
+The resolver is a global setting for a [workspace], and the setting is ignored in dependencies.
+The setting is only honored for the top-level package of the workspace.
+If you are using a [virtual workspace], you will still need to explicitly set the [`resolver` field]
+in the `[workspace]` definition if you want to opt-in to the new resolver.
+
+For more details on how Rust-version aware dependency resolution works, see [the Cargo book](../../cargo/reference/resolver.html#rust-version).
+
+[`package.rust-version`]: ../../cargo/reference/rust-version.html
+[`resolver.incompatible-rust-version = "fallback"`]: ../../cargo/reference/config.html#resolverincompatible-rust-versions
+[workspace]: ../../cargo/reference/workspaces.html
+[virtual workspace]: ../../cargo/reference/workspaces.html#virtual-workspace
+[`resolver` field]: ../../cargo/reference/resolver.html#resolver-versions
+
+## Migration
+
+There are no automated migration tools for updating for the new resolver.
+
+We recommend projects
+[verify against the latest dependencies in CI](../../cargo/guide/continuous-integration.html#verifying-latest-dependencies)
+to catch bugs in dependencies as soon as possible.
