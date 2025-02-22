@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="ja" class="sidebar-visible no-js light">
+<html lang="ja" class="light sidebar-visible" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -8,10 +8,9 @@
 
         <!-- Custom HTML head -->
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="../favicon.svg">
         <link rel="shortcut icon" href="../favicon.png">
@@ -32,16 +31,19 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="../theme/em-to-bold.css">
 
-    </head>
-    <body>
+
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
-
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -57,50 +59,58 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            var html = document.querySelector('html');
-            html.classList.remove('no-js')
+            const html = document.documentElement;
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            html.classList.add("js");
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
+            sidebar_toggle.checked = sidebar === 'visible';
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">序文</a></li><li class="chapter-item expanded "><a href="../editions/index.html"><strong aria-hidden="true">1.</strong> エディションとは？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../editions/creating-a-new-project.html"><strong aria-hidden="true">1.1.</strong> 新しいプロジェクトを作成する</a></li><li class="chapter-item expanded "><a href="../editions/transitioning-an-existing-project-to-a-new-edition.html"><strong aria-hidden="true">1.2.</strong> 既存のプロジェクトのエディションを移行する</a></li><li class="chapter-item expanded "><a href="../editions/advanced-migrations.html"><strong aria-hidden="true">1.3.</strong> 発展的な移行戦略</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="../rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2018/path-changes.html"><strong aria-hidden="true">3.1.</strong> パスとモジュールシステムへの変更</a></li><li class="chapter-item expanded "><a href="../rust-2018/trait-fn-parameters.html"><strong aria-hidden="true">3.2.</strong> トレイト関数の匿名パラメータの非推奨化</a></li><li class="chapter-item expanded "><a href="../rust-2018/new-keywords.html"><strong aria-hidden="true">3.3.</strong> 新しいキーワード</a></li><li class="chapter-item expanded "><a href="../rust-2018/tyvar-behind-raw-pointer.html"><strong aria-hidden="true">3.4.</strong> 推論変数への生ポインタに対するメソッドのディスパッチ</a></li><li class="chapter-item expanded "><a href="../rust-2018/cargo.html"><strong aria-hidden="true">3.5.</strong> Cargo への変更</a></li></ol></li><li class="chapter-item expanded "><a href="../rust-2021/index.html"><strong aria-hidden="true">4.</strong> Rust 2021</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rust-2021/prelude.html"><strong aria-hidden="true">4.1.</strong> Prelude への追加</a></li><li class="chapter-item expanded "><a href="../rust-2021/default-cargo-resolver.html" class="active"><strong aria-hidden="true">4.2.</strong> デフォルトの Cargo のフィーチャリゾルバ</a></li><li class="chapter-item expanded "><a href="../rust-2021/IntoIterator-for-arrays.html"><strong aria-hidden="true">4.3.</strong> 配列に対する IntoIterator</a></li><li class="chapter-item expanded "><a href="../rust-2021/disjoint-capture-in-closures.html"><strong aria-hidden="true">4.4.</strong> クロージャはフィールドごとにキャプチャする</a></li><li class="chapter-item expanded "><a href="../rust-2021/panic-macro-consistency.html"><strong aria-hidden="true">4.5.</strong> panic マクロの一貫性</a></li><li class="chapter-item expanded "><a href="../rust-2021/reserving-syntax.html"><strong aria-hidden="true">4.6.</strong> 構文の予約</a></li><li class="chapter-item expanded "><a href="../rust-2021/warnings-promoted-to-error.html"><strong aria-hidden="true">4.7.</strong> 警告からエラーへの格上げ</a></li><li class="chapter-item expanded "><a href="../rust-2021/or-patterns-macro-rules.html"><strong aria-hidden="true">4.8.</strong> マクロ規則における OR パターン</a></li></ol></li></ol>
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -136,7 +146,7 @@
                 </div>
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -158,7 +168,7 @@
 - `edition = "2021"` implies `resolver = "2"` in `Cargo.toml`.
 -->
 <ul>
-<li><code>edition = &quot;2021&quot;</code> では <code>Cargo.toml</code> で <code>resolver = &quot;2&quot;</code> が設定されているとみなされます。</li>
+<li><code>edition = "2021"</code> では <code>Cargo.toml</code> で <code>resolver = "2"</code> が設定されているとみなされます。</li>
 </ul>
 <!--
 ## Details
@@ -169,13 +179,13 @@ Since Rust 1.51.0, Cargo has opt-in support for a [new feature resolver][4]
 which can be activated with `resolver = "2"` in `Cargo.toml`.
 -->
 <p>Rust 1.51.0 から、Cargo には<a href="https://doc.rust-lang.org/cargo/reference/resolver.html#feature-resolver-version-2">新しいフィーチャリゾルバ</a>がオプトインできるようになっています。
-これは、<code>Cargo.toml</code> で <code>resolver = &quot;2&quot;</code> と書くことで有効化できます。</p>
+これは、<code>Cargo.toml</code> で <code>resolver = "2"</code> と書くことで有効化できます。</p>
 <!--
 Starting in Rust 2021, this will be the default.
 That is, writing `edition = "2021"` in `Cargo.toml` will imply `resolver = "2"`.
 -->
 <p>Rust 2021 から、これがデフォルトになりました。
-つまり、 <code>Cargo.toml</code> に <code>edition = &quot;2021&quot;</code> と書けば、暗黙に <code>resolver = &quot;2&quot;</code> も設定されているとみなされます。</p>
+つまり、 <code>Cargo.toml</code> に <code>edition = "2021"</code> と書けば、暗黙に <code>resolver = "2"</code> も設定されているとみなされます。</p>
 <!--
 The resolver is a global setting for a [workspace], and the setting is ignored in dependencies.
 The setting is only honored for the top-level package of the workspace.
@@ -250,7 +260,7 @@ For example, let's say we have a dependency like this:
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-bstr = { version = &quot;0.2.16&quot;, default-features = false }
+bstr = { version = "0.2.16", default-features = false }
 # ...
 </code></pre>
 <!--
@@ -261,7 +271,7 @@ And somewhere in our dependency tree, another package has this:
 # 別のパッケージの Cargo.toml
 
 [build-dependencies]
-bstr = &quot;0.2.16&quot;
+bstr = "0.2.16"
 </code></pre>
 <!--
 In our package, we've been using the [`words_with_breaks`](https://docs.rs/bstr/0.2.16/bstr/trait.ByteSlice.html#method.words_with_breaks) method from `bstr`, which requires `bstr`'s  "unicode" feature to be enabled.
@@ -269,17 +279,17 @@ This has historically worked because Cargo unified the features of `bstr` betwee
 However, after updating to Rust 2021, the new resolver will build `bstr` twice, once with the default features (as a build dependency), and once with no features (as our normal dependency).
 Since `bstr` is now being built without the "unicode" feature, the `words_with_breaks` method doesn't exist, and the build will fail with an error that the method is missing.
 -->
-<p>我々のパッケージでは、今までは <code>bstr</code> の <a href="https://docs.rs/bstr/0.2.16/bstr/trait.ByteSlice.html#method.words_with_breaks"><code>words_with_breaks</code></a> 関数を使用していたとします。この関数は(本来<!--訳注: わかりにくかったので勝手に入れました-->) <code>bstr</code> の &quot;unicode&quot; フィーチャを有効化しないと使えないものです。
+<p>我々のパッケージでは、今までは <code>bstr</code> の <a href="https://docs.rs/bstr/0.2.16/bstr/trait.ByteSlice.html#method.words_with_breaks"><code>words_with_breaks</code></a> 関数を使用していたとします。この関数は(本来<!--訳注: わかりにくかったので勝手に入れました-->) <code>bstr</code> の "unicode" フィーチャを有効化しないと使えないものです。
 歴史的事情から、今まではこれでもうまくいきました。というのも、Cargo は2つのパッケージで使われている <code>bstr</code> のフィーチャを共通化していたからです。
 しかしながら、Rust 2021 へのアップデート後、 <code>bstr</code> は1回目(ビルド依存関係として)はデフォルトのフィーチャで、2回目(我々のパッケージの通常の依存先として)はフィーチャなしで、合計2回ビルドされます。
-今や <code>bstr</code> は &quot;unicode&quot; フィーチャなしでビルドされるので、 <code>words_with_breaks</code> メソッドは存在せず、メソッドがないというエラーが発生してビルドは失敗します。</p>
+今や <code>bstr</code> は "unicode" フィーチャなしでビルドされるので、 <code>words_with_breaks</code> メソッドは存在せず、メソッドがないというエラーが発生してビルドは失敗します。</p>
 <!--
 The solution here is to ensure that the dependency is declared with the features you are actually using.
 For example:
 -->
 <p>ここでの解決策は、依存関係の宣言に我々が実際に使っているフィーチャを書くようにすることです。</p>
 <pre><code class="language-toml">[dependencies]
-bstr = { version = &quot;0.2.16&quot;, default-features = false, features = [&quot;unicode&quot;] }
+bstr = { version = "0.2.16", default-features = false, features = ["unicode"] }
 </code></pre>
 <!--
 In some cases, this may be a problem with a third-party dependency that you don't have direct control over.
@@ -309,8 +319,8 @@ These packages provide database support, and the database is selected using a fe
 <p>実際の例としては、<a href="https://crates.io/crates/diesel"><code>diesel</code></a> と <a href="https://crates.io/crates/diesel_migrations"><code>diesel_migrations</code></a> を使用する場合が挙げられます。
 これらのパッケージはデータベースへのサポートを提供しますが、データベースはフィーチャを用いて選択されます。たとえば、こんな感じです:</p>
 <pre><code class="language-toml">[dependencies]
-diesel = { version = &quot;1.4.7&quot;, features = [&quot;postgres&quot;] }
-diesel_migrations = &quot;1.4.0&quot;
+diesel = { version = "1.4.7", features = ["postgres"] }
+diesel_migrations = "1.4.0"
 </code></pre>
 <!--
 The problem is that `diesel_migrations` has an internal proc-macro which itself depends on `diesel`, and the proc-macro assumes its own copy of `diesel` has the same features enabled as the rest of the dependency graph.
@@ -318,24 +328,24 @@ After updating to the new resolver, it fails to build because now there are two 
 -->
 <p>ここで問題なのは、 <code>diesel_migrations</code> は内部に <code>diesel</code> に依存する手続き的マクロをもちます。
 この手続き的マクロは、自身が使用する <code>diesel</code> で有効化されているフィーチャが、依存関係木の他の場所で有効化されているものと同じであると仮定します。
-ところが、新しいリゾルバが使用されると、2つの <code>diesel</code> が使用され、そのうち手続き的マクロ用のものは &quot;postgres&quot; フィーチャなしでビルドされるために、ビルドに失敗します。</p>
+ところが、新しいリゾルバが使用されると、2つの <code>diesel</code> が使用され、そのうち手続き的マクロ用のものは "postgres" フィーチャなしでビルドされるために、ビルドに失敗します。</p>
 <!--
 A solution here is to add `diesel` as a build-dependency with the required features, for example:
 -->
 <p>ここでの解決策は、<code>diesel</code> をビルド時の依存として追加し、そこに必要なフィーチャを指定することです。例えば以下のようになります。</p>
 <pre><code class="language-toml">[build-dependencies]
-diesel = { version = &quot;1.4.7&quot;, features = [&quot;postgres&quot;] }
+diesel = { version = "1.4.7", features = ["postgres"] }
 </code></pre>
 <!--
 This causes Cargo to add "postgres" as a feature for host dependencies (proc-macros and build-dependencies).
 Now, the `diesel_migrations` proc-macro will get the "postgres" feature enabled, and it will build correctly.
 -->
-<p>これにより、 Cargo はホスト依存関係（proc-macro と build-dependencies）のフィーチャとして &quot;postgres&quot; を追加します。</p>
+<p>これにより、 Cargo はホスト依存関係（proc-macro と build-dependencies）のフィーチャとして "postgres" を追加します。</p>
 <blockquote>
 <p>訳注：ホスト依存関係とは、コンパイラホスト（コンパイラを実行しているプラットフォーム）向けにビルド・実行される依存を指し、proc-macro クレートや build-dependencies 配下の依存クレートが該当します。
 一方、通常の依存関係はコンパイルターゲットのプラットフォーム向けにビルドされます。</p>
 </blockquote>
-<p>これで、 <code>diesel_migrations</code> の手続き的マクロは &quot;postgres&quot; フィーチャが有効化された状態で走り、正しくビルドされます。</p>
+<p>これで、 <code>diesel_migrations</code> の手続き的マクロは "postgres" フィーチャが有効化された状態で走り、正しくビルドされます。</p>
 <!--
 The 2.0 release of `diesel` (currently in development) does not have this problem as it has been restructured to not have this dependency requirement.
 -->
@@ -393,28 +403,28 @@ For example, let's say the dependency graph is large, and we're not quite sure w
 例えば、依存関係木があまりにも大きくて、何が <code>bstr</code> に依存してるのかよくわからなくても、次のコマンドを実行すればいいです:</p>
 <pre><code class="language-console">&gt; cargo tree -e features -i bstr
 bstr v0.2.16
-├── bstr feature &quot;default&quot;
+├── bstr feature "default"
 │   [build-dependencies]
 │   └── bar v0.1.0
-│       └── bar feature &quot;default&quot;
+│       └── bar feature "default"
 │           └── foo v0.1.0 (/MyProjects/foo)
-├── bstr feature &quot;lazy_static&quot;
-│   └── bstr feature &quot;unicode&quot;
-│       └── bstr feature &quot;default&quot; (*)
-├── bstr feature &quot;regex-automata&quot;
-│   └── bstr feature &quot;unicode&quot; (*)
-├── bstr feature &quot;std&quot;
-│   └── bstr feature &quot;default&quot; (*)
-└── bstr feature &quot;unicode&quot; (*)
+├── bstr feature "lazy_static"
+│   └── bstr feature "unicode"
+│       └── bstr feature "default" (*)
+├── bstr feature "regex-automata"
+│   └── bstr feature "unicode" (*)
+├── bstr feature "std"
+│   └── bstr feature "default" (*)
+└── bstr feature "unicode" (*)
 </code></pre>
 <!--
 This snippet of output shows that the project `foo` depends on `bar` with the "default" feature.
 Then, `bar` depends on `bstr` as a build-dependency with the "default" feature.
 We can further see that `bstr`'s  "default" feature enables "unicode" (among other features).
 -->
-<p>この出力例からは、<code>foo</code> が <code>bar</code> に &quot;default&quot; フィーチャ付きで依存していることがわかり、
-<code>bar</code> はビルド時の依存として <code>bstr</code> に &quot;default&quot; フィーチャ付きで依存していることもわかります。
-さらに、<code>bstr</code> の &quot;default&quot; フィーチャによって &quot;unicode&quot; フィーチャ（と、他のフィーチャも）が有効になっていることもわかります。</p>
+<p>この出力例からは、<code>foo</code> が <code>bar</code> に "default" フィーチャ付きで依存していることがわかり、
+<code>bar</code> はビルド時の依存として <code>bstr</code> に "default" フィーチャ付きで依存していることもわかります。
+さらに、<code>bstr</code> の "default" フィーチャによって "unicode" フィーチャ（と、他のフィーチャも）が有効になっていることもわかります。</p>
 <!--
 [`cargo tree`]: ../../cargo/commands/cargo-tree.html
 -->
@@ -427,7 +437,7 @@ We can further see that `bstr`'s  "default" feature enables "unicode" (among oth
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="../rust-2021/IntoIterator-for-arrays.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../rust-2021/IntoIterator-for-arrays.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -441,7 +451,7 @@ We can further see that `bstr`'s  "default" feature enables "unicode" (among oth
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="../rust-2021/IntoIterator-for-arrays.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../rust-2021/IntoIterator-for-arrays.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -451,21 +461,22 @@ We can further see that `bstr`'s  "default" feature enables "unicode" (among oth
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
-        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>
