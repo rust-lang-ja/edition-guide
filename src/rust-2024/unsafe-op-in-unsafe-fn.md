@@ -10,11 +10,13 @@
 
 ## 概要
 
+<!--
 - The [`unsafe_op_in_unsafe_fn`] lint now warns by default.
   This warning detects calls to unsafe operations in unsafe functions without an explicit unsafe block.
+-->
 
 - [`unsafe_op_in_unsafe_fn`] リントのデフォルトのレベルが警告になりました。
-  アンセーフな関数中にアンセーフな操作を明示的な unsafe ブロックなしに呼び出した場合にこの警告が出ます。
+  アンセーフな関数中でアンセーフな操作を明示的な unsafe ブロックなしに呼び出した場合にこの警告が出ます。
 
 <!--
 [`unsafe_op_in_unsafe_fn`]: ../../rustc/lints/listing/allowed-by-default.html#unsafe-op-in-unsafe-fn
@@ -65,9 +67,8 @@ This second role was determined to be too risky without explicit `unsafe` blocks
 
 これは、アンセーフ関数内の意図しないアンセーフな操作を避けるためのものです。
 かつては、アンセーフ関数の `unsafe` というキーワードには二重の意味が込められていました。
-関数を **呼び出す** 操作がアンセーフであり、呼び出し側が満たすべき安全性要件が存在するという点と、
-関数内でアンセーフな操作ができるという点です。
-特に後者を `unsafe` ブロックなしで実行できることが危険すぎると判断され、この変更に至りました。
+関数を**呼び出す**操作がアンセーフであり、呼び出し側が満たすべき安全性要件が存在するという点と、関数内でアンセーフな操作ができるという点です。
+特に後者を `unsafe` ブロックなしで実行できることが危険すぎると判断されました。
 
 <!--
 More information and motivation may be found in [RFC #2585].
