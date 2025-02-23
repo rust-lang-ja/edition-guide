@@ -15,7 +15,7 @@
   This checks for taking a shared or mutable reference to a `static mut`.
 -->
 
-- [`static_mut_refs`] のリントレベルはデフォルトで `deny` (必ずエラー) になりました。
+- [`static_mut_refs`] のリントレベルはデフォルトで `deny`（必ずエラー）になりました。
   このリントは、`static mut` への共有参照・可変参照を検出します。
 
 <!--
@@ -35,7 +35,8 @@ The [`static_mut_refs`] lint detects taking a reference to a [`static mut`]. In 
 -->
 
 [`static_mut_refs`] リントは、[`static mut`] への参照を検出します。
-この種の参照は避けるべきであると明示するために、2024 エディションではこのリントはデフォルトで `deny` (不許可＝必ずエラー) となります。
+2024 エディションではこのリントはデフォルトで `deny`（不許可＝必ずエラー）となります。
+これは、[`static mut`] への参照は基本的に作るべきでないと強調するためです。
 
 <!-- edition2024 -->
 ```rust
@@ -54,8 +55,8 @@ unsafe {
 Merely taking such a reference in violation of Rust's mutability XOR aliasing requirement has always been *instantaneous* [undefined behavior], **even if the reference is never read from or written to**.  Furthermore, upholding mutability XOR aliasing for a `static mut` requires *reasoning about your code globally*, which can be particularly difficult in the face of reentrancy and/or multithreading.
 -->
 
-Rust の可変性に関するエイリアシングルール [^1] を破るような参照を生成するのは、**たとえその参照が実際に読み書きされないとしても**、今も昔も問答無用で[未定義動作]です。
-その上、このルールは **コード全体で** 守られてなくてはならず、特に再入可能性やマルチスレッドが関わると困難なタスクです。
+Rust の可変性に関するエイリアシングルール[^1]を破るような参照を生成するのは、**たとえその参照が実際に読み書きされないとしても**、今も昔も問答無用で[未定義動作]です。
+その上、このルールは**コード全体で**守られてなくてはならず、特に再入可能性やマルチスレッドが関わると困難なタスクです。
 
 [^1]: 一つの値に対して、ただ一つの可変参照か、複数の共有参照の、たかだか一方しか存在することができないというルールのこと。
 
@@ -93,8 +94,8 @@ Wherever possible, it is **strongly recommended** to use instead an *immutable* 
 In situations where no locally-reasoned abstraction is possible and you are therefore compelled still to reason globally about accesses to your `static` variable, you must now use raw pointers such as can be obtained via the [`&raw const` or `&raw mut` operators][raw].  By first obtaining a raw pointer rather than directly taking a reference, (the safety requirements of) accesses through that pointer will be more familiar to `unsafe` developers and can be deferred until/limited to smaller regions of code.
 -->
 
-局所的正当化による抽象化が不可能で、どうしても `static` 変数へのグローバルアクセスが必要なときは、[`&raw const` か `&raw mut` 演算子][raw]を用いるなどして生ポインタを使う必要があります。
-直接参照を取るのでなく先に生ポインタを作っておけば、そのポインタへのアクセス（に必要な安全性要件）は `unsafe` コードを書く人にとっても慣れたものですし、より局所的なコードに限定（先送り）できます。
+局所的正当化による抽象化が不可能で、どうしても `static` 変数へのグローバルな正当化に基づくアクセスが必要なときは、[`&raw const`・`&raw mut` 演算子][raw]を用いるなどして生ポインタを使う必要があります。
+直接参照を取る代わりに先に生ポインタを作っておけば、そのポインタへのアクセス（に必要な安全性要件）は `unsafe` コードを書く人にとっても慣れたものですし、より局所的なコードに限定（先送り）できます。
 
 <!--
 [Undefined Behavior]: ../../reference/behavior-considered-undefined.html
@@ -114,8 +115,8 @@ Note that the following examples are just illustrations and are not intended as 
 
 なお、以下に示すのはあくまで例示で、厳密な実装というわけではありません。
 そのまま丸写ししないでください。
-一見使えそうな例があっても、用途に合わせて書き換えるべき点もあるでしょう。
-ここでは、様々な問題に対処するための選択肢を示すためにいくつかの例を列挙しています。
+コードによって事情も異なり、用途に合わせて書き換えるべき点もあるでしょう。
+ここでは、様々な問題に対処するための選択肢を示すために、何個かの例を列挙しています。
 
 <!--
 It is recommended to read the documentation for the specific types in the standard library, the reference on [undefined behavior], the [Rustonomicon], and if you are having questions to reach out on one of the Rust forums such as the [Users Forum].
@@ -131,8 +132,8 @@ It is recommended to read the documentation for the specific types in the standa
 -->
 
 [未定義動作]: https://doc.rust-lang.org/reference/behavior-considered-undefined.html
-[Rustonomicon]: https://doc.rust-jp.rs/rust-nomicon-ja/index.html
-[Users Forum]: https://users.rust-lang.org/
+[Rust 裏本]: https://doc.rust-jp.rs/rust-nomicon-ja/index.html
+[ユーザーズフォーラム]: https://users.rust-lang.org/
 
 > **訳注**: 日本語話者向けの Rust コミュニティとして [Zulip](https://rust-lang-jp.zulipchat.com/) がありますので、併せてご活用ください。
 
@@ -147,7 +148,7 @@ This is probably something you already know, but if possible it is best to avoid
 -->
 
 ご存知かもしれませんが、グローバルな状態を書き換えなくて済むならそれが一番です。
-もちろんこれは場合によっては、特に可変参照をたくさんの関数に引き回す必要のあるときは、若干の困難や面倒の種です。
+もちろん場合によっては、特に可変参照をたくさんの関数に引き回す必要のあるときは、若干の困難や面倒の種です。
 
 <!--
 ### Atomics
@@ -161,6 +162,7 @@ The [atomic types][atomics] provide integers, pointers, and booleans that can be
 
 [アトミック型][atomics]を使うと、`static` 文脈で（`mut` なしに）使える整数・ポインタ・論理型を定義できます。
 
+<!--
 ```rust,edition2024
 # use std::sync::atomic::Ordering;
 # use std::sync::atomic::AtomicU64;
@@ -175,13 +177,14 @@ fn main() {
     COUNTER.fetch_add(1, Ordering::Relaxed);
 }
 ```
+-->
 
 ```rust,edition2024
 # use std::sync::atomic::Ordering;
 # use std::sync::atomic::AtomicU64;
 
-//   static mut COUNTER: u64 = 0;
-// 上記の変数は以下のように置き換えられる
+// 以下の置き換えが可能
+// static mut COUNTER: u64 = 0;
 static COUNTER: AtomicU64 = AtomicU64::new(0);
 
 fn main() {
@@ -229,8 +232,8 @@ fn main() {
 # use std::sync::Mutex;
 # use std::collections::VecDeque;
 
-//     static mut QUEUE: VecDeque<String> = VecDeque::new();
-// 上記の変数は以下のように置き換えられる
+// 以下の置き換えが可能
+// static mut QUEUE: VecDeque<String> = VecDeque::new();
 static QUEUE: Mutex<VecDeque<String>> = Mutex::new(VecDeque::new());
 
 fn main() {
@@ -257,7 +260,7 @@ fn main() {
 If you are using a `static mut` because you need to do some one-time initialization that can't be `const`, you can instead reach for [`OnceLock`] or [`LazyLock`] instead.
 -->
 
-`const` にできない一度限りの初期化をするために `static mut` を使っている場合、[`OnceLock`] や [`LazyLock`] に置き換えられます。
+`const` 文脈で実行できない一度限りの初期化をするために `static mut` を使っている場合、[`OnceLock`] や [`LazyLock`] に置き換えられます。
 
 <!--
 ```rust,edition2024
@@ -297,8 +300,8 @@ fn main() {
 #     fn example(&self) {}
 # }
 
-//     static mut STATE: Option<GlobalState> = None;
-// 上記のように一時的・未初期化な値を使用する代わりに、以下のように書ける
+// 以下のように未初期化な値で埋めておく代わりに、以下のように書ける
+// static mut STATE: Option<GlobalState> = None;
 static STATE: LazyLock<GlobalState> = LazyLock::new(|| {
     GlobalState::new()
 });
@@ -312,7 +315,7 @@ fn main() {
 [`OnceLock`] is similar to [`LazyLock`], but can be used if you need to pass information into the constructor, which can work well with single initialization points (like `main`), or if the inputs are available wherever you access the global.
 -->
 
-[`OnceLock`] と [`LazyLock`] は似ていますが、[`OnceLock`] は初期化時に情報を渡す必要がある場合に使え、特に初期化箇所が単一のときや（`main` など）、アクセス時にいつでもその情報を持っているときなどに便利です。
+[`OnceLock`] と [`LazyLock`] は似ていますが、[`OnceLock`] は初期化パラメータを渡す必要がある場合に使え、特に初期化箇所が単一のときや（`main` など）、アクセス時にいつでも初期化パラメータを持っているときなどに便利です。
 
 ```rust,edition2024
 # use std::sync::OnceLock;
@@ -596,8 +599,8 @@ unsafe extern "C" {
 
 fn main() {
     unsafe {
-        //     example_ffi(&mut STATE as *mut GlobalState);
-        // 上記は以下のように置き換えられます。
+        // 以下の書き換えが可能
+        // example_ffi(&mut STATE as *mut GlobalState);
         example_ffi(&raw mut STATE);
     }
 }
@@ -608,7 +611,7 @@ Just beware that you still need to uphold the aliasing constraints around mutabl
 -->
 
 ただし、可変ポインタのエイリアシング規則は変わらず遵守する必要があります。
-内外における同期や、マルチスレッド・割り込み・再入可能性などの観点からの正常な利用を保証してください。
+内部や外部での同期や、マルチスレッド・割り込み・再入可能性などの観点からの正常な利用を保証してください。
 
 <!--
 [raw borrow operators]: ../../reference/expressions/operator-expr.html#raw-borrow-operators
@@ -706,7 +709,8 @@ unsafe impl<T: Sync> Sync for SyncUnsafeCell<T> {}
 static STATE: SyncUnsafeCell<GlobalState> = SyncUnsafeCell(UnsafeCell::new(GlobalState::new()));
 
 fn set_value(value: i32) {
-    // (訳注) 割り込みを無効化した状態で処理を実行する関数
+    // (訳注) with_interrupts_disabled は、
+    // 割り込みを無効化した状態で処理を実行する関数という想定
     with_interrupts_disabled(|| {
         let state = STATE.0.get();
         unsafe {
@@ -723,15 +727,14 @@ The standard library has a nightly-only (unstable) variant of [`UnsafeCell`] cal
 -->
 
 標準ライブラリには [`UnsafeCell`] の変種として [`SyncUnsafeCell`] がありますが、nightly 限定です（安定化されていません）。
-上記のサンプルコードは [`SyncUnsafeCell`] の超簡略版ですが、使用方法はほぼ同じです。
-[`SyncUnsafeCell`] ではより厳密な保護策がとられているので、詳細に関しては実装をご覧ください。
+上記のサンプルコードは `SyncUnsafeCell` の超簡略版ですが、使用方法はほぼ同じです。
+`SyncUnsafeCell` ではより厳密な保護策がとられているので、実装を読むと詳細な設計の参考になるでしょう。
 
 <!--
 This example includes a fictional `with_interrupts_disabled` function which is the type of thing you might see in an embedded environment. For example, the [`critical-section`] crate provides a similar kind of functionality that could be used for an embedded environment.
 -->
 
-本例では仮想的な `with_interrupts_disabled` 関数を使っています。
-組み込み環境ではこの手のものが実際に見られるでしょう。
+本例では仮想的な `with_interrupts_disabled` 関数を使っていますが、組み込み環境では実際にこの手のものがあるでしょう。
 例えば、[`critical-section`] クレートを使うと、組み込み環境で似たような機能が使えます。
 
 <!--
@@ -744,14 +747,18 @@ This example includes a fictional `with_interrupts_disabled` function which is t
 [`UnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html
 [`SyncUnsafeCell`]: https://doc.rust-lang.org/std/cell/struct.SyncUnsafeCell.html
 
+<!--
 ### Safe references
+-->
+
+### 安全な参照
 
 <!--
 In some cases it may be safe to create a reference of a `static mut`. The whole point of the [`static_mut_refs`] lint is that this is very hard to do correctly! However, that's not to say it is *impossible*. If you have a situation where you can guarantee that the aliasing requirements are upheld, such as guaranteeing the static is narrowly scoped (only used in a small module or function), has some internal or external synchronization, accounts for interrupt handlers and reentrancy, panic safety, drop handlers, etc., then taking a reference may be fine.
 -->
 
 `static mut` の参照を作っても安全な場面も存在するにはします。
-[`static_mut_refs`] リントが言いたいのは正しい使用が非常に困難だということで、不可能ではないのです。
+[`static_mut_refs`] リントが伝えたいのは正しい使用が非常に困難だということで、不可能ではないのです。
 エイリアシング規則が遵守できていると保証できるなら、参照を作っても問題ないでしょう。
 例えば、スタティック変数のスコープが十分小さかったり（小さいモジュールや関数など）、内部や外部に同期機構があったり、割り込みハンドラや再入可能性、パニック時の安全性、ドロップハンドラなども十分に考慮できる場合です。
 
@@ -760,7 +767,7 @@ There are two approaches you can take for this. You can either allow the [`stati
 -->
 
 この場合、2 つの方法があります。
-[`static_mut_refs`] リントを（できるだけ狭い範囲で）有効化するか、生ポインタを `&mut *&raw mut MY_STATIC` のように参照に変換するかです。
+[`static_mut_refs`] リントを（できるだけ狭い範囲で）allow とする（エラーが出ないようにする）するか、生ポインタを `&mut *&raw mut MY_STATIC` のように参照に変換するかです。
 
 <!-- TODO: Should we prefer one or the other here? -->
 
