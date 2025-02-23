@@ -120,7 +120,7 @@
     - [Unsafe `extern` blocks](rust-2024/unsafe-extern.md)
     - [Unsafe attributes](rust-2024/unsafe-attributes.md)
     - [`unsafe_op_in_unsafe_fn` warning](rust-2024/unsafe-op-in-unsafe-fn.md)
-    - [Disallow references to `static mut`](rust-2024/static-mut-references.md)
+    - [static mut への参照の禁止](rust-2024/static-mut-references.md)
     - [Never type fallback change](rust-2024/never-type-fallback.md)
     - [Macro fragment specifiers](rust-2024/macro-fragment-specifiers.md)
     - [Missing macro fragment specifiers](rust-2024/missing-macro-fragment-specifiers.md)
