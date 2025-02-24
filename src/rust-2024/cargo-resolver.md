@@ -1,5 +1,3 @@
-> **Rust Edition Guide は現在 Rust 2024 のアップデート作業に向けて翻訳作業中です。本ページはある時点での英語版をコピーしていますが、一部のリンクが動作しない場合や、最新情報が更新されていない場合があります。問題が発生した場合は、[原文（英語版）](https://doc.rust-lang.org/nightly/edition-guide/introduction.html)をご参照ください。**
-
 <!-- 
 # Cargo: Rust-version aware resolver 
 -->
