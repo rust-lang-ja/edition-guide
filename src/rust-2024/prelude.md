@@ -137,8 +137,6 @@ Alternatively, you can manually enable the lint to find places where these quali
 #![warn(rust_2024_prelude_collisions)]
 ```
 
-[`rust_2024_prelude_collisions`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#rust-2024-prelude-collisions
-
 <!-- 
 ### `RustcEncodable` and `RustcDecodable` 
 -->
@@ -163,3 +161,6 @@ There is no automatic migration for this change; you will need to make the updat
 -->
 
 この変更に対する 自動移行手段はありません。そのため、手動で更新を行う必要があります。
+
+
+[`rust_2024_prelude_collisions`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#rust-2024-prelude-collisions
