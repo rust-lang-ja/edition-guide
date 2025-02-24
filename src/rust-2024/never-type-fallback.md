@@ -2,7 +2,7 @@
 # Never type fallback change
 -->
 
-# ネバー型のフォールバック先の変更
+# never 型のフォールバック先の変更
 
 <!--
 ## Summary
@@ -15,7 +15,7 @@
 - The [`never_type_fallback_flowing_into_unsafe`] lint is now `deny` by default.
 -->
 
-- ネバー型（`!`）から任意型への（never-to-any の）型強制は、失敗時にネバー型（`!`）でなくユニット型（`()`）に強制されるようになります。
+- never 型（`!`）から任意型への（never-to-any の）型強制において、失敗時のフォールバック先が never 型（`!`）でなくユニット型（`()`）となります。
 - [`never_type_fallback_flowing_into_unsafe`] のリントレベルはデフォルトで `deny` （必ずエラー）となりました。
 
 <!--
@@ -34,7 +34,7 @@
 When the compiler sees a value of type `!` (never) in a [coercion site][], it implicitly inserts a coercion to allow the type checker to infer any type:
 -->
 
-[型強制サイト][]（型強制可能な場所）に `!` （ネバー）と呼ばれる値があるとき、型検査機が任意の型を推測できるように、コンパイラはそこにある種の変換をさし挟みます。
+[型強制サイト][]（型強制可能な場所）に `!` (never) と呼ばれる値があるとき、型検査機が任意の型を推論できるように、コンパイラはそこにある種の変換をさし挟みます。
 
 <!--
 ```rust,should_panic
@@ -97,7 +97,7 @@ This can lead to compilation errors if the type cannot be inferred:
 To prevent such errors, the compiler remembers where it inserted `absurd` calls, and if it can't infer the type, it uses the fallback type instead:
 -->
 
-このようなエラーを回避するため、コンパイラは `yaba` が挿入された箇所を記録していて、推論に失敗したときにフォールバック（代替）されます。
+このようなエラーを避けるため、コンパイラには、「`yaba` が挿入された場所で型推論に失敗した場合には、代わりにそれをこの型と見做して処理を続ける」というような「失敗時のデフォルト」用の型（フォールバック先の型）が決まっています。
 
 <!--
 ```rust,should_panic
@@ -111,7 +111,7 @@ type Fallback = /* An arbitrarily selected type! */ !;
 ```rust,should_panic
 # #![feature(never_type)]
 # fn absurd<T>(x: !) -> T { x }
-type Fallback = /* どの型にするかはコンパイラの自由！*/ !;
+type Fallback = /* フォールバック先をどの型にするかはコンパイラの自由！*/ !;
 { absurd::<Fallback>(panic!()) }
 ```
 
@@ -119,14 +119,14 @@ type Fallback = /* どの型にするかはコンパイラの自由！*/ !;
 This is what is known as "never type fallback".
 -->
 
-この現象は、ネバー型のフォールバックと呼ばれます。
+この現象は、never 型のフォールバックと呼ばれます。
 
 <!--
 Historically, the fallback type has been `()` (unit).  This caused `!` to spontaneously coerce to `()` even when the compiler would not infer `()` without the fallback.  That was confusing and has prevented the stabilization of the `!` type.
 -->
 
 かつてはフォールバック先の型は `()` 型（ユニット型）でした。
-これにより、フォールバックがなければコンパイラが `()` を推論としない場面であっても、`!` が自発的に `()` に強制されてしまいました。
+これにより、フォールバックが発生しなければコンパイラが `()` を推論としないはずの場面であっても、実際には `!` が勝手に `()` に強制されてしまいました。
 この動作は非直感的で、`!` 型の安定化も妨げていました。
 
 <!--
@@ -134,7 +134,7 @@ In the 2024 edition, the fallback type is now `!`.  (We plan to make this change
 -->
 
 2024 エディションから、フォールバック先の型が `!` 型になりました。
-（将来的には全エディションでそうする予定です。）
+（将来的には全エディションで採用される予定です。）
 これによりコンパイラの動作がより直感的になります。
 これからは、別の型に強制される特段の理由がない限り、`!` は `!` のままです。
 
@@ -184,7 +184,7 @@ The fix is to specify the type explicitly so that the fallback type is not used.
 One of the most common patterns broken by this change is using `f()?;` where `f` is generic over the `Ok`-part of the return type:
 -->
 
-壊れうるコードの中では比較的よく見られるパターンとしては、`f()?;` というコード中で、特に `f` の戻り値の型が `Ok` 側の型引数に対してジェネリックな場合が挙げられます。
+壊れうるコードの中では比較的よく見られるパターンとしては、`f()?;` という式において、特に `f` の戻り値の型が `Ok` 側の型引数に対してジェネリックな場合が挙げられます。
 
 ```rust
 # #![allow(dependency_on_unit_never_type_fallback)]
@@ -202,13 +202,13 @@ f()?;
 You might think that, in this example, type `T` can't be inferred.  However, due to the current desugaring of the `?` operator, it was inferred as `()`, and it will now be inferred as `!`.
 -->
 
-一見型 `T` は推論不可能に見えますが、`?` 構文の脱糖 (desugaring) によりかつては `()` と、今は `!` と推論されます。
+一見、型 `T` は推論不可能に見えますが、`?` 構文の脱糖 (desugaring) 方法の関係で、かつては `()` と、今は `!` と推論されます。
 
 <!--
 To fix the issue you need to specify the `T` type explicitly:
 -->
 
-対策として、`T` の型を明示するとよいです。
+対策としては、`T` の型を明示するとよいです。
 
 <!--
 ```rust,edition2024
@@ -275,7 +275,9 @@ Previously `!` from the `panic!` coerced to `()` which implements `Unit`.  Howev
 run(|| -> () { panic!() });
 ```
 
+<!--
 A similar case to that of `f()?` can be seen when using a `!`-typed expression in one branch and a function with an unconstrained return type in the other:
+-->
 
 `f()?` と似た例として、条件分岐等の一方が `!` 型の式で、もう片方が返り値の型が指定されていない関数の呼び出しである場合が挙げられます。
 

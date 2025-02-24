@@ -121,7 +121,7 @@
     - [Unsafe attributes](rust-2024/unsafe-attributes.md)
     - [`unsafe_op_in_unsafe_fn` warning](rust-2024/unsafe-op-in-unsafe-fn.md)
     - [Disallow references to `static mut`](rust-2024/static-mut-references.md)
-    - [ネバー型のフォールバック先の変更](rust-2024/never-type-fallback.md)
+    - [never 型のフォールバック先の変更](rust-2024/never-type-fallback.md)
     - [Macro fragment specifiers](rust-2024/macro-fragment-specifiers.md)
     - [Missing macro fragment specifiers](rust-2024/missing-macro-fragment-specifiers.md)
     - [`gen` keyword](rust-2024/gen-keyword.md)
