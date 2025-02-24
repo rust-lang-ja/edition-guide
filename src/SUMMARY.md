@@ -127,7 +127,7 @@
     - [`gen` keyword](rust-2024/gen-keyword.md)
     - [Reserved syntax](rust-2024/reserved-syntax.md)
   - [標準ライブラリ](rust-2024/standard-library.md)
-    - [Changes to the prelude](rust-2024/prelude.md)
+    - [Prelude への変更点](rust-2024/prelude.md)
     - [Add `IntoIterator` for `Box<[T]>`](rust-2024/intoiterator-box-slice.md)
     - [Newly unsafe functions](rust-2024/newly-unsafe-functions.md)
   - [Cargo](rust-2024/cargo.md)
