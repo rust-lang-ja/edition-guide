@@ -9,9 +9,9 @@
     - [`link_section`]
     - [`no_mangle`]
 
-[`export_name`]: ../../reference/abi.html#the-export_name-attribute
-[`link_section`]: ../../reference/abi.html#the-link_section-attribute
-[`no_mangle`]: ../../reference/abi.html#the-no_mangle-attribute
+[`export_name`]: https://doc.rust-lang.org/reference/abi.html#the-export_name-attribute
+[`link_section`]: https://doc.rust-lang.org/reference/abi.html#the-link_section-attribute
+[`no_mangle`]: https://doc.rust-lang.org/reference/abi.html#the-no_mangle-attribute
 
 ## Details
 
@@ -56,8 +56,8 @@ fn arduino_loop() {
 }
 ```
 
-[symbol mangling]: ../../rustc/symbol-mangling/index.html
-[`unsafe_attr_outside_unsafe`]: ../../rustc/lints/listing/allowed-by-default.html#unsafe-attr-outside-unsafe
+[symbol mangling]: https://doc.rust-lang.org/rustc/symbol-mangling/index.html
+[`unsafe_attr_outside_unsafe`]: https://doc.rust-lang.org/rustc/lints/listing/allowed-by-default.html#unsafe-attr-outside-unsafe
 
 ## Migration
 
